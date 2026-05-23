@@ -27,6 +27,22 @@ function setFont(doc: jsPDF, weight: 'normal' | 'bold' = 'normal', size = 10, co
   doc.setTextColor(color);
 }
 
+/** jsPDF's default helvetica doesn't carry glyphs outside CP1252 — replace the
+ * Unicode arrow with a single right-pointing angle that IS in the font. */
+function safe(text: string): string {
+  return text.replace(/→/g, '›');
+}
+
+function safeText(
+  doc: jsPDF,
+  text: string,
+  x: number,
+  y: number,
+  opts?: Parameters<jsPDF['text']>[3]
+): void {
+  doc.text(safe(text), x, y, opts);
+}
+
 function writeWrapped(
   doc: jsPDF,
   text: string,
@@ -35,7 +51,7 @@ function writeWrapped(
   maxWidth: number,
   lineHeight = 5
 ): number {
-  const lines = doc.splitTextToSize(text, maxWidth);
+  const lines = doc.splitTextToSize(safe(text), maxWidth);
   for (const line of lines) {
     doc.text(line, x, y);
     y += lineHeight;
@@ -57,7 +73,7 @@ function sectionHeader(
   contentWidth: number
 ): number {
   setFont(doc, 'bold', 12, COLORS.contentAccent);
-  doc.text(label.toUpperCase(), CONTENT_X, y);
+  safeText(doc, label.toUpperCase(), CONTENT_X, y);
   doc.setDrawColor(COLORS.rule);
   doc.setLineWidth(0.3);
   doc.line(CONTENT_X, y + 1.5, CONTENT_X + contentWidth, y + 1.5);
@@ -156,15 +172,17 @@ function drawSidebarHeader(
     y += size + 8;
   }
 
+  const innerW = SIDEBAR_W - SIDEBAR_PAD * 2;
+
   setFont(doc, 'bold', 11, COLORS.sidebarText);
-  const nameLines = doc.splitTextToSize(resume.name, SIDEBAR_W - SIDEBAR_PAD * 2);
+  const nameLines = doc.splitTextToSize(safe(resume.name), innerW);
   for (const line of nameLines) {
     doc.text(line, SIDEBAR_PAD, y);
     y += 5;
   }
 
   setFont(doc, 'normal', 8, COLORS.sidebarAccent);
-  const handleLines = doc.splitTextToSize(`@${resume.handle}`, SIDEBAR_W - SIDEBAR_PAD * 2);
+  const handleLines = doc.splitTextToSize(safe(`@${resume.handle}`), innerW);
   for (const line of handleLines) {
     doc.text(line, SIDEBAR_PAD, y);
     y += 4;
@@ -172,19 +190,19 @@ function drawSidebarHeader(
   y += 4;
 
   y = drawSidebarSection(doc, labels.contact, y);
-  setFont(doc, 'normal', 7.5, COLORS.sidebarText);
+  setFont(doc, 'normal', 7, COLORS.sidebarText);
   const contactItems = [
     resume.email,
-    resume.links.linkedin.replace(/^https?:\/\//, ''),
-    resume.links.github.replace(/^https?:\/\//, ''),
+    resume.links.linkedin.replace(/^https?:\/\//, '').replace(/\/$/, ''),
+    resume.links.github.replace(/^https?:\/\//, '').replace(/\/$/, ''),
     resume.links.lattes ? resume.links.lattes.replace(/^https?:\/\//, '') : '',
     resume.location[locale]
   ].filter(Boolean);
   for (const item of contactItems) {
-    const lines = doc.splitTextToSize(item, SIDEBAR_W - SIDEBAR_PAD * 2);
+    const lines = doc.splitTextToSize(safe(item), innerW);
     for (const line of lines) {
       doc.text(line, SIDEBAR_PAD, y);
-      y += 3.5;
+      y += 3.3;
     }
     y += 1;
   }
@@ -201,11 +219,11 @@ function drawSidebarHeader(
   for (const [groupLabel, items] of skillGroups) {
     if (!items.length) continue;
     setFont(doc, 'bold', 7.5, COLORS.sidebarAccent);
-    doc.text(groupLabel, SIDEBAR_PAD, y);
+    safeText(doc, groupLabel, SIDEBAR_PAD, y);
     y += 3.5;
-    setFont(doc, 'normal', 7.5, COLORS.sidebarText);
+    setFont(doc, 'normal', 7, COLORS.sidebarText);
     const text = items.join(' · ');
-    y = writeWrapped(doc, text, SIDEBAR_PAD, y, SIDEBAR_W - SIDEBAR_PAD * 2, 3.5);
+    y = writeWrapped(doc, text, SIDEBAR_PAD, y, innerW, 3.3);
     y += 2.5;
   }
   y += 2;
@@ -215,7 +233,7 @@ function drawSidebarHeader(
   const years = yearsSince(resume.careerStart);
   const aiYears = yearsSince(resume.aiStart);
   for (const stat of [labels.yearsBuilding(years), labels.yearsAi(aiYears)]) {
-    const lines = doc.splitTextToSize(stat, SIDEBAR_W - SIDEBAR_PAD * 2);
+    const lines = doc.splitTextToSize(safe(stat), innerW);
     for (const line of lines) {
       doc.text(line, SIDEBAR_PAD, y);
       y += 3.5;
@@ -226,7 +244,7 @@ function drawSidebarHeader(
 
 function drawSidebarSection(doc: jsPDF, label: string, y: number): number {
   setFont(doc, 'bold', 8, COLORS.sidebarAccent);
-  doc.text(label.toUpperCase(), SIDEBAR_PAD, y);
+  safeText(doc, label.toUpperCase(), SIDEBAR_PAD, y);
   doc.setDrawColor(COLORS.sidebarRule);
   doc.setLineWidth(0.2);
   doc.line(SIDEBAR_PAD, y + 1.2, SIDEBAR_W - SIDEBAR_PAD, y + 1.2);
@@ -248,11 +266,11 @@ export async function generateResumePDF(resume: Resume, locale: Locale): Promise
   let y = TOP_MARGIN;
 
   setFont(doc, 'bold', 20);
-  doc.text(resume.name, CONTENT_X, y + 4);
+  safeText(doc, resume.name, CONTENT_X, y + 4);
   y += 8;
 
   setFont(doc, 'normal', 10, COLORS.muted);
-  doc.text(resume.headline[locale], CONTENT_X, y + 4);
+  safeText(doc, resume.headline[locale], CONTENT_X, y + 4);
   y += 9;
 
   doc.setDrawColor(COLORS.rule);
@@ -274,10 +292,10 @@ export async function generateResumePDF(resume: Resume, locale: Locale): Promise
     y = maybeNewPage(doc, y, pageHeight, 24);
 
     setFont(doc, 'bold', 11);
-    doc.text(exp.company, CONTENT_X, y);
+    safeText(doc, exp.company, CONTENT_X, y);
     setFont(doc, 'normal', 9, COLORS.muted);
     const range = formatRange(exp.start, exp.end, exp.current, locale);
-    doc.text(range, CONTENT_X + contentWidth, y, { align: 'right' });
+    safeText(doc, range, CONTENT_X + contentWidth, y, { align: 'right' });
     y += 5;
 
     setFont(doc, 'normal', 10);
@@ -289,8 +307,7 @@ export async function generateResumePDF(resume: Resume, locale: Locale): Promise
     if (exp.endedWith === 'acquired') badges.push(labels.acquired);
     if (exp.endedWith === 'shutdown') badges.push(labels.shutdown);
     const roleLine = badges.length ? `${role}  ·  ${badges.join(' · ')}` : role;
-    doc.text(roleLine, CONTENT_X, y);
-    y += 5;
+    y = writeWrapped(doc, roleLine, CONTENT_X, y, contentWidth, 4.8);
 
     setFont(doc, 'normal', 9.5, '#404040');
     y = writeWrapped(doc, exp.summary[locale], CONTENT_X, y, contentWidth, 4.8);
@@ -300,7 +317,7 @@ export async function generateResumePDF(resume: Resume, locale: Locale): Promise
       setFont(doc, 'normal', 9, '#404040');
       for (const bullet of exp.bullets[locale]) {
         y = maybeNewPage(doc, y, pageHeight, 8);
-        const wrapped = doc.splitTextToSize(bullet, contentWidth - 4);
+        const wrapped = doc.splitTextToSize(safe(bullet), contentWidth - 4);
         for (let i = 0; i < wrapped.length; i++) {
           const prefix = i === 0 ? '• ' : '  ';
           doc.text(prefix + wrapped[i], CONTENT_X, y);
@@ -314,19 +331,24 @@ export async function generateResumePDF(resume: Resume, locale: Locale): Promise
   y = maybeNewPage(doc, y, pageHeight, 30);
   y = sectionHeader(doc, labels.education, y, pageWidth, contentWidth);
   for (const edu of resume.education) {
-    y = maybeNewPage(doc, y, pageHeight, 14);
+    y = maybeNewPage(doc, y, pageHeight, 22);
     setFont(doc, 'bold', 10.5);
-    doc.text(edu.institution, CONTENT_X, y);
+    safeText(doc, edu.institution, CONTENT_X, y);
     setFont(doc, 'normal', 9, COLORS.muted);
     const range =
       edu.status === 'in-progress'
-        ? `${edu.start} → ${labels.inProgress}`
-        : `${edu.start} → ${edu.end ?? ''}`;
-    doc.text(range, CONTENT_X + contentWidth, y, { align: 'right' });
+        ? `${edu.start} › ${labels.inProgress}`
+        : `${edu.start} › ${edu.end ?? ''}`;
+    safeText(doc, range, CONTENT_X + contentWidth, y, { align: 'right' });
     setFont(doc, 'normal', 10);
     y += 4.5;
-    doc.text(edu.degree[locale], CONTENT_X, y);
-    y += 7;
+    safeText(doc, edu.degree[locale], CONTENT_X, y);
+    y += 5;
+    if (edu.note) {
+      setFont(doc, 'normal', 9.5, '#404040');
+      y = writeWrapped(doc, edu.note[locale], CONTENT_X, y, contentWidth, 4.6);
+    }
+    y += 5;
   }
 
   return doc;
