@@ -15,12 +15,12 @@
   ];
 
   const koLines = [
-    '$ caffeine --status',
-    '> intake      cup #3',
-    '> output      production-ready code',
-    '> ratio       1 commit / 100 mg',
-    '> mood        focused & slightly buzzing',
-    '> buy_me_one  ↓'
+    '$ pedrolages --thanks',
+    '> for          stopping by',
+    '> if           you liked what you saw',
+    '> consider     buying me a coffee',
+    '> link         ↓ below',
+    '> appreciate   it sincerely'
   ];
 </script>
 
@@ -102,8 +102,8 @@
           </h1>
           <p class="sub">
             {$tt({
-              pt: 'porque o terceiro café é o que vira código bom',
-              en: 'because the third cup is the one that ships'
+              pt: 'se gostou do que viu, considere apoiar',
+              en: 'if you liked what you saw, consider supporting'
             })}
           </p>
           <div class="url">pedrolages.dev</div>
