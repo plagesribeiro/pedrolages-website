@@ -60,30 +60,25 @@
       <div class="ln-layout">
         <div class="ln-safe-zone" aria-hidden="true"></div>
 
-        <div class="ln-content">
-          <div class="ln-hero">
-            <h1 class="ln-name">PEDRO LAGES RIBEIRO</h1>
-            <p class="ln-tagline">
-              <span class="ln-role">Co-founder · Software Engineer</span>
-              <span class="ln-dot">·</span>
-              <span class="ln-ai">AI Solutions Specialist</span>
-            </p>
-          </div>
+        <pre class="terminal terminal--ln">{linkedinLines.join('\n')}</pre>
 
-          <pre class="terminal terminal--ln">{linkedinLines.join('\n')}</pre>
+        <div class="ln-hero">
+          <h1 class="ln-name">PEDRO LAGES<br />RIBEIRO</h1>
+          <p class="ln-tagline">
+            <span class="ln-role">Co-founder · Software Engineer</span>
+            <span class="ln-ai">AI Solutions Specialist</span>
+          </p>
 
           <div class="ln-contact">
-            <span class="ln-contact-item">
+            <div class="ln-contact-row">
               <span class="ln-key">github</span> @plagesribeiro
-            </span>
-            <span class="ln-sep">|</span>
-            <span class="ln-contact-item">
+            </div>
+            <div class="ln-contact-row">
               <span class="ln-key">email</span> plagesribeiro@gmail.com
-            </span>
-            <span class="ln-sep">|</span>
-            <span class="ln-contact-item">
+            </div>
+            <div class="ln-contact-row">
               <span class="ln-key">site</span> pedrolages.dev
-            </span>
+            </div>
           </div>
         </div>
       </div>
@@ -221,55 +216,50 @@
   .ln-layout {
     position: relative;
     display: grid;
-    grid-template-columns: 400px 1fr;
+    grid-template-columns: 360px auto 1fr;
+    align-items: center;
     height: 100%;
-    padding: 40px 64px 40px 32px;
+    padding: 28px 48px 28px 28px;
     box-sizing: border-box;
     gap: 32px;
   }
 
   .ln-safe-zone {
     position: relative;
-  }
-
-  .ln-content {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    gap: 14px;
-    min-width: 0;
+    height: 100%;
   }
 
   .ln-hero {
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: 14px;
+    min-width: 0;
   }
 
   .ln-name {
     margin: 0;
-    font-size: 58px;
+    font-size: 44px;
     font-weight: 800;
-    letter-spacing: -1.5px;
-    line-height: 1;
+    letter-spacing: -1.2px;
+    line-height: 0.98;
     color: #fafafa;
     text-shadow: 0 0 30px rgba(155, 188, 15, 0.15);
   }
 
   .ln-tagline {
     margin: 0;
-    font-size: 22px;
+    font-size: 16px;
     font-weight: 500;
-    letter-spacing: 0.3px;
+    letter-spacing: 0.2px;
     color: #d4d4d8;
+    line-height: 1.4;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
   }
 
   .ln-role {
-    color: #fafafa;
-  }
-  .ln-dot {
-    color: #52525b;
-    margin: 0 6px;
+    color: #e4e4e7;
   }
   .ln-ai {
     color: #9bbc0f;
@@ -277,7 +267,7 @@
   }
 
   .terminal--ln {
-    font-size: 18px;
+    font-size: 15px;
     line-height: 1.55;
     color: #d4d4d8;
     margin: 0;
@@ -289,30 +279,27 @@
     backdrop-filter: blur(2px);
     white-space: pre;
     overflow: hidden;
-    align-self: flex-start;
-    width: 100%;
-    max-width: 720px;
+    align-self: center;
+    justify-self: start;
   }
 
   .ln-contact {
+    margin-top: 6px;
     display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: 14px;
-    font-size: 16px;
+    flex-direction: column;
+    gap: 4px;
+    font-size: 14px;
     color: #d4d4d8;
   }
-  .ln-contact-item {
-    display: inline-flex;
-    gap: 8px;
+  .ln-contact-row {
+    display: flex;
+    gap: 10px;
     align-items: baseline;
   }
   .ln-key {
     color: #9bbc0f;
     font-weight: 600;
-  }
-  .ln-sep {
-    color: #3f3f46;
+    min-width: 56px;
   }
 
   /* ───────── Kofi banner ───────── */
