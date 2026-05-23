@@ -2,7 +2,7 @@
   "name": "Pedro Lages Ribeiro",
   "handle": "plagesribeiro",
   "headline": {
-    "pt": "Desenvolvedor de software · IA & modelos multimodais",
+    "pt": "Engenheiro de software · IA & modelos multimodais",
     "en": "Software engineer · AI & multimodal models"
   },
   "taglines": {
@@ -39,14 +39,14 @@
   "aiStart": "2020-01",
   "bio": {
     "pt": [
-      "Sou desenvolvedor de software desde 2019. Comecei resolvendo problemas em hospitais, virei a chave pra IA quando os modelos da OpenAI ainda chamavam GPT-2 e eu tinha que explicar pra todo mundo o que era um \"transformer\".",
-      "Já fundei, vendi, vi falir e segui em frente. Hoje co-fundo a GoodStream — plataforma de document intelligence pra portfolio management — do Brasil, no fuso de Nova York, no terceiro café.",
-      "Em paralelo, sigo lutando com o mestrado em Ciência da Computação na PUC Minas. Sim, dá pra fazer as duas coisas. Não, não dá pra dormir bem."
+      "Cientista da computação, dev desde 2019. Comecei em hospital — prontuário eletrônico, busca em base de termos médicos. Em 2020 achei a IA: prompt engineering em GPT-2 e GPT-3, em uma das primeiras startups brasileiras a usar GPT em produção, bem antes do ChatGPT existir.",
+      "Hoje sou co-founder e Head of Product Development na GoodStream — plataforma de document intelligence pra portfolio management. Remoto do Brasil, fuso de Nova York, terceiro café. Lidero o time de engenharia (padrões, DDD, CI/CD, code review) e faço ponte com produto, marketing, CEO e suporte. Continuo escrevendo código todo dia, porque liderar sem encostar no teclado não é meu plano de carreira.",
+      "No caminho até aqui: fundei, vendi, vi falir e segui em frente — Me4U, Jeto, CopyKit, Olympos, Scripe. Em paralelo, faço mestrado em Ciência da Computação na PUC Minas, linha de pesquisa em IA — continuação do bacharelado que terminei lá em 2022. Sim, dá pra fazer as duas coisas. Não, não dá pra dormir bem."
     ],
     "en": [
-      "I've been a software engineer since 2019. Started shipping software for hospitals, then jumped on the AI train back when OpenAI models were called GPT-2 and I had to explain to everyone what a \"transformer\" was.",
-      "I've founded, sold, watched things go under, and kept going. Today I'm a co-founder at GoodStream — a document intelligence platform for portfolio management — building from Brazil on New York time, on my third coffee.",
-      "On the side, I'm wrestling a master's degree in Computer Science at PUC Minas. Yes, you can do both. No, you can't sleep well."
+      "Computer scientist, dev since 2019. Started shipping software for hospitals — electronic medical records, search across medical terms databases. In 2020 I found AI: prompt engineering on GPT-2 and GPT-3, at one of the first Brazilian startups to use GPT in production, well before ChatGPT existed.",
+      "Today I'm a co-founder and Head of Product Development at GoodStream — a document intelligence platform for portfolio management. Remote from Brazil, on New York time, third coffee. I lead the engineering team (standards, DDD, CI/CD, code review) and bridge with product, marketing, the CEO and support. I still write code every day, because leading without touching the keyboard is not my career plan.",
+      "How I got here: founded, sold, watched things go under, kept going — Me4U, Jeto, CopyKit, Olympos, Scripe. On the side, I'm doing a master's in Computer Science at PUC Minas, AI research line — natural continuation of the bachelor's I finished there in 2022. Yes, you can do both. No, you can't sleep well."
     ]
   },
   "education": [
@@ -58,19 +58,23 @@
       "institution": "PUC Minas",
       "start": "2018",
       "end": "2022",
-      "status": "completed"
+      "status": "completed",
+      "note": {
+        "pt": "Quatro anos de base sólida: algoritmos, estruturas de dados, sistemas distribuídos, banco de dados, machine learning e IA. Foi onde descobri que IA não era só matéria — era o que eu queria fazer.",
+        "en": "Four years of solid foundation: algorithms, data structures, distributed systems, databases, machine learning and AI. Where I figured out that AI wasn't just a subject — it was what I wanted to do."
+      }
     },
     {
       "degree": {
-        "pt": "Mestrado em Ciência da Computação",
-        "en": "MSc, Computer Science"
+        "pt": "Mestrado em Ciência da Computação · linha de IA",
+        "en": "MSc, Computer Science · AI research line"
       },
       "institution": "PUC Minas",
       "start": "2023",
       "status": "in-progress",
       "note": {
-        "pt": "em andamento, no horário extra",
-        "en": "in progress, on my own time"
+        "pt": "Pesquisa em Inteligência Artificial, em paralelo ao trabalho full-time. Tô usando o tempo pra parar e pensar com calma sobre as coisas que tô construindo todo dia no resto da semana.",
+        "en": "Research in Artificial Intelligence, alongside full-time work. Using it to slow down and actually think about the things I'm building every day during the rest of the week."
       }
     }
   ],
@@ -78,63 +82,110 @@
     {
       "company": "GoodStream",
       "role": {
-        "pt": "Co-fundador · Engenheiro de software",
-        "en": "Co-founder · Software Engineer"
+        "pt": "Co-fundador · Head of Product Development",
+        "en": "Co-founder · Head of Product Development"
       },
-      "start": "2023-01",
+      "start": "2025-08",
       "current": true,
       "founded": true,
       "remote": true,
       "summary": {
-        "pt": "Co-fundei a GoodStream, plataforma de document intelligence para portfolio management. Toco engenharia, IA multimodal e LLMs em produção — remoto do Brasil.",
-        "en": "Co-founded GoodStream, a document intelligence platform for portfolio management. I run engineering, multimodal AI and LLMs in production — remote from Brazil."
+        "pt": "Co-fundei a GoodStream pra resolver um problema chato e específico: portfolio managers gastam horas processando documentos que ninguém devia mais ler manualmente em 2026. A gente automatiza isso com IA multimodal e LLMs em produção. Lidero o time de engenharia desde a primeira linha de código — defino padrões, monto CI/CD, faço code review, alinho com produto, marketing, CEO e suporte. Remoto do Brasil pro fuso de Nova York.",
+        "en": "Co-founded GoodStream to solve a specific, annoying problem: portfolio managers spend hours processing documents nobody should be reading by hand in 2026. We automate that with multimodal AI and LLMs in production. I've been leading engineering since the first line of code — setting standards, building CI/CD, reviewing PRs, aligning with product, marketing, the CEO and support. Remote from Brazil on New York time."
       },
-      "tags": ["ai", "multimodal", "llm", "document-intelligence", "founder", "remote-us"]
+      "bullets": {
+        "pt": [
+          "Lidero o time de engenharia: cobertura de testes (unit + E2E), pre-commit hooks, lint e padrão de code review.",
+          "Montei CI/CD: deploys automáticos, smart gates, environments separados pra preview e produção.",
+          "Arquitetura Domain-Driven Design, TypeScript strict, clean code — sem atalho.",
+          "DevOps: migrations, monitoring, error tracking, deploy automation.",
+          "Stack: monorepo TS, SvelteKit no front, serverless no back (Cloudflare), integração com LLMs."
+        ],
+        "en": [
+          "Leading engineering: test coverage (unit + E2E), pre-commit hooks, lint, and code review standards.",
+          "Set up CI/CD: automatic deploys, smart gates, separate preview/production environments.",
+          "Domain-Driven Design architecture, TypeScript strict, clean code — no shortcuts.",
+          "DevOps: migrations, monitoring, error tracking, deploy automation.",
+          "Stack: TS monorepo, SvelteKit front-end, serverless back-end (Cloudflare), LLM integration."
+        ]
+      },
+      "tags": ["ai", "multimodal", "document-intelligence", "founder", "tech-lead", "remote-us"]
     },
     {
-      "company": "White label próprio",
+      "company": "Me4U",
       "role": {
-        "pt": "Fundador · Desenvolvedor",
-        "en": "Founder · Engineer"
+        "pt": "ML Engineer → Sr Full Stack → Technical Lead",
+        "en": "ML Engineer → Sr Full Stack → Technical Lead"
       },
-      "start": "2022",
-      "end": "2023",
+      "start": "2023-06",
+      "end": "2026-02",
+      "remote": true,
+      "summary": {
+        "pt": "Entrei como ML engineer logo no começo do produto, e fui crescendo junto: virei senior full stack e depois technical lead de um time de 4 devs. A plataforma era um SaaS multimodal de ponta — LLMs, text-to-speech, speech-to-text, image-to-text e text-to-image, com modelos próprios e open-source. A parte mais legal foi montar infra automatizada que deixava o próprio usuário final treinar e deployar modelos custom. Quase 3 anos no total. Aprendi muito sobre liderança técnica — e também sobre o que NÃO automatizar.",
+        "en": "Joined as ML engineer right at the start of the product, and grew with it: senior full stack, then technical lead of a 4-dev team. The platform was a cutting-edge multimodal SaaS — LLMs, text-to-speech, speech-to-text, image-to-text and text-to-image, with proprietary and open-source models. The fun part was building automated infrastructure that let end users train and deploy their own custom models. Almost 3 years total. Learned a lot about tech leadership — and just as much about what NOT to automate."
+      },
+      "bullets": {
+        "pt": [
+          "Liderei time de 4 devs construindo plataforma SaaS multimodal de ponta.",
+          "Integração de LLMs, TTS/STT, image-to-text e text-to-image — proprietários e open-source.",
+          "Infra automatizada permitindo o usuário final treinar e deployar seus próprios modelos.",
+          "Backend robusto + UI intuitiva — guiei a stack do front até o deploy.",
+          "Cloudflare, PostgreSQL, Node, pipelines de ML."
+        ],
+        "en": [
+          "Led a 4-dev team building a cutting-edge multimodal SaaS.",
+          "Integrated LLMs, TTS/STT, image-to-text and text-to-image — proprietary and open-source.",
+          "Automated infrastructure letting end users train and deploy their own custom models.",
+          "Robust back-end + intuitive UI — guided the stack from front to deploy.",
+          "Cloudflare, PostgreSQL, Node, ML pipelines."
+        ]
+      },
+      "tags": ["ai", "multimodal", "saas", "tech-lead", "remote-us"]
+    },
+    {
+      "company": "Jeto",
+      "role": {
+        "pt": "Co-fundador · ML Engineer",
+        "en": "Co-founder · ML Engineer"
+      },
+      "start": "2023-08",
+      "end": "2024-01",
       "founded": true,
       "summary": {
-        "pt": "Construí um produto white label do zero — do código ao primeiro cliente pagante.",
-        "en": "Built a white-label product from scratch — from the code to the first paying customer."
+        "pt": "Co-fundei a Jeto com o pessoal que veio da CopyKit (que por sua vez veio da Scripe e da Olympos). Era um white-label de IA pra empresa: cada cliente montava o próprio assistente especialista no negócio dele — atendimento, suporte ao cliente, conhecimento interno — configurado pelo time da empresa, não hardcoded por nós. Resolveu problema concreto pra bastante gente, rodou um tempo, e seguiu rolando depois que eu saí pra Me4U.",
+        "en": "Co-founded Jeto with the folks who came from CopyKit (which itself came from Scripe and Olympos). It was a white-label AI platform — each client built their own assistant specialized in their business: customer support, internal knowledge, you name it — configured by the company's team, not hardcoded by us. Solved real problems for several companies, ran for a while, and kept going after I moved to Me4U."
       },
-      "tags": ["founder", "product", "saas"]
+      "tags": ["ai", "saas", "founder", "white-label"]
     },
     {
-      "company": "Fábrica de software",
+      "company": "CopyKit",
       "role": {
-        "pt": "Fundador",
-        "en": "Founder"
+        "pt": "Co-fundador · Desenvolvedor",
+        "en": "Co-founder · Engineer"
       },
-      "start": "2022",
-      "end": "2023",
+      "start": "2022-11",
+      "end": "2023-08",
       "founded": true,
       "summary": {
-        "pt": "Pequena fábrica de software entregando projetos sob demanda para clientes selecionados.",
-        "en": "Small software studio shipping custom projects for selected clients."
+        "pt": "Depois da Olympos fechar, eu e um pessoal de ex-Scripe / ex-Olympos resolvemos que a ideia merecia outra chance. Co-fundei a CopyKit como uma releitura moderna da Scripe: marketing com IA pra empresa, mas com tudo que a gente tinha aprendido nas duas anteriores — produto melhor pensado, time mais maduro, expectativas mais realistas. Rodou alguns meses. Quando começamos a enxergar que o filão maior estava em IA empresarial em geral (não só marketing), pivotamos pra Jeto.",
+        "en": "After Olympos shut down, me and a few ex-Scripe / ex-Olympos folks decided the idea deserved another shot. I co-founded CopyKit as a modern take on Scripe: AI marketing for businesses, but with everything we'd learned in the previous two — better-thought product, more mature team, more realistic expectations. Ran for a few months. Once we saw the bigger play was in enterprise AI more broadly (not just marketing), we pivoted to Jeto."
       },
-      "tags": ["consulting", "founder"]
+      "tags": ["ai", "marketing", "founder", "pivot"]
     },
     {
-      "company": "Limpos",
+      "company": "Olympos",
       "role": {
-        "pt": "Engenheiro de software",
-        "en": "Software Engineer"
+        "pt": "Desenvolvedor de software",
+        "en": "Software Developer"
       },
-      "start": "2021",
-      "end": "2022",
+      "start": "2022-04",
+      "end": "2022-11",
       "endedWith": "shutdown",
       "summary": {
-        "pt": "Continuei o trabalho da Scripe depois da aquisição. A empresa veio a fechar — startups são assim.",
-        "en": "Continued the Scripe work after the acquisition. The company eventually shut down — startups gonna startup."
+        "pt": "A Olympos adquiriu a Scripe e me levou junto. Era um builder de loja de dropshipping — site personalizado + back-end próprio pra o usuário cadastrar produto, integrar fornecedor e vender. Cresceu rápido em 2021–2022, virou referência do segmento. Depois faliu — mercado mudou, custos não fecharam. Startups são assim. Foi minha primeira aula prática de que \"unicórnio\" não é sinônimo de \"sustentável\".",
+        "en": "Olympos acquired Scripe and brought me with it. It was a dropshipping store builder — custom storefront + proprietary back-end where users registered products, hooked up suppliers and sold. Grew fast in 2021–2022, became a reference in the segment. Then it shut down — market shifted, costs didn't pencil. Startups gonna startup. First real lesson on how \"unicorn\" is not a synonym for \"sustainable\"."
       },
-      "tags": ["startup", "acquisition", "shutdown"]
+      "tags": ["dropshipping", "saas", "shutdown"]
     },
     {
       "company": "Scripe",
@@ -142,54 +193,100 @@
         "pt": "Engenheiro de software · IA",
         "en": "Software Engineer · AI"
       },
-      "start": "2020",
-      "end": "2021",
+      "start": "2021-11",
+      "end": "2022-04",
       "endedWith": "acquired",
       "summary": {
-        "pt": "Marketing com IA nos primeiros modelos da OpenAI — sim, eu prompt-engineerava o GPT-2 antes do ChatGPT existir.",
-        "en": "AI-powered marketing on the earliest OpenAI models — yes, I was prompt-engineering GPT-2 before ChatGPT was a thing."
+        "pt": "Primeira startup. Marketing com IA em cima dos modelos da OpenAI da época — GPT-2 e os primeiros GPT-3, bem antes do ChatGPT virar palavra do dia a dia. A gente ajudava copywriters e autores a escreverem seus textos com auxílio de IA, em uma das pioneiras disso no Brasil. Svelte no front, Node no back, tudo em TypeScript com testes (sim, mesmo numa startup pequenininha). Cresceu rápido, base de assinantes explodiu, foi adquirida pela Olympos.",
+        "en": "First startup. AI-powered marketing on the OpenAI models of the time — GPT-2 and the early GPT-3, well before ChatGPT became an everyday word. We helped copywriters and authors craft their text with AI assistance, at one of the pioneers of that in Brazil. Svelte on the front, Node on the back, all TypeScript with tests (yes, even in a tiny startup). Grew fast, subscriber base exploded, got acquired by Olympos."
       },
-      "tags": ["startup", "ai", "marketing", "gpt-2", "gpt-3"]
+      "tags": ["ai", "gpt-2", "gpt-3", "marketing", "acquired"]
     },
     {
-      "company": "Suporte Tecnologia",
+      "company": "Suporte Informática",
       "role": {
-        "pt": "Desenvolvedor",
-        "en": "Developer"
+        "pt": "Desenvolvedor de software",
+        "en": "Software Developer"
       },
-      "start": "2019-07",
-      "end": "2020",
+      "start": "2020-11",
+      "end": "2021-11",
       "summary": {
-        "pt": "Primeiro emprego em desenvolvimento: software hospitalar e soluções para a área da saúde.",
-        "en": "First dev job: hospital software and healthcare solutions."
+        "pt": "Primeiro day-job de verdade, ainda durante a graduação. Sistema web de prontuário eletrônico pra hospital: editor de texto otimizado, busca em base extensa de termos médicos, classificação automatizada de termos por critério clínico, front adaptável às necessidades de cada hospital. Não era o trabalho mais glamuroso, mas me ensinou três coisas que eu uso até hoje: testar de verdade, ouvir o usuário antes de inventar solução, e que Elasticsearch é mais útil do que parece à primeira vista.",
+        "en": "First proper day job, while I was still in undergrad. Web-based electronic medical record system for hospitals: optimized text editor, search across a large medical terms database, automated classification of terms by clinical criteria, adaptive front-end per hospital. Not the most glamorous work, but it taught me three things I still use: test for real, listen to the user before inventing a solution, and that Elasticsearch is more useful than it sounds at first."
       },
-      "tags": ["healthcare", "first-job"]
+      "bullets": {
+        "pt": [
+          "Front: Angular, TypeScript, Material UI, Figma, Cypress.",
+          "Back: Python, Unittest, Elasticsearch.",
+          "Ferramentas: Docker, Azure DevOps, Git."
+        ],
+        "en": [
+          "Front: Angular, TypeScript, Material UI, Figma, Cypress.",
+          "Back: Python, Unittest, Elasticsearch.",
+          "Tools: Docker, Azure DevOps, Git."
+        ]
+      },
+      "tags": ["healthcare", "angular", "elasticsearch", "first-job"]
     }
   ],
   "skills": {
     "ai": [
       "LLMs (GPT-2 → GPT-5)",
+      "Claude",
       "Multimodal models",
       "RAG & embeddings",
       "Document intelligence",
       "Fine-tuning",
       "Agents & tool use",
-      "Prompt engineering"
+      "Prompt engineering",
+      "Speech-to-text & text-to-speech",
+      "Image-to-text"
     ],
-    "languages": ["TypeScript", "Python", "Rust", "Dart (Flutter)", "SQL"],
-    "frameworks": ["SvelteKit", "Next.js", "React", "Flutter", "FastAPI", "Node.js"],
-    "infra": ["Cloudflare Workers", "Cloudflare Pages", "PostgreSQL", "Docker", "Vercel"]
+    "leadership": [
+      "Product Management",
+      "Product Development",
+      "Tech Leadership",
+      "Domain-Driven Design",
+      "Code Review culture",
+      "CI/CD & DevOps",
+      "Mentoring",
+      "Cross-functional alignment"
+    ],
+    "stack": [
+      "TypeScript",
+      "Python",
+      "Rust",
+      "Dart (Flutter)",
+      "SQL",
+      "SvelteKit",
+      "Next.js",
+      "React",
+      "Hono",
+      "Node.js",
+      "FastAPI"
+    ],
+    "infra": [
+      "Cloudflare Workers",
+      "Cloudflare Pages",
+      "PostgreSQL",
+      "Docker",
+      "Vercel",
+      "AWS",
+      "Firebase"
+    ]
   },
   "highlights": {
     "pt": [
       "Trabalhou com GPT-2 antes do ChatGPT existir",
       "Fundou, vendeu, viu falir — e seguiu construindo",
-      "Remoto do Brasil para uma startup nos EUA"
+      "Remoto do Brasil para uma startup nos EUA",
+      "Lidera time de engenharia sem largar o teclado"
     ],
     "en": [
       "Worked with GPT-2 before ChatGPT existed",
       "Founded, sold, watched it shut down — and kept building",
-      "Remote from Brazil to a US startup"
+      "Remote from Brazil to a US startup",
+      "Leads engineering without leaving the keyboard"
     ]
   }
 }
