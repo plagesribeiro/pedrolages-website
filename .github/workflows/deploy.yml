@@ -1,15 +1,16 @@
-# Manual deploy fallback. Primary deploy is the Cloudflare Pages → GitHub
-# integration (every push to `production` auto-deploys via Cloudflare's
-# native pipeline — no secrets needed in GitHub).
+# Auto-deploys every push to `production` and supports manual dispatch from
+# the Actions tab. Build runs on a GitHub-hosted runner and ships to
+# Cloudflare Pages via wrangler-action.
 #
-# Trigger this workflow manually from the Actions tab if you ever need a
-# code-driven deploy. Requires repo secrets:
-#   - CLOUDFLARE_API_TOKEN  (account-scoped, with Pages write)
-#   - CLOUDFLARE_ACCOUNT_ID (= f3ccd6adcf1b623cff15b47988b0cd24)
+# Required repo secrets (GitHub → Settings → Secrets and variables → Actions):
+#   - CLOUDFLARE_API_TOKEN  (account-scoped, "Edit Cloudflare Workers" template)
+#   - CLOUDFLARE_ACCOUNT_ID = f3ccd6adcf1b623cff15b47988b0cd24
 
-name: Manual Deploy to Cloudflare Pages
+name: Deploy to Cloudflare Pages
 
 on:
+  push:
+    branches: [production]
   workflow_dispatch:
 
 jobs:
