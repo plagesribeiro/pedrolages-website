@@ -35,9 +35,9 @@
           {#if edu.note}
             <p class="mt-2 text-xs text-zinc-500 italic">{pick(edu.note, $locale)}</p>
           {/if}
-          {#if edu.skills && edu.skills.length}
+          {#if edu.skills}
             <div class="mt-3 flex flex-wrap gap-1.5">
-              {#each edu.skills as skill}
+              {#each pick(edu.skills, $locale) as skill}
                 <span class="chip !text-[10px] !px-2 !py-0.5">{skill}</span>
               {/each}
             </div>

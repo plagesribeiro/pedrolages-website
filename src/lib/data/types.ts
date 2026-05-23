@@ -19,7 +19,7 @@ export interface Education {
   end?: string;
   status: 'completed' | 'in-progress';
   note?: L10n;
-  skills?: string[];
+  skills?: L10n<string[]>;
 }
 
 export interface Experience {
@@ -37,10 +37,10 @@ export interface Experience {
 }
 
 export interface Skills {
-  ai: string[];
-  leadership: string[];
-  stack: string[];
-  infra: string[];
+  ai: L10n<string[]>;
+  leadership: L10n<string[]>;
+  stack: L10n<string[]>;
+  infra: L10n<string[]>;
 }
 
 export interface Resume {

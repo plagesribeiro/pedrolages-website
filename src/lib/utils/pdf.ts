@@ -209,10 +209,10 @@ function drawSidebarHeader(
   y += 3;
 
   const skillGroups: [string, string[]][] = [
-    [labels.ai, resume.skills.ai],
-    [labels.leadership, resume.skills.leadership],
-    [labels.stack, resume.skills.stack],
-    [labels.infra, resume.skills.infra]
+    [labels.ai, resume.skills.ai[locale]],
+    [labels.leadership, resume.skills.leadership[locale]],
+    [labels.stack, resume.skills.stack[locale]],
+    [labels.infra, resume.skills.infra[locale]]
   ];
 
   y = drawSidebarSection(doc, labels.skills, y);
@@ -311,20 +311,6 @@ export async function generateResumePDF(resume: Resume, locale: Locale): Promise
 
     setFont(doc, 'normal', 9.5, '#404040');
     y = writeWrapped(doc, exp.summary[locale], CONTENT_X, y, contentWidth, 4.8);
-
-    if (exp.bullets) {
-      y += 1;
-      setFont(doc, 'normal', 9, '#404040');
-      for (const bullet of exp.bullets[locale]) {
-        y = maybeNewPage(doc, y, pageHeight, 8);
-        const wrapped = doc.splitTextToSize(safe(bullet), contentWidth - 4);
-        for (let i = 0; i < wrapped.length; i++) {
-          const prefix = i === 0 ? '• ' : '  ';
-          doc.text(prefix + wrapped[i], CONTENT_X, y);
-          y += 4.4;
-        }
-      }
-    }
     y += 4;
   }
 
@@ -348,17 +334,16 @@ export async function generateResumePDF(resume: Resume, locale: Locale): Promise
       setFont(doc, 'normal', 9.5, '#404040');
       y = writeWrapped(doc, edu.note[locale], CONTENT_X, y, contentWidth, 4.6);
     }
-    if (edu.skills && edu.skills.length) {
+    if (edu.skills) {
       y += 0.5;
-      setFont(doc, 'normal', 9, '#404040');
-      const label = locale === 'pt' ? 'Skills:' : 'Skills:';
+      const label = 'Skills:';
       setFont(doc, 'bold', 9, '#404040');
       safeText(doc, label, CONTENT_X, y);
       const labelWidth = doc.getTextWidth(label + ' ');
       setFont(doc, 'normal', 9, '#404040');
       y = writeWrapped(
         doc,
-        edu.skills.join(' · '),
+        edu.skills[locale].join(' · '),
         CONTENT_X + labelWidth,
         y,
         contentWidth - labelWidth,

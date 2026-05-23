@@ -41,12 +41,12 @@
     "pt": [
       "Cientista da computação, desenvolvedor desde 2019. Comecei na área da saúde, construindo software de prontuário eletrônico. Em 2020 migrei para Inteligência Artificial, trabalhando com prompt engineering em GPT-2 e GPT-3 em uma das primeiras startups brasileiras a usar GPT em produção, antes da popularização do ChatGPT.",
       "Hoje sou co-founder e Head of Product Development na GoodStream — plataforma de document intelligence para portfolio management. Lidero o time de engenharia (padrões, DDD, CI/CD, code review) e mantenho alinhamento direto com produto, marketing, CEO e suporte. Trabalho remoto do Brasil no fuso de Nova York e sigo escrevendo código diariamente.",
-      "Antes da GoodStream, atuei como technical lead na Me4U (SaaS multimodal de IA) e participei da fundação de Jeto, CopyKit, Olympos e Scripe. Em paralelo, curso mestrado em Ciência da Computação na PUC Minas, com linha de pesquisa em Inteligência Artificial, dando continuidade ao bacharelado concluído lá em 2022."
+      "Antes da GoodStream, atuei como tech lead na Me4U (SaaS multimodal de IA) e participei da fundação de Jeto, CopyKit, Olympos e Scripe. Em paralelo, curso mestrado em Ciência da Computação na PUC Minas, com linha de pesquisa em Inteligência Artificial, dando continuidade ao bacharelado concluído lá em 2022."
     ],
     "en": [
       "Computer scientist, software developer since 2019. Started in healthcare, building electronic medical record systems. In 2020 I moved into Artificial Intelligence, working with prompt engineering on GPT-2 and GPT-3 at one of the first Brazilian startups using GPT in production, well before ChatGPT entered the mainstream.",
       "Today I'm a co-founder and Head of Product Development at GoodStream — a document intelligence platform for portfolio management. I lead the engineering team (standards, DDD, CI/CD, code review) and align directly with product, marketing, the CEO and support. I work remote from Brazil on New York time and stay hands-on with code daily.",
-      "Before GoodStream, I served as technical lead at Me4U (multimodal AI SaaS) and co-founded Jeto, CopyKit, Olympos and Scripe. In parallel, I'm pursuing a master's in Computer Science at PUC Minas with a research focus on Artificial Intelligence, continuing the bachelor's I completed there in 2022."
+      "Before GoodStream, I served as tech lead at Me4U (multimodal AI SaaS) and co-founded Jeto, CopyKit, Olympos and Scripe. In parallel, I'm pursuing a master's in Computer Science at PUC Minas with a research focus on Artificial Intelligence, continuing the bachelor's I completed there in 2022."
     ]
   },
   "education": [
@@ -63,19 +63,24 @@
         "pt": "Formação completa em ciência da computação, com base sólida em algoritmos, estruturas de dados, programação orientada a objetos e arquitetura de computadores. Foi nessa fase que consolidei o interesse por Inteligência Artificial, machine learning, deep learning e processamento de linguagem natural.",
         "en": "Full computer science program, with a solid foundation in algorithms, data structures, object-oriented programming and computer architecture. The period when I consolidated my interest in Artificial Intelligence, machine learning, deep learning and natural language processing."
       },
-      "skills": [
-        "Java",
-        "C#",
-        "Algoritmos",
-        "Estruturas de dados",
-        "Orientação a objetos",
-        "Arquitetura de computadores",
-        "Inteligência Artificial",
-        "Machine Learning",
-        "Deep Learning",
-        "NLP",
-        "RAG (multi-agente)"
-      ]
+      "skills": {
+        "pt": [
+          "Java",
+          "Algoritmos e Estruturas de Dados",
+          "Orientação a Objetos",
+          "Arquitetura de Computadores",
+          "Inteligência Artificial",
+          "Machine Learning"
+        ],
+        "en": [
+          "Java",
+          "Algorithms and Data Structures",
+          "Object-Oriented Programming",
+          "Computer Architecture",
+          "Artificial Intelligence",
+          "Machine Learning"
+        ]
+      }
     },
     {
       "degree": {
@@ -89,13 +94,24 @@
         "pt": "Pesquisa em Inteligência Artificial com foco em NLP e sistemas multi-agente baseados em RAG, em paralelo ao trabalho full-time. Oportunidade de aprofundar fundamentos teóricos — incluindo teoria dos grafos e arquitetura de computadores — enquanto sigo ativo na construção de produtos.",
         "en": "Research in Artificial Intelligence focused on NLP and multi-agent systems built on RAG, alongside full-time work. An opportunity to deepen theoretical foundations — including graph theory and computer architecture — while staying active in product engineering."
       },
-      "skills": [
-        "Inteligência Artificial",
-        "Arquitetura de computadores",
-        "Grafos",
-        "NLP",
-        "RAG (multi-agente)"
-      ]
+      "skills": {
+        "pt": [
+          "Inteligência Artificial",
+          "Arquitetura de Computadores",
+          "Grafos",
+          "NLP",
+          "RAG",
+          "Sistemas Multi-agente"
+        ],
+        "en": [
+          "Artificial Intelligence",
+          "Computer Architecture",
+          "Graphs",
+          "NLP",
+          "RAG",
+          "Multi-Agent Systems"
+        ]
+      }
     }
   ],
   "experience": [
@@ -260,51 +276,104 @@
     }
   ],
   "skills": {
-    "ai": [
-      "LLMs (GPT-2 → GPT-5)",
-      "Claude",
-      "Multimodal models",
-      "RAG & embeddings",
-      "Document intelligence",
-      "Fine-tuning",
-      "Agents & tool use",
-      "Prompt engineering",
-      "Speech-to-text & text-to-speech",
-      "Image-to-text"
-    ],
-    "leadership": [
-      "Product Management",
-      "Product Development",
-      "Tech Leadership",
-      "Domain-Driven Design",
-      "Code Review culture",
-      "CI/CD & DevOps",
-      "Mentoring",
-      "Cross-functional alignment"
-    ],
-    "stack": [
-      "Python",
-      "TypeScript",
-      "SvelteKit",
-      "Next.js",
-      "React",
-      "Hono",
-      "Node.js",
-      "FastAPI",
-      "Flutter",
-      "SQL",
-      "Rust"
-    ],
-    "infra": [
-      "Cloudflare Workers",
-      "Cloudflare Pages",
-      "PostgreSQL",
-      "Docker",
-      "Vercel",
-      "AWS",
-      "GCP",
-      "Firebase"
-    ]
+    "ai": {
+      "pt": [
+        "LLMs (GPT-2 → GPT-5)",
+        "Claude",
+        "Modelos multimodais",
+        "RAG & embeddings",
+        "Document intelligence",
+        "Fine-tuning",
+        "Agentes & uso de ferramentas",
+        "Prompt engineering",
+        "Speech-to-text & text-to-speech",
+        "Image-to-text"
+      ],
+      "en": [
+        "LLMs (GPT-2 → GPT-5)",
+        "Claude",
+        "Multimodal models",
+        "RAG & embeddings",
+        "Document intelligence",
+        "Fine-tuning",
+        "Agents & tool use",
+        "Prompt engineering",
+        "Speech-to-text & text-to-speech",
+        "Image-to-text"
+      ]
+    },
+    "leadership": {
+      "pt": [
+        "Gestão de Produto",
+        "Desenvolvimento de Produto",
+        "Liderança Técnica",
+        "Domain-Driven Design",
+        "Cultura de Code Review",
+        "CI/CD & DevOps",
+        "Mentoria",
+        "Alinhamento cross-funcional"
+      ],
+      "en": [
+        "Product Management",
+        "Product Development",
+        "Tech Leadership",
+        "Domain-Driven Design",
+        "Code Review culture",
+        "CI/CD & DevOps",
+        "Mentoring",
+        "Cross-functional alignment"
+      ]
+    },
+    "stack": {
+      "pt": [
+        "Python",
+        "TypeScript",
+        "SvelteKit",
+        "Next.js",
+        "React",
+        "Hono",
+        "Node.js",
+        "FastAPI",
+        "Flutter",
+        "SQL",
+        "Rust"
+      ],
+      "en": [
+        "Python",
+        "TypeScript",
+        "SvelteKit",
+        "Next.js",
+        "React",
+        "Hono",
+        "Node.js",
+        "FastAPI",
+        "Flutter",
+        "SQL",
+        "Rust"
+      ]
+    },
+    "infra": {
+      "pt": [
+        "Cloudflare Workers",
+        "Cloudflare Pages",
+        "PostgreSQL",
+        "Docker",
+        "Vercel",
+        "AWS",
+        "GCP",
+        "Firebase"
+      ],
+      "en": [
+        "Cloudflare Workers",
+        "Cloudflare Pages",
+        "PostgreSQL",
+        "Docker",
+        "Vercel",
+        "AWS",
+        "GCP",
+        "Firebase"
+      ]
+    }
   },
   "highlights": {
     "pt": [

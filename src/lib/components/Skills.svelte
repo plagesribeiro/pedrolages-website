@@ -1,14 +1,14 @@
 <script lang="ts">
-  import { t } from '$lib/i18n';
+  import { locale, pick, t } from '$lib/i18n';
   import type { Resume } from '$lib/data/types';
 
   export let resume: Resume;
 
   $: groups = [
-    { key: 'skills.ai', items: resume.skills.ai, accent: true },
-    { key: 'skills.leadership', items: resume.skills.leadership },
-    { key: 'skills.stack', items: resume.skills.stack },
-    { key: 'skills.infra', items: resume.skills.infra }
+    { key: 'skills.ai', items: pick(resume.skills.ai, $locale), accent: true },
+    { key: 'skills.leadership', items: pick(resume.skills.leadership, $locale) },
+    { key: 'skills.stack', items: pick(resume.skills.stack, $locale) },
+    { key: 'skills.infra', items: pick(resume.skills.infra, $locale) }
   ];
 </script>
 
