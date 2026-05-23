@@ -118,23 +118,27 @@
     </object>
   </article>
 {:else if data.mode === 'file' && data.kind === 'html'}
-  <article class="mx-auto max-w-5xl px-6 py-12">
-    {#if data.hasParentListing}
-      <a
-        href={data.parentUrl}
-        class="mb-6 inline-flex items-center gap-1.5 text-xs text-zinc-400 hover:text-zinc-100"
-      >
-        <ArrowLeft class="h-3.5 w-3.5" />
-        {$tt({ pt: 'voltar pra listagem', en: 'back to listing' })}
-      </a>
-    {/if}
+  <article class="w-full px-6 py-12">
+    <div class="mx-auto mb-6 max-w-[1600px]">
+      {#if data.hasParentListing}
+        <a
+          href={data.parentUrl}
+          class="mb-6 inline-flex items-center gap-1.5 text-xs text-zinc-400 hover:text-zinc-100"
+        >
+          <ArrowLeft class="h-3.5 w-3.5" />
+          {$tt({ pt: 'voltar pra listagem', en: 'back to listing' })}
+        </a>
+      {/if}
 
-    <header class="mb-6 border-b border-zinc-800 pb-4">
-      <p class="font-mono text-xs text-zinc-500">/docs/{data.slug}</p>
-      <h1 class="mt-1 font-pixel text-xl text-[color:var(--color-gb-light)] glow-green sm:text-2xl">
-        {data.title}
-      </h1>
-    </header>
+      <header class="border-b border-zinc-800 pb-4">
+        <p class="font-mono text-xs text-zinc-500">/docs/{data.slug}</p>
+        <h1
+          class="mt-1 font-pixel text-xl text-[color:var(--color-gb-light)] glow-green sm:text-2xl"
+        >
+          {data.title}
+        </h1>
+      </header>
+    </div>
 
     <iframe
       bind:this={htmlFrame}
@@ -142,8 +146,8 @@
       sandbox="allow-same-origin allow-scripts allow-popups"
       title={data.title}
       on:load={resizeHtmlFrame}
-      class="w-full rounded-xl border border-zinc-800 bg-white"
-      style="height: 60vh"
+      class="mx-auto block w-full max-w-[1600px] rounded-xl border border-zinc-800 bg-white"
+      style="height: 80vh"
     ></iframe>
   </article>
 {:else if data.mode === 'file'}
