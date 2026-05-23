@@ -26,8 +26,5 @@ export function printConsoleArt(email: string, locale: Locale = 'pt'): void {
     locale === 'pt'
       ? 'mais easter eggs: tente ↑↑↓↓←→←→BA, digite "whoami" ou aperte ?'
       : 'more easter eggs: try ↑↑↓↓←→←→BA, type "whoami" or hit ?';
-  console.log(
-    '%c' + moreEggs,
-    'color:#71717a;font-family:monospace;font-style:italic;'
-  );
+  console.log('%c' + moreEggs, 'color:#71717a;font-family:monospace;font-style:italic;');
 }
