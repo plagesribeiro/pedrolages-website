@@ -11,7 +11,10 @@
   export let game: GameId;
   export let score = 0;
 
-  const dispatch = createEventDispatcher<{ submitted: { scores: ScoreEntry[]; ts: number; name: string }; close: void }>();
+  const dispatch = createEventDispatcher<{
+    submitted: { scores: ScoreEntry[]; ts: number; name: string };
+    close: void;
+  }>();
 
   let name = '';
   let busy = false;
@@ -90,12 +93,17 @@
         <Trophy class="h-6 w-6 text-amber-300" />
         <div>
           <p class="font-pixel text-[10px] text-zinc-500">NEW HIGH SCORE</p>
-          <h2 class="mt-1 font-pixel text-xl text-[color:var(--color-gb-light)] glow-green">{score}</h2>
+          <h2 class="mt-1 font-pixel text-xl text-[color:var(--color-gb-light)] glow-green">
+            {score}
+          </h2>
         </div>
       </div>
 
       <p class="mt-4 text-sm text-zinc-400">
-        {$tt({ pt: 'manda teu nome pra ficar no hall da fama dessa página:', en: 'drop your name to land on this page’s hall of fame:' })}
+        {$tt({
+          pt: 'manda teu nome pra ficar no hall da fama dessa página:',
+          en: 'drop your name to land on this page’s hall of fame:'
+        })}
       </p>
 
       <input
@@ -103,7 +111,10 @@
         bind:value={name}
         maxlength={MAX_NAME_LEN}
         class="mt-3 w-full rounded-md border border-zinc-800 bg-zinc-900 px-3 py-2 font-mono text-sm text-zinc-100 outline-none focus:border-[color:var(--color-gb-green)]/60"
-        placeholder={$tt({ pt: `seu nome (max ${MAX_NAME_LEN} chars)`, en: `your name (max ${MAX_NAME_LEN} chars)` })}
+        placeholder={$tt({
+          pt: `seu nome (max ${MAX_NAME_LEN} chars)`,
+          en: `your name (max ${MAX_NAME_LEN} chars)`
+        })}
         autocomplete="off"
         spellcheck="false"
       />
@@ -113,7 +124,11 @@
       {/if}
 
       <div class="mt-5 flex items-center justify-end gap-2">
-        <button class="rounded-md px-3 py-2 text-sm text-zinc-400 hover:text-zinc-200" on:click={close} disabled={busy}>
+        <button
+          class="rounded-md px-3 py-2 text-sm text-zinc-400 hover:text-zinc-200"
+          on:click={close}
+          disabled={busy}
+        >
           {$tt({ pt: 'pular', en: 'skip' })}
         </button>
         <button
@@ -121,7 +136,9 @@
           on:click={submit}
           disabled={busy}
         >
-          {busy ? $tt({ pt: 'salvando...', en: 'saving...' }) : $tt({ pt: 'salvar recorde', en: 'save record' })}
+          {busy
+            ? $tt({ pt: 'salvando...', en: 'saving...' })
+            : $tt({ pt: 'salvar recorde', en: 'save record' })}
         </button>
       </div>
     </div>

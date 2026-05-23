@@ -18,7 +18,9 @@
 <main class="flex min-h-screen flex-col items-center justify-center gap-6 px-6 text-center">
   <pre class="font-terminal text-4xl text-rose-400">ACCESS DENIED</pre>
   <p class="max-w-sm font-mono text-sm text-zinc-400">
-    {$tt({ pt: 'chamando os feds', en: 'calling the feds' })}<span class="text-[color:var(--color-gb-light)]">{dots}</span>
+    {$tt({ pt: 'chamando os feds', en: 'calling the feds' })}<span
+      class="text-[color:var(--color-gb-light)]">{dots}</span
+    >
   </p>
   <p class="font-mono text-xs text-zinc-600">
     ({$tt({ pt: 'brincadeira.', en: 'kidding.' })}

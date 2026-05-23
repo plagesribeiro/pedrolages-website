@@ -145,7 +145,9 @@
     help: {
       desc: 'lista os comandos',
       run: () => {
-        const rows = Object.entries(COMMANDS).map(([name, c]) => `  ${name.padEnd(10)} — ${c.desc}`);
+        const rows = Object.entries(COMMANDS).map(
+          ([name, c]) => `  ${name.padEnd(10)} — ${c.desc}`
+        );
         return [
           'available commands:',
           ...rows,
@@ -178,7 +180,9 @@
         `github:    ${resume.links.github}`,
         `lattes:    ${resume.links.lattes ?? '—'}`,
         '',
-        currentLocale === 'pt' ? 'tip: `cd /contact` pra abrir a página' : 'tip: `cd /contact` to open the page'
+        currentLocale === 'pt'
+          ? 'tip: `cd /contact` pra abrir a página'
+          : 'tip: `cd /contact` to open the page'
       ]
     },
     resume: {
@@ -265,7 +269,9 @@
           out.push(`${isLast ? '└──' : '├──'} ${top.slice(1)}`);
           grouped[top].forEach((sub, si) => {
             const subLast = si === grouped[top].length - 1;
-            out.push(`${isLast ? '    ' : '│   '}${subLast ? '└──' : '├──'} ${sub.split('/').pop()}`);
+            out.push(
+              `${isLast ? '    ' : '│   '}${subLast ? '└──' : '├──'} ${sub.split('/').pop()}`
+            );
           });
         });
         return out;
@@ -326,7 +332,11 @@
       desc: 'alterna verde/amber/branco',
       run: (args) => {
         const t = (args[0] ?? '').toLowerCase();
-        const map: Record<string, string> = { green: '#9bbc0f', amber: '#facc15', white: '#fafafa' };
+        const map: Record<string, string> = {
+          green: '#9bbc0f',
+          amber: '#facc15',
+          white: '#fafafa'
+        };
         if (!map[t]) return ['theme <green|amber|white>'];
         document.documentElement.style.setProperty('--color-gb-light', map[t]);
         return [`theme set to ${t}`];
@@ -396,7 +406,8 @@
   function suggest(cmd: string, raw: string): string[] {
     if (raw === '?') return ["digite 'help' pra ver os comandos."];
     if (raw.startsWith('rm -rf')) return ['lol no.'];
-    if (cmd === 'vim' || cmd === 'emacs' || cmd === 'nano') return ['use vscode like the rest of us.'];
+    if (cmd === 'vim' || cmd === 'emacs' || cmd === 'nano')
+      return ['use vscode like the rest of us.'];
     const known = Object.keys(COMMANDS);
     const near = known.find((k) => k.startsWith(cmd) || cmd.startsWith(k.slice(0, 2)));
     return [`zsh: command not found: ${cmd}${near ? `  (você quis dizer \`${near}\`?)` : ''}`];
@@ -466,19 +477,25 @@
       const last = trailingSpace ? '' : tokens[tokens.length - 1];
       const base = last.includes('/') ? last.slice(0, last.lastIndexOf('/') + 1) : '';
       const stub = last.slice(base.length);
-      const parent = base ? normalizePath(base.replace(/\/$/, '') || '/', get(terminalCwd)) : get(terminalCwd);
+      const parent = base
+        ? normalizePath(base.replace(/\/$/, '') || '/', get(terminalCwd))
+        : get(terminalCwd);
       const candidates = listChildren(parent)
         .map((c) => c.path.split('/').pop()!)
         .filter((n) => n.startsWith(stub));
       if (candidates.length === 1) {
-        const next = trailingSpace ? [...tokens, base + candidates[0]] : [...tokens.slice(0, -1), base + candidates[0]];
+        const next = trailingSpace
+          ? [...tokens, base + candidates[0]]
+          : [...tokens.slice(0, -1), base + candidates[0]];
         return next.join(' ') + ' ';
       }
       if (candidates.length > 1) {
         printMany(['matches:', '  ' + candidates.join('   ')], 'muted');
         const prefix = commonPrefix(candidates);
         if (prefix && prefix.length > stub.length) {
-          const next = trailingSpace ? [...tokens, base + prefix] : [...tokens.slice(0, -1), base + prefix];
+          const next = trailingSpace
+            ? [...tokens, base + prefix]
+            : [...tokens.slice(0, -1), base + prefix];
           return next.join(' ');
         }
       }
@@ -487,7 +504,7 @@
 
     if (cmd === 'play') {
       const games = ['snake', 'tokens', 'pong', 'bugs'];
-      const last = trailingSpace ? '' : tokens[1] ?? '';
+      const last = trailingSpace ? '' : (tokens[1] ?? '');
       const matches = games.filter((g) => g.startsWith(last));
       if (matches.length === 1) return `${cmd} ${matches[0]} `;
       if (matches.length > 1) {
@@ -499,7 +516,7 @@
 
     if (cmd === 'open') {
       const aliases = ['github', 'linkedin', 'lattes', 'instagram', 'email', 'whatsapp', 'kofi'];
-      const last = trailingSpace ? '' : tokens[1] ?? '';
+      const last = trailingSpace ? '' : (tokens[1] ?? '');
       const matches = aliases.filter((a) => a.startsWith(last));
       if (matches.length === 1) return `${cmd} ${matches[0]} `;
       if (matches.length > 1) {
@@ -578,7 +595,9 @@
     <span class="h-2.5 w-2.5 rounded-full bg-rose-500/80"></span>
     <span class="h-2.5 w-2.5 rounded-full bg-amber-400/80"></span>
     <span class="h-2.5 w-2.5 rounded-full bg-emerald-500/80"></span>
-    <span class="ml-2 select-none font-mono text-xs text-zinc-500">{USER}@{HOST}:{$terminalCwd} — zsh</span>
+    <span class="ml-2 select-none font-mono text-xs text-zinc-500"
+      >{USER}@{HOST}:{$terminalCwd} — zsh</span
+    >
     {#if inModal}
       <button
         class="ml-auto text-xs text-zinc-500 hover:text-zinc-200"
@@ -601,12 +620,12 @@
         class="m-0 font-mono whitespace-pre {line.tone === 'accent'
           ? 'text-[color:var(--color-gb-light)]'
           : line.tone === 'muted'
-          ? 'text-zinc-500'
-          : line.tone === 'warn'
-          ? 'text-amber-300'
-          : line.tone === 'err'
-          ? 'text-rose-400'
-          : 'text-zinc-300'}">{line.text || ' '}</pre>
+            ? 'text-zinc-500'
+            : line.tone === 'warn'
+              ? 'text-amber-300'
+              : line.tone === 'err'
+                ? 'text-rose-400'
+                : 'text-zinc-300'}">{line.text || ' '}</pre>
     {/each}
     <form on:submit={onSubmit} class="mt-1 flex items-center gap-2">
       <span class="select-none text-[color:var(--color-gb-light)]">{prompt}</span>

@@ -36,7 +36,8 @@
         href={data.parentUrl}
         class="mb-6 inline-flex items-center gap-1.5 text-xs text-zinc-400 hover:text-zinc-100"
       >
-        <ArrowLeft class="h-3.5 w-3.5" /> {$tt({ pt: 'voltar pra listagem', en: 'back to listing' })}
+        <ArrowLeft class="h-3.5 w-3.5" />
+        {$tt({ pt: 'voltar pra listagem', en: 'back to listing' })}
       </a>
     {/if}
 

@@ -16,7 +16,8 @@
     href="/"
     class="mb-4 inline-flex items-center gap-1.5 rounded-full border border-zinc-800 bg-zinc-950/70 px-3 py-1.5 text-xs text-zinc-400 backdrop-blur transition hover:border-zinc-600 hover:text-zinc-100"
   >
-    <ArrowLeft class="h-3.5 w-3.5" /> {$tt({ pt: 'voltar pro menu', en: 'back to menu' })}
+    <ArrowLeft class="h-3.5 w-3.5" />
+    {$tt({ pt: 'voltar pro menu', en: 'back to menu' })}
   </a>
 
   <div class="mx-auto max-w-3xl">

@@ -29,5 +29,7 @@
 >
   <span class="select-none text-zinc-500">&gt;</span>
   {line}
-  <span class="ml-0.5 inline-block h-4 w-2 -mb-0.5 bg-[color:var(--color-gb-light)] animate-[blink_1s_steps(2)_infinite]"></span>
+  <span
+    class="ml-0.5 inline-block h-4 w-2 -mb-0.5 bg-[color:var(--color-gb-light)] animate-[blink_1s_steps(2)_infinite]"
+  ></span>
 </span>

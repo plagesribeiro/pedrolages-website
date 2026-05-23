@@ -28,20 +28,29 @@
   </header>
 
   <section class="py-6">
-    <h2 class="font-pixel text-sm text-[color:var(--color-gb-light)] print:text-zinc-900">{$t('section.about').toUpperCase()}</h2>
+    <h2 class="font-pixel text-sm text-[color:var(--color-gb-light)] print:text-zinc-900">
+      {$t('section.about').toUpperCase()}
+    </h2>
     <div class="mt-3 space-y-3 text-zinc-300 print:text-zinc-800">
       {#each pick(resume.bio, $locale) as p}<p>{p}</p>{/each}
     </div>
   </section>
 
   <section class="py-6">
-    <h2 class="font-pixel text-sm text-[color:var(--color-gb-light)] print:text-zinc-900">{$t('section.journey').toUpperCase()}</h2>
+    <h2 class="font-pixel text-sm text-[color:var(--color-gb-light)] print:text-zinc-900">
+      {$t('section.journey').toUpperCase()}
+    </h2>
     <div class="mt-3 space-y-5">
       {#each resume.experience as exp}
         <div>
           <div class="flex items-baseline justify-between gap-3">
-            <h3 class="font-semibold">{exp.company} <span class="font-normal text-zinc-400">· {pick(exp.role, $locale)}</span></h3>
-            <span class="font-mono text-xs text-zinc-500">{formatRange(exp.start, exp.end, exp.current, $locale)}</span>
+            <h3 class="font-semibold">
+              {exp.company}
+              <span class="font-normal text-zinc-400">· {pick(exp.role, $locale)}</span>
+            </h3>
+            <span class="font-mono text-xs text-zinc-500"
+              >{formatRange(exp.start, exp.end, exp.current, $locale)}</span
+            >
           </div>
           <p class="text-sm text-zinc-400 print:text-zinc-700">{pick(exp.summary, $locale)}</p>
         </div>
@@ -50,7 +59,9 @@
   </section>
 
   <section class="py-6">
-    <h2 class="font-pixel text-sm text-[color:var(--color-gb-light)] print:text-zinc-900">{$t('section.education').toUpperCase()}</h2>
+    <h2 class="font-pixel text-sm text-[color:var(--color-gb-light)] print:text-zinc-900">
+      {$t('section.education').toUpperCase()}
+    </h2>
     <div class="mt-3 space-y-3">
       {#each resume.education as edu}
         <div>
@@ -67,7 +78,9 @@
   </section>
 
   <section class="py-6">
-    <h2 class="font-pixel text-sm text-[color:var(--color-gb-light)] print:text-zinc-900">{$t('section.skills').toUpperCase()}</h2>
+    <h2 class="font-pixel text-sm text-[color:var(--color-gb-light)] print:text-zinc-900">
+      {$t('section.skills').toUpperCase()}
+    </h2>
     <div class="mt-3 grid gap-1 text-sm">
       <p><span class="font-semibold">AI:</span> {resume.skills.ai.join(' · ')}</p>
       <p><span class="font-semibold">Languages:</span> {resume.skills.languages.join(' · ')}</p>

@@ -36,5 +36,5 @@ export async function load({ params, platform }) {
 
 function extractTitle(html: string, fallback: string): string {
   const m = html.match(/<h1[^>]*>([\s\S]*?)<\/h1>/i);
-  return m ? m[1].replace(/<[^>]+>/g, '').trim() : fallback.split('/').pop() ?? fallback;
+  return m ? m[1].replace(/<[^>]+>/g, '').trim() : (fallback.split('/').pop() ?? fallback);
 }

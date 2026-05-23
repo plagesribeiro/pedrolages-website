@@ -10,7 +10,9 @@
   export let baseUrl: string;
   export let depth: number = 0;
 
-  $: directFiles = items.filter((i) => i.folder === basePath).sort((a, b) => a.name.localeCompare(b.name));
+  $: directFiles = items
+    .filter((i) => i.folder === basePath)
+    .sort((a, b) => a.name.localeCompare(b.name));
 
   $: subFolders = (() => {
     const prefix = basePath ? basePath + '/' : '';
@@ -23,7 +25,9 @@
       const firstSeg = rest.split('/')[0];
       if (!firstSeg) continue;
       const subPath = (basePath ? basePath + '/' : '') + firstSeg;
-      const subItems = items.filter((i) => i.folder === subPath || i.folder.startsWith(subPath + '/'));
+      const subItems = items.filter(
+        (i) => i.folder === subPath || i.folder.startsWith(subPath + '/')
+      );
       seen.set(firstSeg, subItems);
     }
     return [...seen.entries()].sort(([a], [b]) => a.localeCompare(b));
@@ -43,7 +47,9 @@
     {@const subUrl = `${baseUrl}/${name}`}
     {@const isOpen = openSet.has(name)}
     <li>
-      <div class="folder-row group flex items-center gap-2 rounded-lg border border-zinc-800 bg-zinc-950/60 px-3 py-2 transition hover:border-zinc-700">
+      <div
+        class="folder-row group flex items-center gap-2 rounded-lg border border-zinc-800 bg-zinc-950/60 px-3 py-2 transition hover:border-zinc-700"
+      >
         <button
           type="button"
           on:click={() => toggle(name)}
@@ -81,7 +87,9 @@
       >
         <span class="grid h-6 w-6 place-items-center text-zinc-700"></span>
         <FileText class="h-4 w-4 text-zinc-500 group-hover:text-[color:var(--color-gb-light)]" />
-        <span class="flex-1 font-mono text-sm text-zinc-300 group-hover:text-zinc-100">{item.name}</span>
+        <span class="flex-1 font-mono text-sm text-zinc-300 group-hover:text-zinc-100"
+          >{item.name}</span
+        >
       </a>
     </li>
   {/each}

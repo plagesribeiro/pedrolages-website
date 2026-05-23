@@ -1,4 +1,4 @@
-import { unified } from 'unified';
+import { unified, type Processor } from 'unified';
 import remarkParse from 'remark-parse';
 import remarkGfm from 'remark-gfm';
 import remarkMath from 'remark-math';
@@ -7,9 +7,13 @@ import rehypeKatex from 'rehype-katex';
 import rehypeShiki from '@shikijs/rehype';
 import rehypeStringify from 'rehype-stringify';
 
-let cachedProcessor: ReturnType<typeof unified> | null = null;
+// Use a loose type for the cached chain — the configured pipeline isn't
+// assignable to `ReturnType<typeof unified>` because each `.use()` narrows
+// the generic parameters. We only ever call `.process()`, which is on every
+// processor regardless.
+let cachedProcessor: Processor | null = null;
 
-async function getProcessor() {
+function getProcessor(): Processor {
   if (cachedProcessor) return cachedProcessor;
   cachedProcessor = unified()
     .use(remarkParse)
@@ -21,12 +25,12 @@ async function getProcessor() {
       themes: { light: 'github-light', dark: 'github-dark' },
       defaultColor: 'dark'
     })
-    .use(rehypeStringify, { allowDangerousHtml: true });
+    .use(rehypeStringify, { allowDangerousHtml: true }) as unknown as Processor;
   return cachedProcessor;
 }
 
 export async function renderMarkdown(source: string): Promise<string> {
-  const proc = await getProcessor();
+  const proc = getProcessor();
   const file = await proc.process(source);
   return String(file);
 }

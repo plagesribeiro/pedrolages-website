@@ -74,13 +74,7 @@
     aria-modal="true"
   >
     <div class="w-full max-w-3xl">
-      <Terminal
-        bind:this={terminalEl}
-        {resume}
-        inModal
-        on:close={close}
-        on:navigate={onNavigate}
-      />
+      <Terminal bind:this={terminalEl} {resume} inModal on:close={close} on:navigate={onNavigate} />
     </div>
   </div>
 {/if}

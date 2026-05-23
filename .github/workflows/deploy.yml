@@ -1,20 +1,41 @@
-# Auto-deploys every push to `production` and supports manual dispatch from
-# the Actions tab. Build runs on a GitHub-hosted runner and ships to
-# Cloudflare Pages via wrangler-action.
+# CI runs on every push & PR (lint + check + test).
+# Deploy to Cloudflare Pages only runs after CI passes, and only for pushes
+# to `production` (or a manual workflow_dispatch on that branch).
 #
-# Required repo secrets (GitHub → Settings → Secrets and variables → Actions):
+# Required repo secrets (Settings → Secrets and variables → Actions):
 #   - CLOUDFLARE_API_TOKEN  (account-scoped, "Edit Cloudflare Workers" template)
 #   - CLOUDFLARE_ACCOUNT_ID = f3ccd6adcf1b623cff15b47988b0cd24
 
-name: Deploy to Cloudflare Pages
+name: CI + Deploy
 
 on:
   push:
-    branches: [production]
+    branches: [main, production]
+  pull_request:
   workflow_dispatch:
 
 jobs:
+  ci:
+    name: lint · check · test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - name: lint
+        run: npm run lint
+      - name: type-check
+        run: npm run check
+      - name: test
+        run: npm run test
+
   deploy:
+    name: deploy → cloudflare pages
+    needs: ci
+    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/production'
     runs-on: ubuntu-latest
     permissions:
       contents: read

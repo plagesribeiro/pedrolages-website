@@ -17,7 +17,14 @@ function setFont(doc: jsPDF, weight: 'normal' | 'bold' = 'normal', size = 10) {
   doc.setTextColor(COLORS.text);
 }
 
-function writeWrapped(doc: jsPDF, text: string, x: number, y: number, maxWidth: number, lineHeight = 5): number {
+function writeWrapped(
+  doc: jsPDF,
+  text: string,
+  x: number,
+  y: number,
+  maxWidth: number,
+  lineHeight = 5
+): number {
   const lines = doc.splitTextToSize(text, maxWidth);
   for (const line of lines) {
     doc.text(line, x, y);
@@ -215,6 +222,9 @@ export function generateResumePDF(resume: Resume, locale: Locale): jsPDF {
 
 export function downloadResumePDF(resume: Resume, locale: Locale): void {
   const doc = generateResumePDF(resume, locale);
-  const slug = resume.name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+  const slug = resume.name
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-|-$/g, '');
   doc.save(`${slug}-cv-${locale}.pdf`);
 }

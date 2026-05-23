@@ -22,7 +22,9 @@
     style="background-image: radial-gradient(rgba(155,188,15,0.13) 1px, transparent 1px); background-size: 22px 22px;"
   ></div>
 
-  <div class="mx-auto flex max-w-5xl flex-col items-center gap-8 text-center sm:flex-row sm:items-start sm:text-left">
+  <div
+    class="mx-auto flex max-w-5xl flex-col items-center gap-8 text-center sm:flex-row sm:items-start sm:text-left"
+  >
     <div class="shrink-0">
       <PixelAvatar on:secret={onSecret} />
     </div>
@@ -75,7 +77,8 @@
           aria-label="Email"
           class="inline-flex items-center gap-2 rounded-full border border-zinc-800 bg-zinc-900/60 px-3 py-2 text-sm text-zinc-300 transition hover:border-zinc-700 hover:text-white"
         >
-          <Mail class="h-4 w-4" /> {resume.email}
+          <Mail class="h-4 w-4" />
+          {resume.email}
         </a>
       </div>
     </div>

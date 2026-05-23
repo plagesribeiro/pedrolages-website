@@ -11,7 +11,10 @@ function key(game: GameId) {
   return `${KEY_PREFIX}${game}`;
 }
 
-export async function readScores(platform: App.Platform | undefined, game: GameId): Promise<ScoreEntry[]> {
+export async function readScores(
+  platform: App.Platform | undefined,
+  game: GameId
+): Promise<ScoreEntry[]> {
   const kv = platform?.env?.SCORES;
   if (kv) {
     const raw = await kv.get(key(game), 'json');

@@ -22,7 +22,8 @@
     href="/"
     class="fixed top-4 left-4 z-40 inline-flex items-center gap-1.5 rounded-full border border-zinc-800 bg-zinc-950/70 px-3 py-1.5 text-xs text-zinc-400 backdrop-blur transition hover:border-zinc-600 hover:text-zinc-100 print:hidden"
   >
-    <ArrowLeft class="h-3.5 w-3.5" /> {$tt({ pt: 'voltar', en: 'back' })}
+    <ArrowLeft class="h-3.5 w-3.5" />
+    {$tt({ pt: 'voltar', en: 'back' })}
   </a>
 
   <Hero resume={data.resume} />

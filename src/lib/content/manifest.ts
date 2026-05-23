@@ -85,7 +85,11 @@ export function listFolderChildren(
 }
 
 /** Items in a specific folder (recursive). Used by folder routes. */
-export function itemsInFolder(manifest: Manifest, folder: Folder, folderPath: string): ContentItem[] {
+export function itemsInFolder(
+  manifest: Manifest,
+  folder: Folder,
+  folderPath: string
+): ContentItem[] {
   return allItems(manifest, folder).filter(
     (i) => i.folder === folderPath || i.folder.startsWith(folderPath + '/')
   );

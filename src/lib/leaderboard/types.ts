@@ -21,10 +21,12 @@ export function isValidGame(g: string): g is GameId {
 }
 
 export function sanitizeName(raw: string): string {
-  return String(raw ?? '')
-    .replace(/[^\p{L}\p{N}_\-\.@ ]/gu, '')
-    .trim()
-    .slice(0, MAX_NAME_LEN) || 'anon';
+  return (
+    String(raw ?? '')
+      .replace(/[^\p{L}\p{N}_\-\.@ ]/gu, '')
+      .trim()
+      .slice(0, MAX_NAME_LEN) || 'anon'
+  );
 }
 
 export function qualifies(score: number, list: ScoreEntry[]): boolean {

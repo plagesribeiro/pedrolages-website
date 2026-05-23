@@ -99,12 +99,15 @@
         <div class="mt-4 space-y-1 text-[color:var(--color-gb-light)]">
           {#each phases.slice(0, visibleLines) as line, i}
             <p in:fade>
-              <span class="text-zinc-500">$</span> {line}
+              <span class="text-zinc-500">$</span>
+              {line}
               <span class="ml-1 text-zinc-500">[ok]</span>
             </p>
           {/each}
         </div>
-        <div class="mt-6 h-1.5 w-full overflow-hidden rounded-full border border-zinc-800 bg-zinc-950">
+        <div
+          class="mt-6 h-1.5 w-full overflow-hidden rounded-full border border-zinc-800 bg-zinc-950"
+        >
           <div
             class="h-full bg-[color:var(--color-gb-green)] transition-all duration-300"
             style:width="{progress}%"
@@ -118,12 +121,18 @@
         <h2 class="font-pixel text-2xl text-rose-300 glow-yellow sm:text-3xl">
           {$tt({ pt: 'VOCÊ ME HACKEOU.', en: "YOU'VE HACKED ME." })}
         </h2>
-        <p class="font-mono text-zinc-300">{$tt({ pt: 'você será lembrado.', en: 'you will be remembered.' })}</p>
+        <p class="font-mono text-zinc-300">
+          {$tt({ pt: 'você será lembrado.', en: 'you will be remembered.' })}
+        </p>
         <p class="font-terminal text-2xl text-zinc-500">🥺</p>
       </div>
     {:else}
-      <div class="flex max-w-md flex-col items-center gap-4 text-center" in:fly={{ y: 12, duration: 250 }}>
-        <pre class="font-pixel text-[12px] leading-tight text-[color:var(--color-gb-light)] select-none">{`
+      <div
+        class="flex max-w-md flex-col items-center gap-4 text-center"
+        in:fly={{ y: 12, duration: 250 }}
+      >
+        <pre
+          class="font-pixel text-[12px] leading-tight text-[color:var(--color-gb-light)] select-none">{`
    ____   _   _
   / ___| | \\ | |
  | |  _  |  \\| |
@@ -137,7 +146,10 @@
         </p>
         <p class="text-sm text-zinc-500">
           {$tt({ pt: 'mas já que veio até aqui — diz oi:', en: 'but while you’re here — say hi:' })}
-          <a class="text-[color:var(--color-gb-light)] underline" href="mailto:plagesribeiro@gmail.com">plagesribeiro@gmail.com</a>
+          <a
+            class="text-[color:var(--color-gb-light)] underline"
+            href="mailto:plagesribeiro@gmail.com">plagesribeiro@gmail.com</a
+          >
         </p>
         <button
           on:click={close}

@@ -21,7 +21,10 @@ function memSet(key: string, value: unknown, ttlSeconds: number) {
   mem.set(key, { value, expiresAt: Date.now() + ttlSeconds * 1000 });
 }
 
-export async function cacheGet<T>(platform: App.Platform | undefined, key: string): Promise<T | null> {
+export async function cacheGet<T>(
+  platform: App.Platform | undefined,
+  key: string
+): Promise<T | null> {
   const hit = memGet<T>(key);
   if (hit !== null) return hit;
 

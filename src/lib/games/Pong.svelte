@@ -16,7 +16,7 @@
   // AI difficulty knobs — humans should win sometimes.
   const AI_LAG = 0.045;
   const AI_MAX_SPEED = 3.0;
-  const AI_DEADZONE = 8;      // doesn't bother moving for tiny offsets
+  const AI_DEADZONE = 8; // doesn't bother moving for tiny offsets
   const AI_OFFSET_NOISE = 28; // misjudges by up to this many px
   const BALL_START = 1.7;
   const HIT_BOOST = 1.04;
@@ -74,8 +74,7 @@
     //  - aims with a noisy offset that re-rolls each volley
     const sharpness = Math.min(0.025, (scorePlayer + scoreAi) * 0.003);
     const idleY = H / 2 - PADDLE_H / 2;
-    const targetY =
-      ball.vx > 0 ? ball.y - PADDLE_H / 2 + aiOffset : idleY;
+    const targetY = ball.vx > 0 ? ball.y - PADDLE_H / 2 + aiOffset : idleY;
     const delta = targetY - aiY;
     if (Math.abs(delta) > AI_DEADZONE) {
       const desired = delta * (AI_LAG + sharpness);
@@ -178,8 +177,8 @@
             ? 'VOCÊ VENCEU!'
             : 'YOU WIN!'
           : lang === 'pt'
-          ? 'IA VENCEU'
-          : 'AI WINS';
+            ? 'IA VENCEU'
+            : 'AI WINS';
       ctx.fillText(winText, W / 2, H / 2 - 5);
       ctx.fillStyle = '#a1a1aa';
       ctx.font = '12px "Geist Mono", monospace';
@@ -235,10 +234,16 @@
 
 <div class="flex w-full flex-col items-center gap-3">
   <div class="flex w-full max-w-[720px] items-center justify-between font-mono text-sm">
-    <p class="text-zinc-400">you: <span class="text-[color:var(--color-gb-light)]">{scorePlayer}</span></p>
+    <p class="text-zinc-400">
+      you: <span class="text-[color:var(--color-gb-light)]">{scorePlayer}</span>
+    </p>
     <p class="text-zinc-500">{$tt({ pt: 'primeiro a 5', en: 'first to 5' })}</p>
     <p class="text-zinc-400">ai: <span class="text-amber-300">{scoreAi}</span></p>
-    <button class="rounded-full border border-zinc-800 bg-zinc-900 p-2 text-zinc-300 hover:border-zinc-600" on:click={newMatch} aria-label="reset">
+    <button
+      class="rounded-full border border-zinc-800 bg-zinc-900 p-2 text-zinc-300 hover:border-zinc-600"
+      on:click={newMatch}
+      aria-label="reset"
+    >
       <RotateCcw class="h-3.5 w-3.5" />
     </button>
   </div>

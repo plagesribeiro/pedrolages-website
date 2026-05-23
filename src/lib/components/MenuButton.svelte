@@ -15,14 +15,20 @@
   style:animation-delay="{index * 80}ms"
 >
   <div class="flex items-center gap-4">
-    <span class="font-pixel text-[10px] text-zinc-600 transition-colors group-hover:text-[color:var(--color-gb-light)]">
+    <span
+      class="font-pixel text-[10px] text-zinc-600 transition-colors group-hover:text-[color:var(--color-gb-light)]"
+    >
       {String(index + 1).padStart(2, '0')}
     </span>
-    <span class="font-pixel text-xs text-[color:var(--color-gb-light)] glow-green transition-transform group-hover:translate-x-0.5 sm:text-sm">
+    <span
+      class="font-pixel text-xs text-[color:var(--color-gb-light)] glow-green transition-transform group-hover:translate-x-0.5 sm:text-sm"
+    >
       {label}
     </span>
     {#if badge}
-      <span class="ml-auto rounded-full border border-amber-400/40 bg-amber-400/10 px-2 py-0.5 text-[10px] font-medium text-amber-300">
+      <span
+        class="ml-auto rounded-full border border-amber-400/40 bg-amber-400/10 px-2 py-0.5 text-[10px] font-medium text-amber-300"
+      >
         {badge}
       </span>
     {/if}

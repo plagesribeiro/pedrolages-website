@@ -8,12 +8,13 @@
 
   let canvas: HTMLCanvasElement;
   let dpr = 1;
-  let particles: { x: number; y: number; vx: number; vy: number; size: number; phase: number }[] = [];
+  let particles: { x: number; y: number; vx: number; vy: number; size: number; phase: number }[] =
+    [];
   let mouse = { x: -9999, y: -9999 };
   let rafId: number;
 
   onMount(() => {
-    const ctx = canvas.getContext('2d');
+    const ctx = canvas.getContext('2d')!;
     if (!ctx) return;
     dpr = Math.min(window.devicePixelRatio || 1, 2);
 

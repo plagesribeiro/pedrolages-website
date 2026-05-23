@@ -1,6 +1,9 @@
 import type { GameId, ScoreEntry } from './types';
 
-export async function fetchScores(game: GameId, fetchFn: typeof fetch = fetch): Promise<ScoreEntry[]> {
+export async function fetchScores(
+  game: GameId,
+  fetchFn: typeof fetch = fetch
+): Promise<ScoreEntry[]> {
   try {
     const res = await fetchFn(`/api/scores/${game}`);
     if (!res.ok) return [];

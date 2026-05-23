@@ -198,7 +198,11 @@
       ctx.fillText(`score: ${score}`, SIZE / 2, SIZE / 2 + 18);
       ctx.font = '12px "Geist Mono", monospace';
       ctx.fillStyle = '#71717a';
-      ctx.fillText($tt({ pt: 'aperte SPACE ou R pra recomeçar', en: 'press SPACE or R to restart' }), SIZE / 2, SIZE / 2 + 42);
+      ctx.fillText(
+        $tt({ pt: 'aperte SPACE ou R pra recomeçar', en: 'press SPACE or R to restart' }),
+        SIZE / 2,
+        SIZE / 2 + 42
+      );
     } else if (paused) {
       ctx.fillStyle = 'rgba(0,0,0,0.55)';
       ctx.fillRect(0, 0, SIZE, SIZE);
@@ -278,8 +282,12 @@
 
 <div class="flex w-full flex-col items-center gap-4">
   <div class="flex w-full max-w-[600px] items-center justify-between font-mono text-sm">
-    <p class="text-zinc-400">score: <span class="text-[color:var(--color-gb-light)]">{score}</span></p>
-    <p class="text-zinc-500">bombs: <span class="text-rose-400">{bombs.length}/{maxBombs()}</span></p>
+    <p class="text-zinc-400">
+      score: <span class="text-[color:var(--color-gb-light)]">{score}</span>
+    </p>
+    <p class="text-zinc-500">
+      bombs: <span class="text-rose-400">{bombs.length}/{maxBombs()}</span>
+    </p>
     <p class="text-zinc-500">hi: {highScore}</p>
     <div class="flex items-center gap-1">
       <button
@@ -315,19 +323,45 @@
   ></canvas>
 
   <p class="max-w-md text-center text-xs text-zinc-500">
-    {$tt({ pt: 'pega', en: 'eat' })} <span class="text-amber-300">{$tt({ pt: 'frutas', en: 'fruit' })}</span> · {$tt({ pt: 'evita', en: 'avoid' })} <span class="text-rose-400">{$tt({ pt: 'bombas', en: 'bombs' })}</span> ({$tt({ pt: 'somem sozinhas', en: 'they expire on their own' })})<br />
-    {$tt({ pt: 'setas', en: 'arrows' })} / WASD · <kbd class="rounded border border-zinc-700 px-1">space</kbd> {$tt({ pt: 'pausa', en: 'pause' })} · <kbd class="rounded border border-zinc-700 px-1">R</kbd> reset
+    {$tt({ pt: 'pega', en: 'eat' })}
+    <span class="text-amber-300">{$tt({ pt: 'frutas', en: 'fruit' })}</span>
+    · {$tt({ pt: 'evita', en: 'avoid' })}
+    <span class="text-rose-400">{$tt({ pt: 'bombas', en: 'bombs' })}</span>
+    ({$tt({ pt: 'somem sozinhas', en: 'they expire on their own' })})<br />
+    {$tt({ pt: 'setas', en: 'arrows' })} / WASD ·
+    <kbd class="rounded border border-zinc-700 px-1">space</kbd>
+    {$tt({ pt: 'pausa', en: 'pause' })} · <kbd class="rounded border border-zinc-700 px-1">R</kbd> reset
   </p>
 
   <div class="grid grid-cols-3 gap-1 sm:hidden">
     <span></span>
-    <button class="touch-btn" on:touchstart|preventDefault={() => btn({ x: 0, y: -1 })} aria-label="up">▲</button>
+    <button
+      class="touch-btn"
+      on:touchstart|preventDefault={() => btn({ x: 0, y: -1 })}
+      aria-label="up">▲</button
+    >
     <span></span>
-    <button class="touch-btn" on:touchstart|preventDefault={() => btn({ x: -1, y: 0 })} aria-label="left">◀</button>
-    <button class="touch-btn" on:touchstart|preventDefault={() => (!alive ? reset() : (paused = !paused))} aria-label="pause">{paused ? '▶' : '||'}</button>
-    <button class="touch-btn" on:touchstart|preventDefault={() => btn({ x: 1, y: 0 })} aria-label="right">▶</button>
+    <button
+      class="touch-btn"
+      on:touchstart|preventDefault={() => btn({ x: -1, y: 0 })}
+      aria-label="left">◀</button
+    >
+    <button
+      class="touch-btn"
+      on:touchstart|preventDefault={() => (!alive ? reset() : (paused = !paused))}
+      aria-label="pause">{paused ? '▶' : '||'}</button
+    >
+    <button
+      class="touch-btn"
+      on:touchstart|preventDefault={() => btn({ x: 1, y: 0 })}
+      aria-label="right">▶</button
+    >
     <span></span>
-    <button class="touch-btn" on:touchstart|preventDefault={() => btn({ x: 0, y: 1 })} aria-label="down">▼</button>
+    <button
+      class="touch-btn"
+      on:touchstart|preventDefault={() => btn({ x: 0, y: 1 })}
+      aria-label="down">▼</button
+    >
     <span></span>
   </div>
 </div>

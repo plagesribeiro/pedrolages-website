@@ -90,8 +90,8 @@
       {#each row as cell, x}
         {#if cell !== '0'}
           <rect
-            x={x}
-            y={y}
+            {x}
+            {y}
             width="1"
             height="1"
             fill={glitch ? (Math.random() > 0.85 ? '#facc15' : palette[cell]) : palette[cell]}

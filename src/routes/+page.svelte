@@ -14,9 +14,10 @@
   $: years = yearsSince(resume.careerStart);
 
   let booted = false;
-  $: bootLines = $locale === 'pt'
-    ? ['$ booting plagesribeiro.os ...', '$ carregando módulo personalidade ...', '$ pronto.']
-    : ['$ booting plagesribeiro.os ...', '$ loading personality module ...', '$ ready.'];
+  $: bootLines =
+    $locale === 'pt'
+      ? ['$ booting plagesribeiro.os ...', '$ carregando módulo personalidade ...', '$ pronto.']
+      : ['$ booting plagesribeiro.os ...', '$ loading personality module ...', '$ ready.'];
   let visibleBoot = 0;
   let parallaxX = 0;
   let parallaxY = 0;
@@ -48,7 +49,7 @@
     },
     {
       href: '/contact',
-      labelPt: 'me hackear (stalk)',
+      labelPt: 'me stalkear',
       labelEn: 'stalk me',
       hintPt: 'mandar mensagem · me pagar um café',
       hintEn: 'message me · buy me a coffee'
@@ -122,7 +123,9 @@
     style="background-image: radial-gradient(rgba(155,188,15,0.10) 1px, transparent 1px); background-size: 28px 28px;"
   ></div>
 
-  <div class="mx-auto flex min-h-screen max-w-5xl flex-col items-center justify-center gap-8 px-6 py-12">
+  <div
+    class="mx-auto flex min-h-screen max-w-5xl flex-col items-center justify-center gap-8 px-6 py-12"
+  >
     <div
       class="relative will-change-transform"
       style:transform="translate3d({parallaxX * 8}px, {parallaxY * 8}px, 0)"
@@ -132,7 +135,10 @@
 
     <div class="text-center">
       <p class="font-pixel text-[10px] text-zinc-500">
-        ★ <kbd class="kbd">↑</kbd> <kbd class="kbd">↓</kbd> · <kbd class="kbd">W</kbd>/<kbd class="kbd">S</kbd> · <kbd class="kbd">enter</kbd> · <kbd class="kbd">1-4</kbd> · <kbd class="kbd">?</kbd> ★
+        ★ <kbd class="kbd">↑</kbd> <kbd class="kbd">↓</kbd> · <kbd class="kbd">W</kbd>/<kbd
+          class="kbd">S</kbd
+        >
+        · <kbd class="kbd">enter</kbd> · <kbd class="kbd">1-4</kbd> · <kbd class="kbd">?</kbd> ★
       </p>
       <h1 class="mt-3 font-pixel text-2xl leading-tight glow-green sm:text-3xl lg:text-4xl">
         {resume.name}
@@ -145,11 +151,7 @@
       </p>
     </div>
 
-    <nav
-      bind:this={menuEl}
-      class="flex w-full max-w-md flex-col gap-3"
-      aria-label="main menu"
-    >
+    <nav bind:this={menuEl} class="flex w-full max-w-md flex-col gap-3" aria-label="main menu">
       {#each items as item, i (item.href)}
         <div
           on:mouseenter={() => (cursor = i)}
@@ -177,7 +179,11 @@
         {/each}
         {#if booted}
           <p class="text-zinc-700">
-            ★ {$tt({ pt: 'terminal', en: 'terminal' })}: <kbd class="kbd">⌘K</kbd> · <kbd class="kbd">?</kbd> · {$tt({ pt: 'digite', en: 'type' })} <span class="text-[color:var(--color-gb-light)]">whoami</span> · <kbd class="kbd">↑↑↓↓←→←→BA</kbd>
+            ★ {$tt({ pt: 'terminal', en: 'terminal' })}: <kbd class="kbd">⌘K</kbd> ·
+            <kbd class="kbd">?</kbd>
+            · {$tt({ pt: 'digite', en: 'type' })}
+            <span class="text-[color:var(--color-gb-light)]">whoami</span>
+            · <kbd class="kbd">↑↑↓↓←→←→BA</kbd>
           </p>
         {/if}
       </div>

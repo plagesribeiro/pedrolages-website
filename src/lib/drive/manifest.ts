@@ -149,7 +149,10 @@ function fileKey(driveId: string): string {
 
 import { downloadText } from './api';
 
-export async function getFileText(platform: App.Platform | undefined, driveId: string): Promise<string> {
+export async function getFileText(
+  platform: App.Platform | undefined,
+  driveId: string
+): Promise<string> {
   const cached = await cacheGet<string>(platform, fileKey(driveId));
   if (cached !== null) return cached;
   const text = await downloadText(driveId);

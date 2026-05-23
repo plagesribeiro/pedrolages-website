@@ -16,16 +16,16 @@ It runs entirely on Cloudflare's edge — a small SvelteKit Worker plus two KV n
 
 ## stack
 
-| | |
-|---|---|
-| Framework | **SvelteKit 2** + **Svelte 5** runes, **TypeScript** strict |
-| Styling | **Tailwind CSS v4** via the Vite plugin (no PostCSS config) |
-| Runtime | **Cloudflare Pages** (Workers under the hood) |
-| Storage | **Workers KV** — `SCORES` (leaderboard), `CONTENT_CACHE` (Drive cache, 5-min TTL) |
-| Content | **Google Drive API** (service-account auth) as a drop-in CMS |
-| Markdown | **unified** — remark + rehype, **Shiki** for code, **KaTeX** for math |
-| PDF | **jsPDF** + jspdf-autotable, client-side résumé export |
-| Build | **Vite 6**, **Wrangler 4**, deployed via **GitHub Actions** |
+|           |                                                                                   |
+| --------- | --------------------------------------------------------------------------------- |
+| Framework | **SvelteKit 2** + **Svelte 5** runes, **TypeScript** strict                       |
+| Styling   | **Tailwind CSS v4** via the Vite plugin (no PostCSS config)                       |
+| Runtime   | **Cloudflare Pages** (Workers under the hood)                                     |
+| Storage   | **Workers KV** — `SCORES` (leaderboard), `CONTENT_CACHE` (Drive cache, 5-min TTL) |
+| Content   | **Google Drive API** (service-account auth) as a drop-in CMS                      |
+| Markdown  | **unified** — remark + rehype, **Shiki** for code, **KaTeX** for math             |
+| PDF       | **jsPDF** + jspdf-autotable, client-side résumé export                            |
+| Build     | **Vite 6**, **Wrangler 4**, deployed via **GitHub Actions**                       |
 
 ## architecture notes
 
@@ -94,10 +94,10 @@ npx wrangler pages dev .svelte-kit/cloudflare --kv SCORES --kv CONTENT_CACHE
 
 Copy `.env.example` to `.env` and fill in:
 
-| Variable | Purpose |
-|---|---|
+| Variable                           | Purpose                                                                                              |
+| ---------------------------------- | ---------------------------------------------------------------------------------------------------- |
 | `GOOGLE_DRIVE_SERVICE_ACCOUNT_KEY` | Full service-account JSON, base64-encoded — used by the Drive-backed CMS for `/md`, `/html`, `/pdf`. |
-| `GOOGLE_DRIVE_ROOT_FOLDER_ID` | The Drive folder ID the content manifest is built from. |
+| `GOOGLE_DRIVE_ROOT_FOLDER_ID`      | The Drive folder ID the content manifest is built from.                                              |
 
 In production, set the same names in **Cloudflare Pages → Settings → Variables and Secrets** (mark them as **Secret** so they're encrypted at rest).
 

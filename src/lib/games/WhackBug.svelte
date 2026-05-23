@@ -1,3 +1,12 @@
+<script context="module" lang="ts">
+  function popIn(node: HTMLElement) {
+    return {
+      duration: 180,
+      css: (t: number) => `transform: scale(${0.6 + 0.4 * t}); opacity: ${t}`
+    };
+  }
+</script>
+
 <script lang="ts">
   import { onMount } from 'svelte';
   import { RotateCcw, Bug } from '@lucide/svelte';
@@ -40,7 +49,10 @@
     if (empty.length === 0) return;
     const idx = empty[Math.floor(Math.random() * empty.length)];
     const isFeature = Math.random() < 0.18;
-    board[idx] = { type: isFeature ? 'feature' : 'bug', until: Date.now() + 900 + Math.random() * 600 };
+    board[idx] = {
+      type: isFeature ? 'feature' : 'bug',
+      until: Date.now() + 900 + Math.random() * 600
+    };
     board = board;
     setTimeout(() => {
       if (board[idx] && Date.now() >= board[idx]!.until) {
@@ -91,15 +103,26 @@
 
 <div class="flex flex-col items-center gap-4">
   <div class="flex w-full max-w-md items-center justify-between font-mono text-sm">
-    <p class="text-zinc-400">score: <span class="text-[color:var(--color-gb-light)]">{score}</span></p>
-    <p class="text-zinc-500">{$tt({ pt: 'tempo', en: 'time' })}: <span class={timeLeft < 10 ? 'text-rose-400' : 'text-zinc-200'}>{timeLeft}s</span></p>
+    <p class="text-zinc-400">
+      score: <span class="text-[color:var(--color-gb-light)]">{score}</span>
+    </p>
+    <p class="text-zinc-500">
+      {$tt({ pt: 'tempo', en: 'time' })}:
+      <span class={timeLeft < 10 ? 'text-rose-400' : 'text-zinc-200'}>{timeLeft}s</span>
+    </p>
     <p class="text-zinc-500">hi: {highScore}</p>
-    <button class="rounded-full border border-zinc-800 bg-zinc-900 p-2 text-zinc-300 hover:border-zinc-600" on:click={start} aria-label="start/reset">
+    <button
+      class="rounded-full border border-zinc-800 bg-zinc-900 p-2 text-zinc-300 hover:border-zinc-600"
+      on:click={start}
+      aria-label="start/reset"
+    >
       <RotateCcw class="h-3.5 w-3.5" />
     </button>
   </div>
 
-  <div class="grid grid-cols-3 gap-3 rounded-xl border border-zinc-800 bg-zinc-950/80 p-4 shadow-[0_0_60px_-20px_rgba(155,188,15,0.5)]">
+  <div
+    class="grid grid-cols-3 gap-3 rounded-xl border border-zinc-800 bg-zinc-950/80 p-4 shadow-[0_0_60px_-20px_rgba(155,188,15,0.5)]"
+  >
     {#each board as critter, i}
       <button
         type="button"
@@ -119,7 +142,10 @@
   </div>
 
   {#if !running}
-    <button class="rounded-full border border-[color:var(--color-gb-green)]/40 bg-[color:var(--color-gb-green)]/15 px-4 py-2 text-sm font-medium text-[color:var(--color-gb-light)] hover:bg-[color:var(--color-gb-green)]/25" on:click={start}>
+    <button
+      class="rounded-full border border-[color:var(--color-gb-green)]/40 bg-[color:var(--color-gb-green)]/15 px-4 py-2 text-sm font-medium text-[color:var(--color-gb-light)] hover:bg-[color:var(--color-gb-green)]/25"
+      on:click={start}
+    >
       {timeLeft === DURATION
         ? $tt({ pt: 'começar', en: 'start' })
         : $tt({ pt: 'jogar de novo', en: 'play again' })}
@@ -127,19 +153,14 @@
   {/if}
 
   <p class="max-w-sm text-center text-xs text-zinc-500">
-    {$tt({ pt: 'esmaga', en: 'smash' })} <span class="text-rose-400">bugs</span> (+10), {$tt({ pt: 'evita', en: 'avoid' })} <span class="text-amber-300">features</span> (−5)
-    {$tt({ pt: 'e os', en: 'and' })} <span class="text-zinc-300">{$tt({ pt: 'buracos vazios', en: 'empty holes' })}</span> (−1)
+    {$tt({ pt: 'esmaga', en: 'smash' })} <span class="text-rose-400">bugs</span> (+10), {$tt({
+      pt: 'evita',
+      en: 'avoid'
+    })} <span class="text-amber-300">features</span> (−5)
+    {$tt({ pt: 'e os', en: 'and' })}
+    <span class="text-zinc-300">{$tt({ pt: 'buracos vazios', en: 'empty holes' })}</span> (−1)
   </p>
 </div>
-
-<script context="module" lang="ts">
-  function popIn(node: HTMLElement) {
-    return {
-      duration: 180,
-      css: (t: number) => `transform: scale(${0.6 + 0.4 * t}); opacity: ${t}`
-    };
-  }
-</script>
 
 <style>
   :global(.hole) {

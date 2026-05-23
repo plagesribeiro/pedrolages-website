@@ -8,7 +8,7 @@
       slug: 'snake',
       title: 'snake',
       hintPt: 'clássico + bombas. setas. não bata.',
-      hintEn: 'classic + bombs. arrows. don\'t crash.',
+      hintEn: "classic + bombs. arrows. don't crash.",
       glyph: '◉',
       hue: 'text-[color:var(--color-gb-light)] border-[color:var(--color-gb-green)]/30'
     },
@@ -46,18 +46,27 @@
 <main class="relative isolate min-h-screen overflow-hidden">
   <div class="absolute inset-0 -z-10"><Particles density={50} /></div>
 
-  <a href="/" class="fixed top-4 left-4 z-40 inline-flex items-center gap-1.5 rounded-full border border-zinc-800 bg-zinc-950/70 px-3 py-1.5 text-xs text-zinc-400 backdrop-blur transition hover:border-zinc-600 hover:text-zinc-100">
-    <ArrowLeft class="h-3.5 w-3.5" /> {$tt({ pt: 'voltar', en: 'back' })}
+  <a
+    href="/"
+    class="fixed top-4 left-4 z-40 inline-flex items-center gap-1.5 rounded-full border border-zinc-800 bg-zinc-950/70 px-3 py-1.5 text-xs text-zinc-400 backdrop-blur transition hover:border-zinc-600 hover:text-zinc-100"
+  >
+    <ArrowLeft class="h-3.5 w-3.5" />
+    {$tt({ pt: 'voltar', en: 'back' })}
   </a>
 
   <div class="mx-auto max-w-4xl px-6 py-20">
     <header class="text-center">
       <p class="font-pixel text-[10px] text-zinc-500">/* arcade */</p>
-      <h1 class="mt-2 font-pixel text-2xl text-[color:var(--color-gb-light)] glow-green sm:text-3xl">
+      <h1
+        class="mt-2 font-pixel text-2xl text-[color:var(--color-gb-light)] glow-green sm:text-3xl"
+      >
         {$tt({ pt: 'insert coin.', en: 'insert coin.' })}
       </h1>
       <p class="mt-3 text-sm text-zinc-400">
-        {$tt({ pt: '4 joguinhos rápidos, sem cadastro, sem cookies.', en: 'four quick games — no signup, no cookies.' })}
+        {$tt({
+          pt: '4 joguinhos rápidos, sem cadastro, sem cookies.',
+          en: 'four quick games — no signup, no cookies.'
+        })}
       </p>
     </header>
 
@@ -76,7 +85,9 @@
           <p class="mt-1 text-sm text-zinc-400 group-hover:text-zinc-200">
             {$tt({ pt: g.hintPt, en: g.hintEn })}
           </p>
-          <p class="mt-4 inline-flex items-center gap-1 text-xs font-mono text-zinc-500 group-hover:text-[color:var(--color-gb-light)]">
+          <p
+            class="mt-4 inline-flex items-center gap-1 text-xs font-mono text-zinc-500 group-hover:text-[color:var(--color-gb-light)]"
+          >
             {$tt({ pt: 'jogar', en: 'play' })} ▶
           </p>
         </a>

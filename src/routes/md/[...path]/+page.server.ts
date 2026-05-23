@@ -40,5 +40,5 @@ export async function load({ params, platform }) {
 
 function extractTitle(md: string, fallback: string): string {
   const m = md.match(/^#\s+(.+)$/m);
-  return m ? m[1].trim() : fallback.split('/').pop() ?? fallback;
+  return m ? m[1].trim() : (fallback.split('/').pop() ?? fallback);
 }

@@ -26,14 +26,17 @@ if (browser) {
 
 function interpolate(template: string, vars: Record<string, string | number>): string {
   // simple {key} replacement + minimal ICU plural support: {n, plural, one {...} other {...}}
-  return template.replace(/\{(\w+)(?:,\s*plural,\s*one\s*\{([^}]*)\}\s*other\s*\{([^}]*)\})?\}/g, (_, key, one, other) => {
-    const value = vars[key];
-    if (one !== undefined && other !== undefined) {
-      const n = Number(value);
-      return (n === 1 ? one : other).replace(/\{n\}/g, String(n));
+  return template.replace(
+    /\{(\w+)(?:,\s*plural,\s*one\s*\{([^}]*)\}\s*other\s*\{([^}]*)\})?\}/g,
+    (_, key, one, other) => {
+      const value = vars[key];
+      if (one !== undefined && other !== undefined) {
+        const n = Number(value);
+        return (n === 1 ? one : other).replace(/\{n\}/g, String(n));
+      }
+      return value !== undefined ? String(value) : '';
     }
-    return value !== undefined ? String(value) : '';
-  });
+  );
 }
 
 export const t: Readable<(key: string, vars?: Record<string, string | number>) => string> = derived(
@@ -50,10 +53,12 @@ export function pick<T>(field: { pt: T; en: T }, current: Locale): T {
   return field[current];
 }
 
+type BiText = <T>(msgs: { pt: T; en: T }) => T;
+
 /** Inline bilingual helper: `$tt({ pt: 'olá', en: 'hello' })`. */
-export const tt: Readable<<T>(msgs: { pt: T; en: T }) => T> = derived(
+export const tt: Readable<BiText> = derived(
   locale,
-  ($locale) =>
+  ($locale): BiText =>
     <T>(msgs: { pt: T; en: T }): T =>
       msgs[$locale]
 );

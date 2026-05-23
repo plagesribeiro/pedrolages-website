@@ -47,7 +47,9 @@
   :global(.reveal-init) {
     opacity: 0;
     transform: translateY(12px);
-    transition: opacity 0.6s ease, transform 0.6s ease;
+    transition:
+      opacity 0.6s ease,
+      transform 0.6s ease;
   }
   :global(.reveal-init.is-visible) {
     opacity: 1;

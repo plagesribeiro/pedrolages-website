@@ -8,17 +8,37 @@
 </script>
 
 <footer class="border-t border-zinc-900 px-6 py-10 sm:px-10">
-  <div class="mx-auto flex max-w-5xl flex-col items-center justify-between gap-4 text-xs text-zinc-500 sm:flex-row">
+  <div
+    class="mx-auto flex max-w-5xl flex-col items-center justify-between gap-4 text-xs text-zinc-500 sm:flex-row"
+  >
     <p class="font-mono">$ {$t('footer.madeWith')}</p>
     <div class="flex items-center gap-4">
-      <a href={resume.links.github} target="_blank" rel="noopener" aria-label="GitHub" class="hover:text-zinc-200">
+      <a
+        href={resume.links.github}
+        target="_blank"
+        rel="noopener"
+        aria-label="GitHub"
+        class="hover:text-zinc-200"
+      >
         <BrandIcon name="github" size={16} />
       </a>
-      <a href={resume.links.linkedin} target="_blank" rel="noopener" aria-label="LinkedIn" class="hover:text-zinc-200">
+      <a
+        href={resume.links.linkedin}
+        target="_blank"
+        rel="noopener"
+        aria-label="LinkedIn"
+        class="hover:text-zinc-200"
+      >
         <BrandIcon name="linkedin" size={16} />
       </a>
       {#if resume.links.lattes}
-        <a href={resume.links.lattes} target="_blank" rel="noopener" aria-label="Lattes" class="hover:text-zinc-200">
+        <a
+          href={resume.links.lattes}
+          target="_blank"
+          rel="noopener"
+          aria-label="Lattes"
+          class="hover:text-zinc-200"
+        >
           <GraduationCap size={16} />
         </a>
       {/if}

@@ -100,7 +100,12 @@
     }
 
     drops = drops.filter((d) => {
-      if (d.y > H - PADDLE_H - 18 && d.y < H - PADDLE_H + 8 && d.x > paddleX - 10 && d.x < paddleX + PADDLE_W + 10) {
+      if (
+        d.y > H - PADDLE_H - 18 &&
+        d.y < H - PADDLE_H + 8 &&
+        d.x > paddleX - 10 &&
+        d.x < paddleX + PADDLE_W + 10
+      ) {
         if (d.type === 'token') {
           score += 1;
         } else {
@@ -246,9 +251,16 @@
 
 <div class="flex w-full flex-col items-center gap-3">
   <div class="flex w-full max-w-[520px] items-center justify-between font-mono text-sm">
-    <p class="text-zinc-400">score: <span class="text-[color:var(--color-gb-light)]">{score}</span></p>
+    <p class="text-zinc-400">
+      score: <span class="text-[color:var(--color-gb-light)]">{score}</span>
+    </p>
     <p class="text-zinc-500">hi: {highScore}</p>
-    <button type="button" class="rounded-full border border-zinc-800 bg-zinc-900 p-2 text-zinc-300 hover:border-zinc-600" on:click={reset} aria-label="reset">
+    <button
+      type="button"
+      class="rounded-full border border-zinc-800 bg-zinc-900 p-2 text-zinc-300 hover:border-zinc-600"
+      on:click={reset}
+      aria-label="reset"
+    >
       <RotateCcw class="h-3.5 w-3.5" />
     </button>
   </div>
@@ -263,7 +275,14 @@
     aria-label="token catcher game"
   ></canvas>
   <p class="max-w-xs text-center text-xs text-zinc-500">
-    {$tt({ pt: 'pega', en: 'catch' })} <span class="text-[color:var(--color-gb-light)]">tokens</span>, {$tt({ pt: 'evita', en: 'dodge' })} <span class="text-rose-400">bugs</span>. {$tt({ pt: 'acelera com o tempo.', en: 'speeds up over time.' })}<br />
+    {$tt({ pt: 'pega', en: 'catch' })}
+    <span class="text-[color:var(--color-gb-light)]">tokens</span>, {$tt({
+      pt: 'evita',
+      en: 'dodge'
+    })} <span class="text-rose-400">bugs</span>. {$tt({
+      pt: 'acelera com o tempo.',
+      en: 'speeds up over time.'
+    })}<br />
     mouse · ← → / A D · R = reset
   </p>
 
@@ -273,15 +292,15 @@
       on:touchstart|preventDefault={() => (leftPressed = true)}
       on:touchend|preventDefault={() => (leftPressed = false)}
       on:touchcancel|preventDefault={() => (leftPressed = false)}
-      aria-label="left"
-    >◀</button>
+      aria-label="left">◀</button
+    >
     <button
       class="touch-pad"
       on:touchstart|preventDefault={() => (rightPressed = true)}
       on:touchend|preventDefault={() => (rightPressed = false)}
       on:touchcancel|preventDefault={() => (rightPressed = false)}
-      aria-label="right"
-    >▶</button>
+      aria-label="right">▶</button
+    >
   </div>
 </div>
 

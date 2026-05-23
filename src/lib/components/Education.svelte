@@ -9,7 +9,8 @@
 <section id="education" class="px-6 py-12 sm:px-10">
   <div class="mx-auto max-w-3xl">
     <h2 class="font-pixel text-xl text-[color:var(--color-gb-light)] glow-green">
-      <span class="text-zinc-500">/*</span> {$t('section.education')} <span class="text-zinc-500">*/</span>
+      <span class="text-zinc-500">/*</span>
+      {$t('section.education')} <span class="text-zinc-500">*/</span>
     </h2>
 
     <div class="mt-6 grid gap-3 sm:grid-cols-2">
@@ -18,7 +19,9 @@
           <div class="flex items-start justify-between gap-3">
             <GraduationCap class="h-5 w-5 text-[color:var(--color-gb-light)]" />
             {#if edu.status === 'in-progress'}
-              <span class="inline-flex items-center gap-1 rounded-full border border-amber-500/30 bg-amber-500/10 px-2 py-0.5 text-[11px] text-amber-300">
+              <span
+                class="inline-flex items-center gap-1 rounded-full border border-amber-500/30 bg-amber-500/10 px-2 py-0.5 text-[11px] text-amber-300"
+              >
                 <span class="h-1.5 w-1.5 animate-pulse rounded-full bg-amber-400"></span>
                 {$t('edu.inProgress')}
               </span>

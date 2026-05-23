@@ -26,14 +26,20 @@
         class="group relative overflow-hidden rounded-2xl border border-zinc-800 bg-zinc-900/40 p-5 transition hover:border-[color:var(--color-gb-green)]/40"
       >
         <div class="flex items-center justify-between">
-          <span class="font-pixel text-4xl text-[color:var(--color-gb-light)] glow-green">{card.big}</span>
-          <svelte:component this={card.icon} class="h-5 w-5 text-zinc-500 group-hover:text-[color:var(--color-gb-light)] transition" />
+          <span class="font-pixel text-4xl text-[color:var(--color-gb-light)] glow-green"
+            >{card.big}</span
+          >
+          <svelte:component
+            this={card.icon}
+            class="h-5 w-5 text-zinc-500 group-hover:text-[color:var(--color-gb-light)] transition"
+          />
         </div>
         <p class="mt-2 text-sm text-zinc-400">{card.label}</p>
       </div>
     {/each}
   </div>
   <p class="mx-auto mt-3 max-w-5xl text-center text-xs text-zinc-500 sm:text-left">
-    <span class="font-mono">★</span> {$t('stats.gpt2')}
+    <span class="font-mono">★</span>
+    {$t('stats.gpt2')}
   </p>
 </section>

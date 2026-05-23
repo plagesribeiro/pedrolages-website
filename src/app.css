@@ -70,8 +70,7 @@
   body {
     background:
       radial-gradient(ellipse at top, rgba(155, 188, 15, 0.04), transparent 60%),
-      radial-gradient(ellipse at bottom, rgba(250, 204, 21, 0.03), transparent 60%),
-      #09090b;
+      radial-gradient(ellipse at bottom, rgba(250, 204, 21, 0.03), transparent 60%), #09090b;
   }
   ::selection {
     background: var(--color-gb-green);
@@ -112,8 +111,13 @@
     position: fixed;
     inset: 0;
     pointer-events: none;
-    background:
-      repeating-linear-gradient(0deg, rgba(0, 0, 0, 0.18) 0px, rgba(0, 0, 0, 0.18) 1px, transparent 1px, transparent 3px);
+    background: repeating-linear-gradient(
+      0deg,
+      rgba(0, 0, 0, 0.18) 0px,
+      rgba(0, 0, 0, 0.18) 1px,
+      transparent 1px,
+      transparent 3px
+    );
     z-index: 50;
     mix-blend-mode: multiply;
     opacity: 0.4;

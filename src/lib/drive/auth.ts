@@ -21,7 +21,8 @@ function decodeServiceAccount(): ServiceAccount {
   if (cachedSA) return cachedSA;
   const b64 = env.GOOGLE_DRIVE_SERVICE_ACCOUNT_KEY;
   if (!b64) throw new Error('GOOGLE_DRIVE_SERVICE_ACCOUNT_KEY is not set');
-  const json = typeof atob === 'function' ? atob(b64) : Buffer.from(b64, 'base64').toString('utf-8');
+  const json =
+    typeof atob === 'function' ? atob(b64) : Buffer.from(b64, 'base64').toString('utf-8');
   const sa = JSON.parse(json) as ServiceAccount;
   if (!sa.client_email || !sa.private_key) {
     throw new Error('Service account JSON missing client_email or private_key');

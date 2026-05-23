@@ -26,8 +26,7 @@ export const GET: RequestHandler = async ({ params }) => {
     throw error(404, 'file not found');
   }
 
-  const contentType =
-    upstream.headers.get('content-type') ?? 'application/octet-stream';
+  const contentType = upstream.headers.get('content-type') ?? 'application/octet-stream';
   const contentLength = upstream.headers.get('content-length');
 
   const headers: Record<string, string> = {

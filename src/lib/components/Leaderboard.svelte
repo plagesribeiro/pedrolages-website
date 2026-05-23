@@ -35,19 +35,24 @@
   }
 </script>
 
-<aside class="w-full max-w-[600px] rounded-xl border border-zinc-800 bg-zinc-950/60 p-4 backdrop-blur">
+<aside
+  class="w-full max-w-[600px] rounded-xl border border-zinc-800 bg-zinc-950/60 p-4 backdrop-blur"
+>
   <header class="mb-3 flex items-center gap-2">
     <Trophy class="h-4 w-4 text-amber-300" />
     <h3 class="font-pixel text-[11px] tracking-wider text-zinc-300">{titleText.toUpperCase()}</h3>
     {#if scores[0]}
       <span class="ml-auto text-[10px] font-mono text-zinc-500">
-        {$tt({ pt: 'líder', en: 'leader' })}: <span class="text-[color:var(--color-gb-light)]">{scores[0].name}</span>
+        {$tt({ pt: 'líder', en: 'leader' })}:
+        <span class="text-[color:var(--color-gb-light)]">{scores[0].name}</span>
       </span>
     {/if}
   </header>
 
   {#if loading && scores.length === 0}
-    <p class="py-4 text-center font-mono text-xs text-zinc-600">{$tt({ pt: 'carregando...', en: 'loading...' })}</p>
+    <p class="py-4 text-center font-mono text-xs text-zinc-600">
+      {$tt({ pt: 'carregando...', en: 'loading...' })}
+    </p>
   {:else if scores.length === 0}
     <p class="py-4 text-center font-mono text-xs text-zinc-600">
       {$tt({ pt: 'ninguém ainda. seja o primeiro 👑', en: 'nobody yet. be the first 👑' })}
@@ -56,7 +61,8 @@
     <ol class="space-y-1 font-mono text-sm">
       {#each scores as entry, i (entry.ts + entry.name)}
         <li
-          class="flex items-center justify-between rounded-md px-2 py-1.5 transition {highlightTs === entry.ts
+          class="flex items-center justify-between rounded-md px-2 py-1.5 transition {highlightTs ===
+          entry.ts
             ? 'bg-[color:var(--color-gb-green)]/15 text-[color:var(--color-gb-light)]'
             : 'text-zinc-300 odd:bg-zinc-900/40'}"
         >
@@ -68,7 +74,9 @@
           </span>
           <span class="flex items-center gap-3">
             <span class="text-xs text-zinc-500">{timeAgo(entry.ts)}</span>
-            <span class="font-pixel text-[11px] text-[color:var(--color-gb-light)]">{entry.score}</span>
+            <span class="font-pixel text-[11px] text-[color:var(--color-gb-light)]"
+              >{entry.score}</span
+            >
           </span>
         </li>
       {/each}

@@ -30,14 +30,19 @@
         href={data.parentUrl}
         class="mb-6 inline-flex items-center gap-1.5 text-xs text-zinc-400 hover:text-zinc-100"
       >
-        <ArrowLeft class="h-3.5 w-3.5" /> {$tt({ pt: 'voltar pra listagem', en: 'back to listing' })}
+        <ArrowLeft class="h-3.5 w-3.5" />
+        {$tt({ pt: 'voltar pra listagem', en: 'back to listing' })}
       </a>
     {/if}
 
-    <header class="mb-6 flex flex-wrap items-end justify-between gap-3 border-b border-zinc-800 pb-4">
+    <header
+      class="mb-6 flex flex-wrap items-end justify-between gap-3 border-b border-zinc-800 pb-4"
+    >
       <div>
         <p class="font-mono text-xs text-zinc-500">/pdf/{data.slug}</p>
-        <h1 class="mt-1 font-pixel text-xl text-[color:var(--color-gb-light)] glow-green sm:text-2xl">
+        <h1
+          class="mt-1 font-pixel text-xl text-[color:var(--color-gb-light)] glow-green sm:text-2xl"
+        >
           {data.title}
         </h1>
       </div>
@@ -47,7 +52,8 @@
           download
           class="inline-flex items-center gap-1.5 rounded-full border border-zinc-800 bg-zinc-900/60 px-3 py-1.5 text-xs text-zinc-300 hover:border-zinc-600 hover:text-zinc-100"
         >
-          <Download class="h-3.5 w-3.5" /> {$tt({ pt: 'baixar', en: 'download' })}
+          <Download class="h-3.5 w-3.5" />
+          {$tt({ pt: 'baixar', en: 'download' })}
         </a>
         <a
           href={data.url}
@@ -55,7 +61,8 @@
           rel="noopener"
           class="inline-flex items-center gap-1.5 rounded-full border border-zinc-800 bg-zinc-900/60 px-3 py-1.5 text-xs text-zinc-300 hover:border-zinc-600 hover:text-zinc-100"
         >
-          <ExternalLink class="h-3.5 w-3.5" /> {$tt({ pt: 'abrir em nova aba', en: 'open in new tab' })}
+          <ExternalLink class="h-3.5 w-3.5" />
+          {$tt({ pt: 'abrir em nova aba', en: 'open in new tab' })}
         </a>
       </div>
     </header>
