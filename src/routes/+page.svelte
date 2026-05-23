@@ -6,6 +6,9 @@
   import RotatingTagline from '$lib/components/RotatingTagline.svelte';
   import Particles from '$lib/components/Particles.svelte';
   import MenuButton from '$lib/components/MenuButton.svelte';
+  import StalkPanel from '$lib/components/StalkPanel.svelte';
+  import ContactPanel from '$lib/components/ContactPanel.svelte';
+  import KofiFab from '$lib/components/KofiFab.svelte';
   import { yearsSince } from '$lib/utils/dates';
 
   export let data;
@@ -23,9 +26,30 @@
   let parallaxY = 0;
   let cursor = 0;
   let menuEl: HTMLElement;
+  let openPanel: 'stalk' | 'contact' | null = null;
 
-  const items = [
+  type LinkItem = {
+    kind: 'link';
+    href: string;
+    labelPt: string;
+    labelEn: string;
+    hintPt: string;
+    hintEn: string;
+    badge?: string;
+  };
+  type ExpandItem = {
+    kind: 'expand';
+    panelId: 'stalk' | 'contact';
+    labelPt: string;
+    labelEn: string;
+    hintPt: string;
+    hintEn: string;
+  };
+  type Item = LinkItem | ExpandItem;
+
+  const items: Item[] = [
     {
+      kind: 'link',
       href: '/about',
       labelPt: 'sobre o pedro',
       labelEn: 'about pedro',
@@ -33,6 +57,7 @@
       hintEn: 'the story, the cv, the joke'
     },
     {
+      kind: 'link',
       href: '/hack',
       labelPt: '$ hack me',
       labelEn: '$ hack me',
@@ -40,6 +65,7 @@
       hintEn: 'interactive terminal'
     },
     {
+      kind: 'link',
       href: '/games',
       labelPt: 'jogar',
       labelEn: 'play',
@@ -48,18 +74,40 @@
       badge: 'NEW'
     },
     {
-      href: '/contact',
+      kind: 'expand',
+      panelId: 'stalk',
       labelPt: 'me stalkear',
       labelEn: 'stalk me',
-      hintPt: 'mandar mensagem · me pagar um café',
-      hintEn: 'message me · buy me a coffee'
+      hintPt: 'redes sociais e cv',
+      hintEn: 'socials and cv'
+    },
+    {
+      kind: 'expand',
+      panelId: 'contact',
+      labelPt: 'me contactar',
+      labelEn: 'contact me',
+      hintPt: 'email e whatsapp',
+      hintEn: 'email and whatsapp'
     }
   ];
 
   function focusItem(i: number) {
     cursor = (i + items.length) % items.length;
-    const links = menuEl?.querySelectorAll<HTMLAnchorElement>('a[data-menu-item]');
-    links?.[cursor]?.focus();
+    const elems = menuEl?.querySelectorAll<HTMLElement>('[data-menu-item]');
+    elems?.[cursor]?.focus();
+  }
+
+  function togglePanel(id: 'stalk' | 'contact') {
+    openPanel = openPanel === id ? null : id;
+  }
+
+  function activate(i: number) {
+    const it = items[i];
+    if (it.kind === 'link') {
+      goto(it.href);
+    } else {
+      togglePanel(it.panelId);
+    }
   }
 
   function onKey(e: KeyboardEvent) {
@@ -72,15 +120,17 @@
     } else if (k === 'ArrowUp' || k === 'k' || k === 'w' || k === 'W') {
       e.preventDefault();
       focusItem(cursor - 1);
-    } else if (k === 'Enter' || k === ' ') {
-      const link = menuEl?.querySelectorAll<HTMLAnchorElement>('a[data-menu-item]')?.[cursor];
-      if (link) {
+    } else if (k === 'Escape') {
+      if (openPanel) {
         e.preventDefault();
-        goto(link.getAttribute('href') ?? '/');
+        openPanel = null;
       }
     } else if (k >= '1' && k <= '9') {
       const i = Number(k) - 1;
-      if (i < items.length) goto(items[i].href);
+      if (i < items.length) {
+        e.preventDefault();
+        activate(i);
+      }
     }
   }
 
@@ -138,7 +188,7 @@
         ★ <kbd class="kbd">↑</kbd> <kbd class="kbd">↓</kbd> · <kbd class="kbd">W</kbd>/<kbd
           class="kbd">S</kbd
         >
-        · <kbd class="kbd">enter</kbd> · <kbd class="kbd">1-4</kbd> · <kbd class="kbd">?</kbd> ★
+        · <kbd class="kbd">enter</kbd> · <kbd class="kbd">1-5</kbd> · <kbd class="kbd">?</kbd> ★
       </p>
       <h1 class="mt-3 font-pixel text-2xl leading-tight glow-green sm:text-3xl lg:text-4xl">
         {resume.name}
@@ -152,20 +202,37 @@
     </div>
 
     <nav bind:this={menuEl} class="flex w-full max-w-md flex-col gap-3" aria-label="main menu">
-      {#each items as item, i (item.href)}
+      {#each items as item, i (item.kind === 'link' ? item.href : item.panelId)}
         <div
           on:mouseenter={() => (cursor = i)}
           class={cursor === i ? 'menu-cursor-on' : ''}
           role="presentation"
         >
-          <MenuButton
-            href={item.href}
-            label={$locale === 'pt' ? item.labelPt : item.labelEn}
-            hint={$locale === 'pt' ? item.hintPt : item.hintEn}
-            badge={item.badge ?? ''}
-            index={i}
-            dataAttr="menu-item"
-          />
+          {#if item.kind === 'link'}
+            <MenuButton
+              href={item.href}
+              label={$locale === 'pt' ? item.labelPt : item.labelEn}
+              hint={$locale === 'pt' ? item.hintPt : item.hintEn}
+              badge={item.badge ?? ''}
+              index={i}
+              dataAttr="menu-item"
+            />
+          {:else}
+            <MenuButton
+              label={$locale === 'pt' ? item.labelPt : item.labelEn}
+              hint={$locale === 'pt' ? item.hintPt : item.hintEn}
+              index={i}
+              dataAttr="menu-item"
+              expanded={openPanel === item.panelId}
+              panelId={`panel-${item.panelId}`}
+              on:toggle={() => togglePanel(item.panelId)}
+            />
+            {#if item.panelId === 'stalk'}
+              <StalkPanel {resume} open={openPanel === 'stalk'} id="panel-stalk" />
+            {:else}
+              <ContactPanel {resume} open={openPanel === 'contact'} id="panel-contact" />
+            {/if}
+          {/if}
         </div>
       {/each}
     </nav>
@@ -189,6 +256,10 @@
       </div>
     </div>
   </div>
+
+  {#if resume.links.kofi}
+    <KofiFab href={resume.links.kofi} />
+  {/if}
 </main>
 
 <style>
@@ -201,7 +272,8 @@
     color: rgb(212 212 216);
     font-family: var(--font-mono);
   }
-  :global(.menu-cursor-on a) {
+  :global(.menu-cursor-on a),
+  :global(.menu-cursor-on > button) {
     border-color: rgba(155, 188, 15, 0.7) !important;
     background: rgba(24, 24, 27, 0.95) !important;
   }

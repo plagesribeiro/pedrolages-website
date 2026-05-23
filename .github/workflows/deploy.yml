@@ -1,6 +1,10 @@
-# CI runs on every push & PR (lint + check + test).
-# Deploy to Cloudflare Pages only runs after CI passes, and only for pushes
-# to `production` (or a manual workflow_dispatch on that branch).
+# CI + Deploy
+#
+# Trigger model:
+#   - push to `staging`     → CI → deploy preview (https://staging.pedrolages-website.pages.dev)
+#   - push to `production`  → CI → deploy production (https://pedrolages.dev)
+#   - pull_request targeting `staging` or `production` → CI only (no deploy)
+#   - any other branch       → nothing runs (no CI, no deploy)
 #
 # Required repo secrets (Settings → Secrets and variables → Actions):
 #   - CLOUDFLARE_API_TOKEN  (account-scoped, "Edit Cloudflare Workers" template)
@@ -10,8 +14,9 @@ name: CI + Deploy
 
 on:
   push:
-    branches: [main, production]
+    branches: [staging, production]
   pull_request:
+    branches: [staging, production]
   workflow_dispatch:
 
 jobs:
@@ -32,10 +37,32 @@ jobs:
       - name: test
         run: npm run test
 
-  deploy:
-    name: deploy → cloudflare pages
+  deploy-staging:
+    name: deploy → cloudflare pages (preview / staging)
     needs: ci
-    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/production'
+    if: github.event_name == 'push' && github.ref == 'refs/heads/staging'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      deployments: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run build
+      - uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          command: pages deploy .svelte-kit/cloudflare --project-name=pedrolages-website --branch=staging
+
+  deploy-production:
+    name: deploy → cloudflare pages (production)
+    needs: ci
+    if: github.event_name == 'push' && github.ref == 'refs/heads/production'
     runs-on: ubuntu-latest
     permissions:
       contents: read

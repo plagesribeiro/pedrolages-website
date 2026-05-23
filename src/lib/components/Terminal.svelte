@@ -54,7 +54,6 @@
     '/games/tokens': { label: { pt: 'pegador de tokens', en: 'token catcher' } },
     '/games/pong': { label: { pt: 'pong vs ia', en: 'pong vs ai' } },
     '/games/bugs': { label: { pt: 'mata-bugs', en: 'whack-a-bug' } },
-    '/contact': { label: { pt: 'me stalkeie', en: 'stalk me' } },
     '/resume': { label: { pt: 'cv para imprimir', en: 'printable cv' } },
     '/md': { label: { pt: 'posts em markdown', en: 'markdown shares' } },
     '/html': { label: { pt: 'compartilhamentos html', en: 'html shares' } },
@@ -72,7 +71,11 @@
 
   function labelFor(folder: ContentFolder): string {
     if (currentLocale === 'pt') {
-      return folder === 'md' ? 'post markdown' : folder === 'html' ? 'compartilhamento html' : 'pdf';
+      return folder === 'md'
+        ? 'post markdown'
+        : folder === 'html'
+          ? 'compartilhamento html'
+          : 'pdf';
     }
     return folder === 'md' ? 'markdown post' : folder === 'html' ? 'html share' : 'pdf';
   }
@@ -192,8 +195,8 @@
         `lattes:    ${resume.links.lattes ?? '—'}`,
         '',
         currentLocale === 'pt'
-          ? 'tip: `cd /contact` pra abrir a página'
-          : 'tip: `cd /contact` to open the page'
+          ? 'tip: `cd /` e clica em "me contactar" pra abrir inline'
+          : 'tip: `cd /` and click "contact me" to expand inline'
       ]
     },
     resume: {
@@ -292,7 +295,7 @@
       }
     },
     date: {
-      desc: { pt: 'que dia é hoje', en: "what day is it" },
+      desc: { pt: 'que dia é hoje', en: 'what day is it' },
       run: () => new Date().toString()
     },
     uname: {
@@ -386,9 +389,7 @@
         '     |__________________  __|',
         '       (O)            (O)',
         '',
-        currentLocale === 'pt'
-          ? '   (psst: o comando era `ls`)'
-          : '   (psst: the command was `ls`)'
+        currentLocale === 'pt' ? '   (psst: o comando era `ls`)' : '   (psst: the command was `ls`)'
       ]
     },
     sudo: {
@@ -511,7 +512,10 @@
       const matches = Object.keys(COMMANDS).filter((k) => k.startsWith(start));
       if (matches.length === 1) return matches[0] + ' ';
       if (matches.length > 1) {
-        printMany([currentLocale === 'pt' ? 'opções:' : 'matches:', '  ' + matches.join('   ')], 'muted');
+        printMany(
+          [currentLocale === 'pt' ? 'opções:' : 'matches:', '  ' + matches.join('   ')],
+          'muted'
+        );
         const prefix = commonPrefix(matches);
         return prefix.length > start.length ? prefix : value;
       }
@@ -558,7 +562,10 @@
       const matches = games.filter((g) => g.startsWith(last));
       if (matches.length === 1) return `${cmd} ${matches[0]} `;
       if (matches.length > 1) {
-        printMany([currentLocale === 'pt' ? 'opções:' : 'matches:', '  ' + matches.join('   ')], 'muted');
+        printMany(
+          [currentLocale === 'pt' ? 'opções:' : 'matches:', '  ' + matches.join('   ')],
+          'muted'
+        );
         const prefix = commonPrefix(matches);
         if (prefix && prefix.length > last.length) return `${cmd} ${prefix}`;
       }
@@ -570,7 +577,10 @@
       const matches = aliases.filter((a) => a.startsWith(last));
       if (matches.length === 1) return `${cmd} ${matches[0]} `;
       if (matches.length > 1) {
-        printMany([currentLocale === 'pt' ? 'opções:' : 'matches:', '  ' + matches.join('   ')], 'muted');
+        printMany(
+          [currentLocale === 'pt' ? 'opções:' : 'matches:', '  ' + matches.join('   ')],
+          'muted'
+        );
         const prefix = commonPrefix(matches);
         if (prefix && prefix.length > last.length) return `${cmd} ${prefix}`;
       }
