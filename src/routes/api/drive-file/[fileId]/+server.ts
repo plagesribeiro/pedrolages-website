@@ -31,9 +31,9 @@ export const GET: RequestHandler = async ({ params }) => {
 
   const headers: Record<string, string> = {
     'content-type': contentType,
-    // safe to cache aggressively — Drive returns a new file id when the file
-    // is replaced, so the URL changes too.
-    'cache-control': 'public, max-age=3600',
+    // Short cache + revalidate — Drive keeps the same file id across edits,
+    // so we can't trust long-lived caches to reflect updates.
+    'cache-control': 'public, max-age=60, must-revalidate',
     'content-disposition': 'inline'
   };
   if (contentLength) headers['content-length'] = contentLength;

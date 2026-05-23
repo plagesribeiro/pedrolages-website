@@ -1,14 +1,20 @@
 <script lang="ts">
   import Self from './Tree.svelte';
-  import type { ContentItem } from '$lib/content/manifest';
-  import { FileText, Folder as FolderIcon, ChevronRight } from '@lucide/svelte';
+  import type { ContentItem, Kind } from '$lib/content/manifest';
+  import { FileText, FileCode, FileType, Folder as FolderIcon, ChevronRight } from '@lucide/svelte';
 
   export let items: ContentItem[];
   /** Folder path of the current node, e.g. "notas" or "" for root. */
   export let basePath: string = '';
-  /** URL prefix, e.g. "/md" or "/md/notas". */
+  /** URL prefix, e.g. "/docs" or "/docs/notas". */
   export let baseUrl: string;
   export let depth: number = 0;
+
+  function iconFor(kind: Kind) {
+    if (kind === 'html') return FileCode;
+    if (kind === 'pdf') return FileType;
+    return FileText;
+  }
 
   $: directFiles = items
     .filter((i) => i.folder === basePath)
@@ -69,7 +75,7 @@
         >
           {name}/
         </a>
-        <span class="text-xs font-mono text-zinc-600">{subItems.length}</span>
+        <span class="font-mono text-xs text-zinc-600">{subItems.length}</span>
       </div>
       {#if isOpen}
         <div class="mt-1.5 ml-3 border-l border-zinc-800 pl-3">
@@ -80,16 +86,22 @@
   {/each}
 
   {#each directFiles as item}
+    {@const Icon = iconFor(item.kind)}
     <li>
       <a
         href={item.url}
         class="group flex items-center gap-2 rounded-lg border border-zinc-800 bg-zinc-950/60 px-3 py-2 transition hover:border-[color:var(--color-gb-green)]/40 hover:bg-zinc-900/60"
       >
         <span class="grid h-6 w-6 place-items-center text-zinc-700"></span>
-        <FileText class="h-4 w-4 text-zinc-500 group-hover:text-[color:var(--color-gb-light)]" />
+        <Icon class="h-4 w-4 text-zinc-500 group-hover:text-[color:var(--color-gb-light)]" />
         <span class="flex-1 font-mono text-sm text-zinc-300 group-hover:text-zinc-100"
           >{item.name}</span
         >
+        {#if item.visibility === 'private'}
+          <span class="font-mono text-[10px] tracking-wider text-amber-300/70 uppercase"
+            >private</span
+          >
+        {/if}
       </a>
     </li>
   {/each}

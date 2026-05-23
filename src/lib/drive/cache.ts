@@ -32,7 +32,8 @@ export async function cacheGet<T>(
   if (!kv) return null;
   try {
     const v = await kv.get(key, 'json');
-    if (v !== null) memSet(key, v, 60); // mirror in memory briefly
+    // Mirror briefly so staleness stays bounded — KV's own TTL ultimately wins.
+    if (v !== null) memSet(key, v, 5);
     return (v ?? null) as T | null;
   } catch {
     return null;

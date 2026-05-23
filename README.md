@@ -34,8 +34,8 @@ A few things worth pointing out if you're skimming the code:
 - **Single source of truth for the résumé.** `src/lib/data/resume.json` powers the landing page, the `/resume` route, and the client-side PDF export. The PT/EN switcher just toggles `{ "pt": "...", "en": "..." }` shaped fields throughout the tree.
 - **No `PUBLIC_` env vars.** Every secret stays server-side in the Worker; the browser bundle never sees them. See `.env.example` for the contract.
 - **Two KV namespaces with graceful degradation.** Both `SCORES` and `CONTENT_CACHE` fall back to in-memory stores when the binding is missing, so `npm run dev` Just Runs without any Cloudflare setup. Production gets persistence; local gets ergonomics.
-- **Markdown pipeline is a single unified processor** that lives on the server: `remark-parse → remark-math → remark-gfm → remark-rehype → rehype-katex → @shikijs/rehype → rehype-stringify`. The output is plain HTML, cached in KV by file ID + revision.
-- **Drop-file content routes.** Drop `slug.md` into the Drive folder mapped to `/md/public/` and it becomes `/md/<slug>`. Same for `.html` and `.pdf`. The manifest is fetched once per 5 min, the file body is cached on first hit.
+- **Markdown pipeline is a single unified processor** that lives on the server: `remark-parse → remark-math → remark-gfm → remark-rehype → rehype-katex → @shikijs/rehype → rehype-stringify`. The output is plain HTML, cached in KV by `driveId + modifiedTime`, so any edit invalidates automatically.
+- **Drop-file content routes under `/docs`.** Drop any `.md`, `.html`, or `.pdf` into the Drive folder `public/<...>` (or `private/<...>`) and it becomes `/docs/<path>`. Single unified tree mixing all three kinds, with the file type decided by extension. Updates show up on the site in ~10–20s — the manifest TTL is 15s and the open page polls `/api/manifest-version` every 5s to invalidate when something changes.
 - **i18n is two flat JSON files** (`pt.json`, `en.json`) and a small store — no runtime, no framework, no message-extraction step.
 - **Prerendered where it makes sense, server-rendered where it doesn't.** The Worker stays small; the games and `/api/scores/*` are the only routes that need a request.
 
@@ -59,7 +59,8 @@ src/
   routes/
     +page.svelte            landing (Hero / Timeline / Stats / Skills / Education / ...)
     api/scores/[game]/      KV-backed leaderboard endpoints
-    md/, html/, pdf/        catch-all routes for Drive content
+    api/manifest-version    revision tag the /docs page polls for live updates
+    docs/[...path]          unified Drive-backed library (md/html/pdf)
     games/, hack/, ...      the fun stuff
   lib/
     components/             Hero, Timeline, Terminal, Particles, HackOverlay, ...
@@ -94,10 +95,10 @@ npx wrangler pages dev .svelte-kit/cloudflare --kv SCORES --kv CONTENT_CACHE
 
 Copy `.env.example` to `.env` and fill in:
 
-| Variable                           | Purpose                                                                                              |
-| ---------------------------------- | ---------------------------------------------------------------------------------------------------- |
-| `GOOGLE_DRIVE_SERVICE_ACCOUNT_KEY` | Full service-account JSON, base64-encoded — used by the Drive-backed CMS for `/md`, `/html`, `/pdf`. |
-| `GOOGLE_DRIVE_ROOT_FOLDER_ID`      | The Drive folder ID the content manifest is built from.                                              |
+| Variable                           | Purpose                                                                              |
+| ---------------------------------- | ------------------------------------------------------------------------------------ |
+| `GOOGLE_DRIVE_SERVICE_ACCOUNT_KEY` | Full service-account JSON, base64-encoded — used by the Drive-backed CMS at `/docs`. |
+| `GOOGLE_DRIVE_ROOT_FOLDER_ID`      | The Drive folder ID the content manifest is built from.                              |
 
 In production, set the same names in **Cloudflare Pages → Settings → Variables and Secrets** (mark them as **Secret** so they're encrypted at rest).
 
