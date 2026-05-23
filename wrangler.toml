@@ -4,7 +4,7 @@
 name = "plagesribeiro-site"
 compatibility_date = "2025-05-01"
 pages_build_output_dir = ".svelte-kit/cloudflare"
-account_id = "f3ccd6adcf1b623cff15b47988b0cd24"
+# Account ID injected via CLOUDFLARE_ACCOUNT_ID env var or Pages dashboard.
 
 # Leaderboard scores.
 [[kv_namespaces]]
