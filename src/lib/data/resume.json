@@ -253,17 +253,17 @@
       "Cross-functional alignment"
     ],
     "stack": [
-      "TypeScript",
       "Python",
-      "Rust",
-      "Dart (Flutter)",
-      "SQL",
+      "TypeScript",
       "SvelteKit",
       "Next.js",
       "React",
       "Hono",
       "Node.js",
-      "FastAPI"
+      "FastAPI",
+      "Flutter",
+      "SQL",
+      "Rust"
     ],
     "infra": [
       "Cloudflare Workers",
@@ -272,6 +272,7 @@
       "Docker",
       "Vercel",
       "AWS",
+      "GCP",
       "Firebase"
     ]
   },
