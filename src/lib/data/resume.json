@@ -60,9 +60,22 @@
       "end": "2022",
       "status": "completed",
       "note": {
-        "pt": "Quatro anos de fundamentos sólidos: algoritmos, estruturas de dados, sistemas distribuídos, banco de dados, machine learning e IA. Período em que consolidei o interesse pela área de Inteligência Artificial.",
-        "en": "Four years of solid foundations: algorithms, data structures, distributed systems, databases, machine learning and AI. The period when I consolidated my interest in Artificial Intelligence."
-      }
+        "pt": "Formação completa em ciência da computação, com base sólida em algoritmos, estruturas de dados, programação orientada a objetos e arquitetura de computadores. Foi nessa fase que consolidei o interesse por Inteligência Artificial, machine learning, deep learning e processamento de linguagem natural.",
+        "en": "Full computer science program, with a solid foundation in algorithms, data structures, object-oriented programming and computer architecture. The period when I consolidated my interest in Artificial Intelligence, machine learning, deep learning and natural language processing."
+      },
+      "skills": [
+        "Java",
+        "C#",
+        "Algoritmos",
+        "Estruturas de dados",
+        "Orientação a objetos",
+        "Arquitetura de computadores",
+        "Inteligência Artificial",
+        "Machine Learning",
+        "Deep Learning",
+        "NLP",
+        "RAG (multi-agente)"
+      ]
     },
     {
       "degree": {
@@ -73,9 +86,16 @@
       "start": "2023",
       "status": "in-progress",
       "note": {
-        "pt": "Pesquisa em Inteligência Artificial, em paralelo ao trabalho full-time. Oportunidade de aprofundar fundamentos teóricos enquanto sigo ativo na construção de produtos.",
-        "en": "Research in Artificial Intelligence, alongside full-time work. An opportunity to deepen theoretical foundations while staying active in product engineering."
-      }
+        "pt": "Pesquisa em Inteligência Artificial com foco em NLP e sistemas multi-agente baseados em RAG, em paralelo ao trabalho full-time. Oportunidade de aprofundar fundamentos teóricos — incluindo teoria dos grafos e arquitetura de computadores — enquanto sigo ativo na construção de produtos.",
+        "en": "Research in Artificial Intelligence focused on NLP and multi-agent systems built on RAG, alongside full-time work. An opportunity to deepen theoretical foundations — including graph theory and computer architecture — while staying active in product engineering."
+      },
+      "skills": [
+        "Inteligência Artificial",
+        "Arquitetura de computadores",
+        "Grafos",
+        "NLP",
+        "RAG (multi-agente)"
+      ]
     }
   ],
   "experience": [

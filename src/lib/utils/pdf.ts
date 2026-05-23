@@ -348,6 +348,23 @@ export async function generateResumePDF(resume: Resume, locale: Locale): Promise
       setFont(doc, 'normal', 9.5, '#404040');
       y = writeWrapped(doc, edu.note[locale], CONTENT_X, y, contentWidth, 4.6);
     }
+    if (edu.skills && edu.skills.length) {
+      y += 0.5;
+      setFont(doc, 'normal', 9, '#404040');
+      const label = locale === 'pt' ? 'Skills:' : 'Skills:';
+      setFont(doc, 'bold', 9, '#404040');
+      safeText(doc, label, CONTENT_X, y);
+      const labelWidth = doc.getTextWidth(label + ' ');
+      setFont(doc, 'normal', 9, '#404040');
+      y = writeWrapped(
+        doc,
+        edu.skills.join(' · '),
+        CONTENT_X + labelWidth,
+        y,
+        contentWidth - labelWidth,
+        4.5
+      );
+    }
     y += 5;
   }
 

@@ -90,6 +90,15 @@
             </span>
           </div>
           <p class="text-sm text-zinc-400 print:text-zinc-700">{pick(edu.degree, $locale)}</p>
+          {#if edu.note}
+            <p class="mt-1 text-sm text-zinc-500 print:text-zinc-700">{pick(edu.note, $locale)}</p>
+          {/if}
+          {#if edu.skills && edu.skills.length}
+            <p class="mt-1 text-xs text-zinc-500 print:text-zinc-700">
+              <span class="font-semibold">Skills:</span>
+              {edu.skills.join(' · ')}
+            </p>
+          {/if}
         </div>
       {/each}
     </div>

@@ -19,6 +19,7 @@ export interface Education {
   end?: string;
   status: 'completed' | 'in-progress';
   note?: L10n;
+  skills?: string[];
 }
 
 export interface Experience {
