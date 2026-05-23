@@ -31,13 +31,14 @@ export interface Experience {
   remote?: boolean;
   endedWith?: 'acquired' | 'shutdown' | 'left';
   summary: L10n;
+  bullets?: L10n<string[]>;
   tags: string[];
 }
 
 export interface Skills {
   ai: string[];
-  languages: string[];
-  frameworks: string[];
+  leadership: string[];
+  stack: string[];
   infra: string[];
 }
 

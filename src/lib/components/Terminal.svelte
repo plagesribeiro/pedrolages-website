@@ -59,7 +59,8 @@
     '/html': { label: { pt: 'compartilhamentos html', en: 'html shares' } },
     '/pdf': { label: { pt: 'pdfs', en: 'pdf shares' } },
     '/coffee': { label: { pt: '418 bule de chá', en: '418 teapot' } },
-    '/admin': { label: { pt: 'acesso negado :p', en: 'access denied :p' } }
+    '/admin': { label: { pt: 'acesso negado :p', en: 'access denied :p' } },
+    '/banner': { label: { pt: 'banners pra LinkedIn/kofi', en: 'banners for LinkedIn/kofi' } }
   };
 
   /** Identify if a path lives inside one of the content trees, e.g. /md/notas. */
@@ -211,6 +212,19 @@
       desc: { pt: 'me hackear (cuidado)', en: 'hack me (careful)' },
       run: () => {
         hackOpen = true;
+      }
+    },
+    banner: {
+      desc: { pt: 'banners do LinkedIn/kofi', en: 'LinkedIn/kofi banners' },
+      run: async (args) => {
+        const kind = args[0] === 'kofi' ? 'kofi' : 'linkedin';
+        const path = `/banner?for=${kind}`;
+        await tick();
+        dispatch('navigate', { path });
+        goto(path);
+        return [
+          currentLocale === 'pt' ? `abrindo banner ${kind} ...` : `opening ${kind} banner ...`
+        ];
       }
     },
     ls: {
