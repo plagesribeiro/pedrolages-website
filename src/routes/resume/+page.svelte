@@ -12,12 +12,23 @@
 
 <article class="mx-auto max-w-3xl px-6 py-10 print:py-0 print:px-0">
   <header class="border-b border-zinc-800 pb-6 print:border-zinc-300">
-    <div class="flex items-center justify-between">
-      <h1 class="text-2xl font-semibold">{resume.name}</h1>
+    <div class="flex items-start justify-between gap-4">
+      <div class="flex items-center gap-4">
+        <img
+          src="/photo.png"
+          alt={resume.name}
+          width="72"
+          height="72"
+          class="h-16 w-16 rounded-full border border-zinc-700 object-cover print:hidden"
+        />
+        <div>
+          <h1 class="text-2xl font-semibold">{resume.name}</h1>
+          <p class="mt-1 text-zinc-400 print:text-zinc-700">{pick(resume.headline, $locale)}</p>
+        </div>
+      </div>
       <div class="print:hidden"><DownloadResume {resume} /></div>
     </div>
-    <p class="mt-1 text-zinc-400 print:text-zinc-700">{pick(resume.headline, $locale)}</p>
-    <p class="mt-2 font-mono text-xs text-zinc-500 print:text-zinc-700">
+    <p class="mt-3 font-mono text-xs text-zinc-500 print:text-zinc-700">
       {pick(resume.location, $locale)} · {resume.email} ·
       <a class="underline" href={resume.links.linkedin}>LinkedIn</a> ·
       <a class="underline" href={resume.links.github}>GitHub</a>
@@ -53,6 +64,13 @@
             >
           </div>
           <p class="text-sm text-zinc-400 print:text-zinc-700">{pick(exp.summary, $locale)}</p>
+          {#if exp.bullets}
+            <ul class="mt-2 list-disc space-y-1 pl-5 text-sm text-zinc-400 print:text-zinc-700">
+              {#each pick(exp.bullets, $locale) as bullet}
+                <li>{bullet}</li>
+              {/each}
+            </ul>
+          {/if}
         </div>
       {/each}
     </div>
@@ -82,10 +100,19 @@
       {$t('section.skills').toUpperCase()}
     </h2>
     <div class="mt-3 grid gap-1 text-sm">
-      <p><span class="font-semibold">AI:</span> {resume.skills.ai.join(' · ')}</p>
-      <p><span class="font-semibold">Languages:</span> {resume.skills.languages.join(' · ')}</p>
-      <p><span class="font-semibold">Frameworks:</span> {resume.skills.frameworks.join(' · ')}</p>
-      <p><span class="font-semibold">Infra:</span> {resume.skills.infra.join(' · ')}</p>
+      <p><span class="font-semibold">{$t('skills.ai')}:</span> {resume.skills.ai.join(' · ')}</p>
+      <p>
+        <span class="font-semibold">{$t('skills.leadership')}:</span>
+        {resume.skills.leadership.join(' · ')}
+      </p>
+      <p>
+        <span class="font-semibold">{$t('skills.stack')}:</span>
+        {resume.skills.stack.join(' · ')}
+      </p>
+      <p>
+        <span class="font-semibold">{$t('skills.infra')}:</span>
+        {resume.skills.infra.join(' · ')}
+      </p>
     </div>
   </section>
 </article>

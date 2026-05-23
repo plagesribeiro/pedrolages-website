@@ -10,9 +10,8 @@
     busy = true;
     try {
       const { downloadResumePDF } = await import('$lib/utils/pdf');
-      downloadResumePDF(resume, $locale);
+      await downloadResumePDF(resume, $locale);
     } finally {
-      // brief delay so the spinner isn't a flash
       setTimeout(() => (busy = false), 400);
     }
   }

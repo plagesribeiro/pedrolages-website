@@ -5,16 +5,26 @@ import { formatRange, yearsSince } from './dates';
 const COLORS = {
   text: '#0a0a0a',
   muted: '#525252',
-  accent: '#306230',
-  rule: '#d4d4d4'
+  contentAccent: '#306230',
+  rule: '#d4d4d4',
+  sidebarBg: '#1a1a1a',
+  sidebarText: '#e5e5e5',
+  sidebarMuted: '#a3a3a3',
+  sidebarAccent: '#9bbc0f',
+  sidebarRule: '#3a3a3a'
 };
 
-const MARGIN = 16;
+const SIDEBAR_W = 62;
+const SIDEBAR_PAD = 7;
+const CONTENT_X = SIDEBAR_W + 10;
+const TOP_MARGIN = 14;
+const BOTTOM_MARGIN = 14;
+const RIGHT_MARGIN = 12;
 
-function setFont(doc: jsPDF, weight: 'normal' | 'bold' = 'normal', size = 10) {
+function setFont(doc: jsPDF, weight: 'normal' | 'bold' = 'normal', size = 10, color = COLORS.text) {
   doc.setFont('helvetica', weight);
   doc.setFontSize(size);
-  doc.setTextColor(COLORS.text);
+  doc.setTextColor(color);
 }
 
 function writeWrapped(
@@ -33,21 +43,36 @@ function writeWrapped(
   return y;
 }
 
-function sectionHeader(doc: jsPDF, label: string, y: number, pageWidth: number): number {
-  setFont(doc, 'bold', 12);
-  doc.setTextColor(COLORS.accent);
-  doc.text(label.toUpperCase(), MARGIN, y);
+function paintSidebar(doc: jsPDF) {
+  const pageHeight = doc.internal.pageSize.getHeight();
+  doc.setFillColor(COLORS.sidebarBg);
+  doc.rect(0, 0, SIDEBAR_W, pageHeight, 'F');
+}
+
+function sectionHeader(
+  doc: jsPDF,
+  label: string,
+  y: number,
+  pageWidth: number,
+  contentWidth: number
+): number {
+  setFont(doc, 'bold', 12, COLORS.contentAccent);
+  doc.text(label.toUpperCase(), CONTENT_X, y);
   doc.setDrawColor(COLORS.rule);
   doc.setLineWidth(0.3);
-  doc.line(MARGIN, y + 1.5, pageWidth - MARGIN, y + 1.5);
-  doc.setTextColor(COLORS.text);
+  doc.line(CONTENT_X, y + 1.5, CONTENT_X + contentWidth, y + 1.5);
   return y + 7;
 }
 
+function addPageWithSidebar(doc: jsPDF): number {
+  doc.addPage();
+  paintSidebar(doc);
+  return TOP_MARGIN;
+}
+
 function maybeNewPage(doc: jsPDF, y: number, pageHeight: number, needed = 20): number {
-  if (y + needed > pageHeight - MARGIN) {
-    doc.addPage();
-    return MARGIN;
+  if (y + needed > pageHeight - BOTTOM_MARGIN) {
+    return addPageWithSidebar(doc);
   }
   return y;
 }
@@ -56,12 +81,13 @@ const LABELS = {
   pt: {
     contact: 'Contato',
     summary: 'Sobre',
-    experience: 'Experiência',
+    experience: 'Trajetória',
     education: 'Educação',
-    skills: 'Habilidades',
+    skills: 'Skills',
+    stats: 'Stats',
     ai: 'IA & ML',
-    languages: 'Linguagens',
-    frameworks: 'Frameworks',
+    leadership: 'Liderança',
+    stack: 'Stack',
     infra: 'Infra',
     founded: 'fundei',
     current: 'atual',
@@ -69,17 +95,19 @@ const LABELS = {
     shutdown: 'encerrada',
     remote: 'remoto',
     yearsBuilding: (n: number) => `${n} ano${n === 1 ? '' : 's'} construindo software`,
-    yearsAi: (n: number) => `${n} ano${n === 1 ? '' : 's'} com IA`
+    yearsAi: (n: number) => `${n} ano${n === 1 ? '' : 's'} com IA`,
+    inProgress: 'em andamento'
   },
   en: {
     contact: 'Contact',
     summary: 'About',
-    experience: 'Experience',
+    experience: 'Journey',
     education: 'Education',
     skills: 'Skills',
+    stats: 'Stats',
     ai: 'AI & ML',
-    languages: 'Languages',
-    frameworks: 'Frameworks',
+    leadership: 'Leadership',
+    stack: 'Stack',
     infra: 'Infra',
     founded: 'founder',
     current: 'current',
@@ -87,76 +115,172 @@ const LABELS = {
     shutdown: 'shut down',
     remote: 'remote',
     yearsBuilding: (n: number) => `${n} year${n === 1 ? '' : 's'} building software`,
-    yearsAi: (n: number) => `${n} year${n === 1 ? '' : 's'} working with AI`
+    yearsAi: (n: number) => `${n} year${n === 1 ? '' : 's'} working with AI`,
+    inProgress: 'in progress'
   }
-} as const;
+};
 
-export function generateResumePDF(resume: Resume, locale: Locale): jsPDF {
+type LabelSet = (typeof LABELS)['pt'];
+
+async function fetchImageAsDataURL(url: string): Promise<string | null> {
+  try {
+    const res = await fetch(url);
+    if (!res.ok) return null;
+    const blob = await res.blob();
+    return await new Promise<string>((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = () => resolve(reader.result as string);
+      reader.onerror = reject;
+      reader.readAsDataURL(blob);
+    });
+  } catch {
+    return null;
+  }
+}
+
+function drawSidebarHeader(
+  doc: jsPDF,
+  resume: Resume,
+  locale: Locale,
+  labels: LabelSet,
+  photoDataUrl: string | null
+): void {
+  let y = TOP_MARGIN;
+
+  if (photoDataUrl) {
+    const size = SIDEBAR_W - SIDEBAR_PAD * 2 - 6;
+    const x = (SIDEBAR_W - size) / 2;
+    doc.setFillColor(COLORS.sidebarRule);
+    doc.roundedRect(x - 1, y - 1, size + 2, size + 2, 3, 3, 'F');
+    doc.addImage(photoDataUrl, 'PNG', x, y, size, size, undefined, 'FAST');
+    y += size + 8;
+  }
+
+  setFont(doc, 'bold', 11, COLORS.sidebarText);
+  const nameLines = doc.splitTextToSize(resume.name, SIDEBAR_W - SIDEBAR_PAD * 2);
+  for (const line of nameLines) {
+    doc.text(line, SIDEBAR_PAD, y);
+    y += 5;
+  }
+
+  setFont(doc, 'normal', 8, COLORS.sidebarAccent);
+  const handleLines = doc.splitTextToSize(`@${resume.handle}`, SIDEBAR_W - SIDEBAR_PAD * 2);
+  for (const line of handleLines) {
+    doc.text(line, SIDEBAR_PAD, y);
+    y += 4;
+  }
+  y += 4;
+
+  y = drawSidebarSection(doc, labels.contact, y);
+  setFont(doc, 'normal', 7.5, COLORS.sidebarText);
+  const contactItems = [
+    resume.email,
+    resume.links.linkedin.replace(/^https?:\/\//, ''),
+    resume.links.github.replace(/^https?:\/\//, ''),
+    resume.links.lattes ? resume.links.lattes.replace(/^https?:\/\//, '') : '',
+    resume.location[locale]
+  ].filter(Boolean);
+  for (const item of contactItems) {
+    const lines = doc.splitTextToSize(item, SIDEBAR_W - SIDEBAR_PAD * 2);
+    for (const line of lines) {
+      doc.text(line, SIDEBAR_PAD, y);
+      y += 3.5;
+    }
+    y += 1;
+  }
+  y += 3;
+
+  const skillGroups: [string, string[]][] = [
+    [labels.ai, resume.skills.ai],
+    [labels.leadership, resume.skills.leadership],
+    [labels.stack, resume.skills.stack],
+    [labels.infra, resume.skills.infra]
+  ];
+
+  y = drawSidebarSection(doc, labels.skills, y);
+  for (const [groupLabel, items] of skillGroups) {
+    if (!items.length) continue;
+    setFont(doc, 'bold', 7.5, COLORS.sidebarAccent);
+    doc.text(groupLabel, SIDEBAR_PAD, y);
+    y += 3.5;
+    setFont(doc, 'normal', 7.5, COLORS.sidebarText);
+    const text = items.join(' · ');
+    y = writeWrapped(doc, text, SIDEBAR_PAD, y, SIDEBAR_W - SIDEBAR_PAD * 2, 3.5);
+    y += 2.5;
+  }
+  y += 2;
+
+  y = drawSidebarSection(doc, labels.stats, y);
+  setFont(doc, 'normal', 7.5, COLORS.sidebarText);
+  const years = yearsSince(resume.careerStart);
+  const aiYears = yearsSince(resume.aiStart);
+  for (const stat of [labels.yearsBuilding(years), labels.yearsAi(aiYears)]) {
+    const lines = doc.splitTextToSize(stat, SIDEBAR_W - SIDEBAR_PAD * 2);
+    for (const line of lines) {
+      doc.text(line, SIDEBAR_PAD, y);
+      y += 3.5;
+    }
+    y += 1;
+  }
+}
+
+function drawSidebarSection(doc: jsPDF, label: string, y: number): number {
+  setFont(doc, 'bold', 8, COLORS.sidebarAccent);
+  doc.text(label.toUpperCase(), SIDEBAR_PAD, y);
+  doc.setDrawColor(COLORS.sidebarRule);
+  doc.setLineWidth(0.2);
+  doc.line(SIDEBAR_PAD, y + 1.2, SIDEBAR_W - SIDEBAR_PAD, y + 1.2);
+  return y + 5;
+}
+
+export async function generateResumePDF(resume: Resume, locale: Locale): Promise<jsPDF> {
   const doc = new jsPDF({ unit: 'mm', format: 'a4' });
   const labels = LABELS[locale];
   const pageWidth = doc.internal.pageSize.getWidth();
   const pageHeight = doc.internal.pageSize.getHeight();
-  const contentWidth = pageWidth - MARGIN * 2;
-  let y = MARGIN;
+  const contentWidth = pageWidth - CONTENT_X - RIGHT_MARGIN;
 
-  // Header — name
-  setFont(doc, 'bold', 22);
-  doc.text(resume.name, MARGIN, y + 4);
+  const photoDataUrl = await fetchImageAsDataURL('/photo.png');
+
+  paintSidebar(doc);
+  drawSidebarHeader(doc, resume, locale, labels, photoDataUrl);
+
+  let y = TOP_MARGIN;
+
+  setFont(doc, 'bold', 20);
+  doc.text(resume.name, CONTENT_X, y + 4);
   y += 8;
 
-  setFont(doc, 'normal', 10);
-  doc.setTextColor(COLORS.muted);
-  doc.text(resume.headline[locale], MARGIN, y + 4);
-  y += 7;
+  setFont(doc, 'normal', 10, COLORS.muted);
+  doc.text(resume.headline[locale], CONTENT_X, y + 4);
+  y += 9;
 
-  // Contact line
-  setFont(doc, 'normal', 9);
-  doc.setTextColor(COLORS.muted);
-  const contact = [
-    resume.location[locale],
-    resume.email,
-    resume.links.linkedin.replace(/^https?:\/\//, ''),
-    resume.links.github.replace(/^https?:\/\//, ''),
-    resume.links.lattes ? resume.links.lattes.replace(/^https?:\/\//, '') : ''
-  ]
-    .filter(Boolean)
-    .join('  ·  ');
-  doc.text(contact, MARGIN, y + 4);
-  y += 8;
+  doc.setDrawColor(COLORS.rule);
+  doc.setLineWidth(0.4);
+  doc.line(CONTENT_X, y, CONTENT_X + contentWidth, y);
+  y += 6;
 
-  // Stats line
-  const years = yearsSince(resume.careerStart);
-  const aiYears = yearsSince(resume.aiStart);
-  setFont(doc, 'normal', 9);
-  doc.setTextColor(COLORS.accent);
-  doc.text(`${labels.yearsBuilding(years)}  ·  ${labels.yearsAi(aiYears)}`, MARGIN, y + 4);
-  doc.setTextColor(COLORS.text);
-  y += 8;
-
-  // About
-  y = sectionHeader(doc, labels.summary, y, pageWidth);
+  y = sectionHeader(doc, labels.summary, y, pageWidth, contentWidth);
   setFont(doc, 'normal', 10);
   for (const para of resume.bio[locale]) {
-    y = writeWrapped(doc, para, MARGIN, y, contentWidth, 5);
+    y = writeWrapped(doc, para, CONTENT_X, y, contentWidth, 5);
     y += 2;
   }
   y += 3;
 
-  // Experience
   y = maybeNewPage(doc, y, pageHeight, 30);
-  y = sectionHeader(doc, labels.experience, y, pageWidth);
+  y = sectionHeader(doc, labels.experience, y, pageWidth, contentWidth);
   for (const exp of resume.experience) {
-    y = maybeNewPage(doc, y, pageHeight, 22);
+    y = maybeNewPage(doc, y, pageHeight, 24);
+
     setFont(doc, 'bold', 11);
-    doc.text(exp.company, MARGIN, y);
-    setFont(doc, 'normal', 9);
-    doc.setTextColor(COLORS.muted);
+    doc.text(exp.company, CONTENT_X, y);
+    setFont(doc, 'normal', 9, COLORS.muted);
     const range = formatRange(exp.start, exp.end, exp.current, locale);
-    doc.text(range, pageWidth - MARGIN, y, { align: 'right' });
+    doc.text(range, CONTENT_X + contentWidth, y, { align: 'right' });
     y += 5;
 
     setFont(doc, 'normal', 10);
-    doc.setTextColor(COLORS.text);
     const role = exp.role[locale];
     const badges: string[] = [];
     if (exp.current) badges.push(labels.current);
@@ -165,63 +289,51 @@ export function generateResumePDF(resume: Resume, locale: Locale): jsPDF {
     if (exp.endedWith === 'acquired') badges.push(labels.acquired);
     if (exp.endedWith === 'shutdown') badges.push(labels.shutdown);
     const roleLine = badges.length ? `${role}  ·  ${badges.join(' · ')}` : role;
-    doc.text(roleLine, MARGIN, y);
+    doc.text(roleLine, CONTENT_X, y);
     y += 5;
 
-    setFont(doc, 'normal', 9.5);
-    doc.setTextColor('#404040');
-    y = writeWrapped(doc, exp.summary[locale], MARGIN, y, contentWidth, 4.8);
-    doc.setTextColor(COLORS.text);
-    y += 3;
-  }
-  y += 2;
+    setFont(doc, 'normal', 9.5, '#404040');
+    y = writeWrapped(doc, exp.summary[locale], CONTENT_X, y, contentWidth, 4.8);
 
-  // Education
-  y = maybeNewPage(doc, y, pageHeight, 25);
-  y = sectionHeader(doc, labels.education, y, pageWidth);
+    if (exp.bullets) {
+      y += 1;
+      setFont(doc, 'normal', 9, '#404040');
+      for (const bullet of exp.bullets[locale]) {
+        y = maybeNewPage(doc, y, pageHeight, 8);
+        const wrapped = doc.splitTextToSize(bullet, contentWidth - 4);
+        for (let i = 0; i < wrapped.length; i++) {
+          const prefix = i === 0 ? '• ' : '  ';
+          doc.text(prefix + wrapped[i], CONTENT_X, y);
+          y += 4.4;
+        }
+      }
+    }
+    y += 4;
+  }
+
+  y = maybeNewPage(doc, y, pageHeight, 30);
+  y = sectionHeader(doc, labels.education, y, pageWidth, contentWidth);
   for (const edu of resume.education) {
-    y = maybeNewPage(doc, y, pageHeight, 12);
+    y = maybeNewPage(doc, y, pageHeight, 14);
     setFont(doc, 'bold', 10.5);
-    doc.text(edu.institution, MARGIN, y);
-    setFont(doc, 'normal', 9);
-    doc.setTextColor(COLORS.muted);
+    doc.text(edu.institution, CONTENT_X, y);
+    setFont(doc, 'normal', 9, COLORS.muted);
     const range =
       edu.status === 'in-progress'
-        ? `${edu.start} → ${locale === 'pt' ? 'em andamento' : 'in progress'}`
+        ? `${edu.start} → ${labels.inProgress}`
         : `${edu.start} → ${edu.end ?? ''}`;
-    doc.text(range, pageWidth - MARGIN, y, { align: 'right' });
+    doc.text(range, CONTENT_X + contentWidth, y, { align: 'right' });
     setFont(doc, 'normal', 10);
-    doc.setTextColor(COLORS.text);
     y += 4.5;
-    doc.text(edu.degree[locale], MARGIN, y);
-    y += 6;
-  }
-
-  // Skills
-  y = maybeNewPage(doc, y, pageHeight, 30);
-  y = sectionHeader(doc, labels.skills, y, pageWidth);
-  const groups: [string, string[]][] = [
-    [labels.ai, resume.skills.ai],
-    [labels.languages, resume.skills.languages],
-    [labels.frameworks, resume.skills.frameworks],
-    [labels.infra, resume.skills.infra]
-  ];
-  for (const [label, items] of groups) {
-    if (!items.length) continue;
-    y = maybeNewPage(doc, y, pageHeight, 10);
-    setFont(doc, 'bold', 10);
-    doc.text(`${label}:`, MARGIN, y);
-    setFont(doc, 'normal', 10);
-    const labelWidth = doc.getTextWidth(`${label}: `);
-    y = writeWrapped(doc, items.join(' · '), MARGIN + labelWidth, y, contentWidth - labelWidth, 5);
-    y += 1.5;
+    doc.text(edu.degree[locale], CONTENT_X, y);
+    y += 7;
   }
 
   return doc;
 }
 
-export function downloadResumePDF(resume: Resume, locale: Locale): void {
-  const doc = generateResumePDF(resume, locale);
+export async function downloadResumePDF(resume: Resume, locale: Locale): Promise<void> {
+  const doc = await generateResumePDF(resume, locale);
   const slug = resume.name
     .toLowerCase()
     .replace(/[^a-z0-9]+/g, '-')
