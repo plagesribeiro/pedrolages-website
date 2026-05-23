@@ -109,20 +109,20 @@
           "Stack: TypeScript monorepo, SvelteKit front-end, serverless back-end (Cloudflare), LLM integration."
         ]
       },
-      "tags": ["ai", "multimodal", "document-intelligence", "founder", "tech-lead", "remote-us"]
+      "tags": ["ai", "saas", "full-stack", "typescript", "claude", "cloudflare", "gcp"]
     },
     {
       "company": "Me4U",
       "role": {
-        "pt": "ML Engineer → Sr Full Stack → Technical Lead",
-        "en": "ML Engineer → Sr Full Stack → Technical Lead"
+        "pt": "AI Engineer & Software Developer → Sr Software Developer → Tech Lead",
+        "en": "AI Engineer & Software Developer → Sr Software Developer → Tech Lead"
       },
       "start": "2023-06",
       "end": "2026-02",
       "remote": true,
       "summary": {
-        "pt": "Entrei como ML engineer no início do produto e evoluí com ele: senior full stack e, posteriormente, technical lead de um time de 4 desenvolvedores. A plataforma era um SaaS multimodal de ponta — LLMs, text-to-speech, speech-to-text, image-to-text e text-to-image, combinando modelos próprios e open-source. Construí a infraestrutura automatizada que permitia ao usuário final treinar e fazer deploy dos próprios modelos. Quase três anos no total.",
-        "en": "Joined as ML engineer at the start of the product and grew with it: senior full stack, then technical lead of a 4-developer team. The platform was a cutting-edge multimodal SaaS — LLMs, text-to-speech, speech-to-text, image-to-text and text-to-image, combining proprietary and open-source models. Built the automated infrastructure that let end users train and deploy their own custom models. Nearly three years in total."
+        "pt": "Entrei como AI Engineer e Software Developer no início do produto e evoluí com ele: Senior full stack e, posteriormente, tech lead de um time de 4 desenvolvedores. A plataforma era um SaaS multimodal de ponta — LLMs, text-to-speech, speech-to-text, image-to-text e text-to-image, combinando modelos próprios e open-source. Construí a infraestrutura automatizada que permitia ao usuário final treinar e fazer deploy dos próprios modelos. Quase três anos no total.",
+        "en": "Joined as AI Engineer and Software Developer at the start of the product and grew with it: Senior full stack, then tech lead of a 4-developer team. The platform was a cutting-edge multimodal SaaS — LLMs, text-to-speech, speech-to-text, image-to-text and text-to-image, combining proprietary and open-source models. Built the automated infrastructure that let end users train and deploy their own custom models. Nearly three years in total."
       },
       "bullets": {
         "pt": [
@@ -140,13 +140,23 @@
           "Cloudflare, PostgreSQL, Node.js, ML pipelines."
         ]
       },
-      "tags": ["ai", "multimodal", "saas", "tech-lead", "remote-us"]
+      "tags": [
+        "ai",
+        "saas",
+        "full-stack",
+        "typescript",
+        "leadership",
+        "claude",
+        "cloudflare",
+        "python",
+        "gcp"
+      ]
     },
     {
       "company": "Jeto",
       "role": {
-        "pt": "Co-fundador · ML Engineer",
-        "en": "Co-founder · ML Engineer"
+        "pt": "Co-fundador · AI Engineer & Software Developer",
+        "en": "Co-founder · AI Engineer & Software Developer"
       },
       "start": "2023-08",
       "end": "2024-01",
@@ -155,13 +165,13 @@
         "pt": "Co-fundei a Jeto com o time que veio da CopyKit (originada na Scripe e Olympos). Plataforma white-label de IA: cada cliente configurava o próprio assistente especialista no negócio — atendimento, suporte, conhecimento interno — sem necessidade de hardcoding por parte da nossa equipe. Atendemos diversas empresas e o produto seguiu operando após minha transição para a Me4U.",
         "en": "Co-founded Jeto with the team that came from CopyKit (originally from Scripe and Olympos). A white-label AI platform: each client configured their own business-specialist assistant — customer support, internal knowledge — without any hardcoding from our team. We served several companies, and the product continued operating after my transition to Me4U."
       },
-      "tags": ["ai", "saas", "founder", "white-label"]
+      "tags": ["ai", "saas", "full-stack", "typescript", "cloudflare", "gcp"]
     },
     {
       "company": "CopyKit",
       "role": {
-        "pt": "Co-fundador · Desenvolvedor",
-        "en": "Co-founder · Engineer"
+        "pt": "Co-fundador · Software Developer",
+        "en": "Co-founder · Software Developer"
       },
       "start": "2022-11",
       "end": "2023-08",
@@ -170,12 +180,12 @@
         "pt": "Após o encerramento da Olympos, reuni um grupo de ex-Scripe e ex-Olympos para retomar a tese. A CopyKit foi uma releitura moderna da Scripe — marketing com IA para empresas — incorporando o aprendizado das duas anteriores: produto melhor estruturado, time mais maduro e expectativas mais realistas. Operou por alguns meses até identificarmos uma oportunidade maior em IA empresarial mais ampla, o que motivou o pivot para a Jeto.",
         "en": "After Olympos shut down, I gathered a group of ex-Scripe and ex-Olympos engineers to revisit the thesis. CopyKit was a modern take on Scripe — AI marketing for businesses — incorporating lessons from both predecessors: a better-structured product, a more mature team, and more realistic expectations. We operated for a few months until identifying a broader opportunity in enterprise AI overall, which led to the pivot to Jeto."
       },
-      "tags": ["ai", "marketing", "founder", "pivot"]
+      "tags": ["ai", "saas", "full-stack", "typescript", "cloudflare"]
     },
     {
       "company": "Olympos",
       "role": {
-        "pt": "Desenvolvedor de software",
+        "pt": "Software Developer",
         "en": "Software Developer"
       },
       "start": "2022-04",
@@ -185,13 +195,13 @@
         "pt": "A Olympos adquiriu a Scripe e me incorporou ao time. Construtor de lojas de dropshipping — storefront personalizado e back-end próprio para o usuário cadastrar produtos, integrar fornecedores e vender. Cresceu rapidamente em 2021–2022 e se tornou referência no segmento, mas encerrou as operações em seguida diante de mudanças de mercado e desequilíbrio de custos. Primeira lição prática de que crescimento acelerado não garante sustentabilidade.",
         "en": "Olympos acquired Scripe and brought me onto the team. A dropshipping store builder — custom storefront and proprietary back-end where users registered products, integrated suppliers and sold. Grew quickly in 2021–2022 and became a reference in the segment, then shut down as the market shifted and unit economics didn't hold. First practical lesson that fast growth doesn't guarantee sustainability."
       },
-      "tags": ["dropshipping", "saas", "shutdown"]
+      "tags": ["ai", "saas", "full-stack", "typescript", "aws"]
     },
     {
       "company": "Scripe",
       "role": {
-        "pt": "Engenheiro de software · IA",
-        "en": "Software Engineer · AI"
+        "pt": "Software Developer",
+        "en": "Software Developer"
       },
       "start": "2021-11",
       "end": "2022-04",
@@ -200,12 +210,12 @@
         "pt": "Primeira experiência em startup. Marketing assistido por IA utilizando os modelos da OpenAI da época — GPT-2 e os primeiros GPT-3, antes da popularização do ChatGPT. Ajudávamos copywriters e autores a escreverem textos com apoio de IA, em uma das pioneiras do segmento no Brasil. Stack: Svelte no front-end, Node no back-end, TypeScript em toda a base e cobertura de testes. A empresa cresceu rapidamente, com forte aumento de assinantes, e foi adquirida pela Olympos.",
         "en": "First startup experience. AI-assisted marketing built on the OpenAI models of the time — GPT-2 and early GPT-3, before ChatGPT entered the mainstream. We helped copywriters and authors craft text with AI assistance, at one of the pioneers in the Brazilian market. Stack: Svelte on the front-end, Node on the back-end, TypeScript throughout, and test coverage end-to-end. The company grew quickly, subscribers ramped up, and it was acquired by Olympos."
       },
-      "tags": ["ai", "gpt-2", "gpt-3", "marketing", "acquired"]
+      "tags": ["ai", "saas", "full-stack", "typescript", "aws", "firebase"]
     },
     {
       "company": "Suporte Informática",
       "role": {
-        "pt": "Desenvolvedor de software",
+        "pt": "Software Developer",
         "en": "Software Developer"
       },
       "start": "2020-11",
@@ -226,7 +236,7 @@
           "Tools: Docker, Azure DevOps, Git."
         ]
       },
-      "tags": ["healthcare", "angular", "elasticsearch", "first-job"]
+      "tags": ["saas", "full-stack", "typescript", "angular", "python"]
     }
   ],
   "skills": {
