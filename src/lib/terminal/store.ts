@@ -17,3 +17,6 @@ export const terminalCwd = writable<string>('/');
 
 /** Track whether the boot sequence (banner + whoami) already ran this session. */
 export const terminalBooted = writable<boolean>(false);
+
+/** Locale of the last boot — used to re-render the banner when language changes. */
+export const terminalBootedLocale = writable<'pt' | 'en' | null>(null);

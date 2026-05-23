@@ -8,6 +8,8 @@
   import TerminalEasterEgg from '$lib/components/TerminalEasterEgg.svelte';
   import { printConsoleArt } from '$lib/utils/console-art';
   import { manifestStore } from '$lib/content/store';
+  import { locale } from '$lib/i18n';
+  import { get } from 'svelte/store';
 
   export let data;
 
@@ -16,15 +18,15 @@
   $: manifestStore.set(data.manifest);
 
   onMount(() => {
-    printConsoleArt(data.resume.email);
+    printConsoleArt(data.resume.email, get(locale));
   });
 </script>
 
 <svelte:head>
-  <title>{data.resume.name} — {data.resume.headline.pt}</title>
-  <meta name="description" content={data.resume.headline.en} />
+  <title>{data.resume.name} — {data.resume.headline[$locale]}</title>
+  <meta name="description" content={data.resume.headline[$locale]} />
   <meta property="og:title" content={data.resume.name} />
-  <meta property="og:description" content={data.resume.headline.en} />
+  <meta property="og:description" content={data.resume.headline[$locale]} />
   <meta property="og:type" content="website" />
 </svelte:head>
 

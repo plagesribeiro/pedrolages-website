@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { onMount, tick, createEventDispatcher } from 'svelte';
+  import { onMount, onDestroy, tick, createEventDispatcher } from 'svelte';
   import { get } from 'svelte/store';
   import { goto } from '$app/navigation';
   import { locale, tt } from '$lib/i18n';
@@ -12,6 +12,7 @@
     terminalHistory,
     terminalCwd,
     terminalBooted,
+    terminalBootedLocale,
     type TerminalTone
   } from '$lib/terminal/store';
   import HackOverlay from './HackOverlay.svelte';
@@ -32,6 +33,9 @@
   let currentLocale: 'pt' | 'en' = 'pt';
   locale.subscribe((v) => (currentLocale = v));
 
+  type BiStr = { pt: string; en: string };
+  const loc = (b: BiStr): string => b[currentLocale];
+
   const HOST = 'plagesribeiro';
   const USER = 'pedrolages';
   $: prompt = `${USER}@${HOST}:${$terminalCwd}$ `;
@@ -41,22 +45,22 @@
   // Dynamic content folders (/md, /html, /pdf) get their children from the
   // build-time content manifest so `ls /md` shows actual public files.
   // ---------------------------------------------------------------------------
-  const STATIC_ROUTES: Record<string, { label: string }> = {
-    '/': { label: 'home menu' },
-    '/about': { label: 'a história toda' },
-    '/hack': { label: 'terminal full-page' },
-    '/games': { label: 'arcade index' },
-    '/games/snake': { label: 'classic snake + bombs' },
-    '/games/tokens': { label: 'token catcher' },
-    '/games/pong': { label: 'pong vs ai' },
-    '/games/bugs': { label: 'whack-a-bug' },
-    '/contact': { label: 'stalk me' },
-    '/resume': { label: 'printable cv' },
-    '/md': { label: 'markdown shares' },
-    '/html': { label: 'html shares' },
-    '/pdf': { label: 'pdf shares' },
-    '/coffee': { label: '418 teapot' },
-    '/admin': { label: 'access denied :p' }
+  const STATIC_ROUTES: Record<string, { label: BiStr }> = {
+    '/': { label: { pt: 'menu inicial', en: 'home menu' } },
+    '/about': { label: { pt: 'a história toda', en: 'the whole story' } },
+    '/hack': { label: { pt: 'terminal em tela cheia', en: 'terminal full-page' } },
+    '/games': { label: { pt: 'índice do arcade', en: 'arcade index' } },
+    '/games/snake': { label: { pt: 'snake clássico + bombas', en: 'classic snake + bombs' } },
+    '/games/tokens': { label: { pt: 'pegador de tokens', en: 'token catcher' } },
+    '/games/pong': { label: { pt: 'pong vs ia', en: 'pong vs ai' } },
+    '/games/bugs': { label: { pt: 'mata-bugs', en: 'whack-a-bug' } },
+    '/contact': { label: { pt: 'me stalkeie', en: 'stalk me' } },
+    '/resume': { label: { pt: 'cv para imprimir', en: 'printable cv' } },
+    '/md': { label: { pt: 'posts em markdown', en: 'markdown shares' } },
+    '/html': { label: { pt: 'compartilhamentos html', en: 'html shares' } },
+    '/pdf': { label: { pt: 'pdfs', en: 'pdf shares' } },
+    '/coffee': { label: { pt: '418 bule de chá', en: '418 teapot' } },
+    '/admin': { label: { pt: 'acesso negado :p', en: 'access denied :p' } }
   };
 
   /** Identify if a path lives inside one of the content trees, e.g. /md/notas. */
@@ -67,6 +71,9 @@
   }
 
   function labelFor(folder: ContentFolder): string {
+    if (currentLocale === 'pt') {
+      return folder === 'md' ? 'post markdown' : folder === 'html' ? 'compartilhamento html' : 'pdf';
+    }
     return folder === 'md' ? 'markdown post' : folder === 'html' ? 'html share' : 'pdf';
   }
 
@@ -78,7 +85,7 @@
     if (!split) return [];
     return M.listFolderChildren(m(), split.folder, split.sub).map((c) => ({
       path: `/${split.folder}/${split.sub ? split.sub + '/' : ''}${c.name}`,
-      label: c.isDir ? 'pasta' : labelFor(split.folder),
+      label: c.isDir ? (currentLocale === 'pt' ? 'pasta' : 'folder') : labelFor(split.folder),
       isDir: c.isDir
     }));
   }
@@ -105,7 +112,7 @@
       if (!rest || rest.includes('/')) continue;
       const hasStaticChildren = Object.keys(STATIC_ROUTES).some((q) => q.startsWith(p + '/'));
       const hasDynamicChildren = p === '/md' || p === '/html' || p === '/pdf';
-      out.push({ path: p, label: meta.label, isDir: hasStaticChildren || hasDynamicChildren });
+      out.push({ path: p, label: loc(meta.label), isDir: hasStaticChildren || hasDynamicChildren });
     }
     for (const dyn of dynamicChildren(norm)) out.push(dyn);
     return out.sort((a, b) => a.path.localeCompare(b.path));
@@ -137,41 +144,45 @@
   // eval of user input, no script injection vectors).
   // ---------------------------------------------------------------------------
   type Cmd = {
-    desc: string;
+    desc: BiStr;
     run: (args: string[]) => string[] | string | void | Promise<string[] | string | void>;
   };
 
   const COMMANDS: Record<string, Cmd> = {
     help: {
-      desc: 'lista os comandos',
+      desc: { pt: 'lista os comandos', en: 'list commands' },
       run: () => {
         const rows = Object.entries(COMMANDS).map(
-          ([name, c]) => `  ${name.padEnd(10)} — ${c.desc}`
+          ([name, c]) => `  ${name.padEnd(10)} — ${loc(c.desc)}`
         );
         return [
-          'available commands:',
+          currentLocale === 'pt' ? 'comandos disponíveis:' : 'available commands:',
           ...rows,
           '',
-          'TAB autocompleta · ↑↓ histórico · CTRL+L limpa · CTRL+C cancela'
+          currentLocale === 'pt'
+            ? 'TAB autocompleta · ↑↓ histórico · CTRL+L limpa · CTRL+C cancela'
+            : 'TAB autocompletes · ↑↓ history · CTRL+L clears · CTRL+C cancels'
         ];
       }
     },
     whoami: {
-      desc: 'quem é esse cara',
+      desc: { pt: 'quem é esse cara', en: 'who is this guy' },
       run: () => {
         const years = yearsSince(resume.careerStart);
         const ai = yearsSince(resume.aiStart);
         return [
           `uid=1000(${resume.handle}) gid=1000(devs) groups=1000(devs),1337(founders)`,
           `${resume.name}`,
-          `${years}y construindo software · ${ai}y trabalhando com IA`,
+          currentLocale === 'pt'
+            ? `${years}a construindo software · ${ai}a trabalhando com IA`
+            : `${years}y building software · ${ai}y working with AI`,
           resume.location[currentLocale]
         ];
       }
     },
-    about: { desc: 'bio rápida', run: () => resume.bio[currentLocale] },
+    about: { desc: { pt: 'bio rápida', en: 'short bio' }, run: () => resume.bio[currentLocale] },
     contact: {
-      desc: 'formas de me achar',
+      desc: { pt: 'formas de me achar', en: 'ways to reach me' },
       run: () => [
         `email:     ${resume.email}`,
         `whatsapp:  ${resume.links.whatsapp ?? '—'}`,
@@ -186,7 +197,7 @@
       ]
     },
     resume: {
-      desc: 'baixar CV (PDF)',
+      desc: { pt: 'baixar CV (PDF)', en: 'download CV (PDF)' },
       run: async () => {
         const { downloadResumePDF } = await import('$lib/utils/pdf');
         downloadResumePDF(resume, currentLocale);
@@ -194,13 +205,13 @@
       }
     },
     hack: {
-      desc: 'me hackear (cuidado)',
+      desc: { pt: 'me hackear (cuidado)', en: 'hack me (careful)' },
       run: () => {
         hackOpen = true;
       }
     },
     ls: {
-      desc: 'lista as áreas',
+      desc: { pt: 'lista as áreas', en: 'list areas' },
       run: (args) => {
         const requested = args[0] ? normalizePath(args[0], get(terminalCwd)) : get(terminalCwd);
         let target = requested;
@@ -228,7 +239,7 @@
       }
     },
     cd: {
-      desc: 'navega de verdade pra outra rota',
+      desc: { pt: 'navega de verdade pra outra rota', en: 'actually navigate to another route' },
       run: async (args) => {
         const arg = args[0] ?? '/';
         let target = normalizePath(arg, get(terminalCwd));
@@ -238,7 +249,10 @@
           else return [`cd: ${arg}: No such file or directory`];
         }
         terminalCwd.set(target);
-        print(`navigating to ${target} ...`, 'muted');
+        print(
+          currentLocale === 'pt' ? `navegando para ${target} ...` : `navigating to ${target} ...`,
+          'muted'
+        );
         await tick();
         dispatch('navigate', { path: target });
         goto(target);
@@ -246,7 +260,7 @@
       }
     },
     tree: {
-      desc: 'estrutura do site',
+      desc: { pt: 'estrutura do site', en: 'site structure' },
       run: () => {
         const grouped: Record<string, string[]> = {};
         for (const path of Object.keys(STATIC_ROUTES)) {
@@ -277,14 +291,23 @@
         return out;
       }
     },
-    date: { desc: 'que dia é hoje', run: () => new Date().toString() },
-    uname: { desc: 'sistema', run: () => 'PlagesOS 4.7.1 (svelte-cloudflare) x86_64 GNU/Caffeine' },
+    date: {
+      desc: { pt: 'que dia é hoje', en: "what day is it" },
+      run: () => new Date().toString()
+    },
+    uname: {
+      desc: { pt: 'sistema', en: 'system' },
+      run: () => 'PlagesOS 4.7.1 (svelte-cloudflare) x86_64 GNU/Caffeine'
+    },
     history: {
-      desc: 'histórico de comandos',
+      desc: { pt: 'histórico de comandos', en: 'command history' },
       run: () => get(terminalHistory).map((h, i) => `${String(i + 1).padStart(3, ' ')}  ${h}`)
     },
     open: {
-      desc: 'abre um link externo (apenas http/https/mailto)',
+      desc: {
+        pt: 'abre um link externo (apenas http/https/mailto)',
+        en: 'open an external link (http/https/mailto only)'
+      },
       run: (args) => {
         const aliases: Record<string, string> = {
           github: resume.links.github,
@@ -303,11 +326,11 @@
         const safe = /^(https?:|mailto:)/i.test(raw);
         if (!safe) return [`open: blocked unsafe url: ${raw}`];
         window.open(raw, '_blank', 'noopener,noreferrer');
-        return [`opening ${raw} ...`];
+        return [currentLocale === 'pt' ? `abrindo ${raw} ...` : `opening ${raw} ...`];
       }
     },
     play: {
-      desc: 'atalho pra um jogo',
+      desc: { pt: 'atalho pra um jogo', en: 'shortcut to a game' },
       run: async (args) => {
         const games = ['snake', 'tokens', 'pong', 'bugs'];
         const target = args[0] ?? '';
@@ -316,20 +339,20 @@
         await tick();
         dispatch('navigate', { path });
         goto(path);
-        return [`loading ${target}...`];
+        return [currentLocale === 'pt' ? `carregando ${target}...` : `loading ${target}...`];
       }
     },
     games: {
-      desc: 'abre o arcade',
+      desc: { pt: 'abre o arcade', en: 'open the arcade' },
       run: async () => {
         await tick();
         dispatch('navigate', { path: '/games' });
         goto('/games');
-        return ['loading arcade...'];
+        return [currentLocale === 'pt' ? 'carregando arcade...' : 'loading arcade...'];
       }
     },
     theme: {
-      desc: 'alterna verde/amber/branco',
+      desc: { pt: 'alterna verde/amber/branco', en: 'switch green/amber/white' },
       run: (args) => {
         const t = (args[0] ?? '').toLowerCase();
         const map: Record<string, string> = {
@@ -339,12 +362,20 @@
         };
         if (!map[t]) return ['theme <green|amber|white>'];
         document.documentElement.style.setProperty('--color-gb-light', map[t]);
-        return [`theme set to ${t}`];
+        return [currentLocale === 'pt' ? `tema definido como ${t}` : `theme set to ${t}`];
       }
     },
-    matrix: { desc: 'rabbit hole', run: () => ['take the blue pill, friend.'] },
+    matrix: {
+      desc: { pt: 'toca de coelho', en: 'rabbit hole' },
+      run: () => [
+        currentLocale === 'pt' ? 'tome a pílula azul, amigo.' : 'take the blue pill, friend.'
+      ]
+    },
     sl: {
-      desc: 'você quis dizer `ls`? toma um trem.',
+      desc: {
+        pt: 'você quis dizer `ls`? toma um trem.',
+        en: 'did you mean `ls`? have a train.'
+      },
       run: () => [
         '   choo choo!',
         '',
@@ -355,11 +386,13 @@
         '     |__________________  __|',
         '       (O)            (O)',
         '',
-        '   (psst: o comando era `ls`)'
+        currentLocale === 'pt'
+          ? '   (psst: o comando era `ls`)'
+          : '   (psst: the command was `ls`)'
       ]
     },
     sudo: {
-      desc: 'nope',
+      desc: { pt: 'nem vem', en: 'nope' },
       run: (args) => {
         if (args.join(' ').startsWith('rm -rf')) {
           document.documentElement.animate(
@@ -371,20 +404,20 @@
             ],
             { duration: 350, iterations: 2 }
           );
-          return ['nice try.'];
+          return [currentLocale === 'pt' ? 'boa tentativa.' : 'nice try.'];
         }
         return ['Permission denied.'];
       }
     },
     clear: {
-      desc: 'limpa o terminal',
+      desc: { pt: 'limpa o terminal', en: 'clear the terminal' },
       run: () => {
         terminalLines.set([]);
         return '';
       }
     },
     exit: {
-      desc: 'volta pro menu',
+      desc: { pt: 'volta pro menu', en: 'back to menu' },
       run: async () => {
         if (inModal) {
           dispatch('close');
@@ -404,13 +437,27 @@
   }
 
   function suggest(cmd: string, raw: string): string[] {
-    if (raw === '?') return ["digite 'help' pra ver os comandos."];
+    if (raw === '?')
+      return [
+        currentLocale === 'pt'
+          ? "digite 'help' pra ver os comandos."
+          : "type 'help' to see the commands."
+      ];
     if (raw.startsWith('rm -rf')) return ['lol no.'];
     if (cmd === 'vim' || cmd === 'emacs' || cmd === 'nano')
-      return ['use vscode like the rest of us.'];
+      return [
+        currentLocale === 'pt'
+          ? 'usa vscode como o resto da gente.'
+          : 'use vscode like the rest of us.'
+      ];
     const known = Object.keys(COMMANDS);
     const near = known.find((k) => k.startsWith(cmd) || cmd.startsWith(k.slice(0, 2)));
-    return [`zsh: command not found: ${cmd}${near ? `  (você quis dizer \`${near}\`?)` : ''}`];
+    const hint = near
+      ? currentLocale === 'pt'
+        ? `  (você quis dizer \`${near}\`?)`
+        : `  (did you mean \`${near}\`?)`
+      : '';
+    return [`zsh: command not found: ${cmd}${hint}`];
   }
 
   async function scrollDown() {
@@ -464,7 +511,7 @@
       const matches = Object.keys(COMMANDS).filter((k) => k.startsWith(start));
       if (matches.length === 1) return matches[0] + ' ';
       if (matches.length > 1) {
-        printMany(['matches:', '  ' + matches.join('   ')], 'muted');
+        printMany([currentLocale === 'pt' ? 'opções:' : 'matches:', '  ' + matches.join('   ')], 'muted');
         const prefix = commonPrefix(matches);
         return prefix.length > start.length ? prefix : value;
       }
@@ -490,7 +537,10 @@
         return next.join(' ') + ' ';
       }
       if (candidates.length > 1) {
-        printMany(['matches:', '  ' + candidates.join('   ')], 'muted');
+        printMany(
+          [currentLocale === 'pt' ? 'opções:' : 'matches:', '  ' + candidates.join('   ')],
+          'muted'
+        );
         const prefix = commonPrefix(candidates);
         if (prefix && prefix.length > stub.length) {
           const next = trailingSpace
@@ -508,7 +558,7 @@
       const matches = games.filter((g) => g.startsWith(last));
       if (matches.length === 1) return `${cmd} ${matches[0]} `;
       if (matches.length > 1) {
-        printMany(['matches:', '  ' + matches.join('   ')], 'muted');
+        printMany([currentLocale === 'pt' ? 'opções:' : 'matches:', '  ' + matches.join('   ')], 'muted');
         const prefix = commonPrefix(matches);
         if (prefix && prefix.length > last.length) return `${cmd} ${prefix}`;
       }
@@ -520,7 +570,7 @@
       const matches = aliases.filter((a) => a.startsWith(last));
       if (matches.length === 1) return `${cmd} ${matches[0]} `;
       if (matches.length > 1) {
-        printMany(['matches:', '  ' + matches.join('   ')], 'muted');
+        printMany([currentLocale === 'pt' ? 'opções:' : 'matches:', '  ' + matches.join('   ')], 'muted');
         const prefix = commonPrefix(matches);
         if (prefix && prefix.length > last.length) return `${cmd} ${prefix}`;
       }
@@ -556,23 +606,53 @@
   }
 
   // ASCII banner kept short + uses simple block chars so it reads at any width.
-  const banner = [
+  const bannerHint = {
+    pt: 'digite `help` · TAB autocompleta · ↑↓ histórico · CTRL+L limpa',
+    en: 'type `help` · TAB autocompletes · ↑↓ history · CTRL+L clears'
+  };
+  const banner = () => [
     '╔══════════════════════════════════════╗',
     '║   PLAGESRIBEIRO // TERMINAL  v0.1    ║',
     '╚══════════════════════════════════════╝',
-    'type `help` · TAB autocompletes · ↑↓ history · CTRL+L clear'
+    loc(bannerHint)
   ];
 
+  async function boot() {
+    terminalLines.set([]);
+    terminalBooted.set(true);
+    terminalBootedLocale.set(currentLocale);
+    for (const ln of banner()) print(ln, 'accent');
+    print('');
+    await runCommand('whoami');
+  }
+
+  // If the user toggles language while the terminal is mounted, refresh the
+  // boot so the visible output matches the new locale. Subscription is set up
+  // synchronously at component init so its teardown can be returned from onMount.
+  let localeSubInitialized = false;
+  const unsubLocale = locale.subscribe((v) => {
+    if (!localeSubInitialized) {
+      localeSubInitialized = true;
+      return;
+    }
+    if (v !== get(terminalBootedLocale) && get(terminalBooted)) {
+      void boot();
+    }
+  });
+
   onMount(async () => {
-    // boot sequence runs once per session — second mount just focuses the input.
-    if (!get(terminalBooted)) {
-      terminalBooted.set(true);
-      for (const ln of banner) print(ln, 'accent');
-      print('');
-      await runCommand('whoami');
+    // boot sequence runs once per session — but re-runs if the locale changed
+    // since the previous boot, so the banner+whoami match the current language.
+    const bootedLocale = get(terminalBootedLocale);
+    if (!get(terminalBooted) || bootedLocale !== currentLocale) {
+      await boot();
     }
     inputEl?.focus();
     await scrollDown();
+  });
+
+  onDestroy(() => {
+    unsubLocale();
   });
 
   export function focusInput() {

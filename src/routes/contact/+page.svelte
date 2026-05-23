@@ -26,7 +26,7 @@
 </script>
 
 <svelte:head>
-  <title>stalk me — {resume.name}</title>
+  <title>{$tt({ pt: 'me stalkear', en: 'stalk me' })} — {resume.name}</title>
 </svelte:head>
 
 <main class="relative isolate min-h-screen overflow-hidden">
@@ -48,7 +48,7 @@
       <h1
         class="mt-2 font-pixel text-2xl text-[color:var(--color-gb-light)] glow-green sm:text-3xl"
       >
-        stalk me.
+        {$tt({ pt: 'me stalkear.', en: 'stalk me.' })}
       </h1>
       <p class="mt-3 mx-auto max-w-md text-sm text-zinc-400">
         {$locale === 'pt'
@@ -93,7 +93,7 @@
           <div class="card-icon"><Coffee class="h-5 w-5" /></div>
           <p class="font-pixel text-[11px] text-amber-300">BUY ME A COFFEE</p>
           <p class="mt-1 text-sm text-zinc-300 group-hover:text-zinc-100">
-            ko-fi.com/plagesribeiro
+            buymeacoffee.com/pedrolages
           </p>
           <p class="mt-3 text-xs text-zinc-500">
             {$tt({ pt: 'meu mestrado agradece ☕', en: "my master's degree thanks you ☕" })}
@@ -135,7 +135,9 @@
             >
           </div>
           <p class="font-pixel text-[11px] text-[color:var(--color-gb-light)]">LATTES</p>
-          <p class="mt-1 text-sm text-zinc-300 group-hover:text-zinc-100">CV acadêmico</p>
+          <p class="mt-1 text-sm text-zinc-300 group-hover:text-zinc-100">
+            {$tt({ pt: 'CV acadêmico', en: 'academic CV' })}
+          </p>
           <p class="mt-3 text-xs text-zinc-500">
             {$tt({ pt: 'pra olhar o lado científico', en: 'for the academic side' })}
           </p>
