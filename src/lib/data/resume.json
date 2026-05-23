@@ -1,0 +1,195 @@
+{
+  "name": "Pedro Lages Ribeiro",
+  "handle": "plagesribeiro",
+  "headline": {
+    "pt": "Desenvolvedor de software · IA & modelos multimodais",
+    "en": "Software engineer · AI & multimodal models"
+  },
+  "taglines": {
+    "pt": [
+      "engineer que ainda escreve testes",
+      "human-in-the-loop, mas no bom sentido",
+      "fala com LLMs há mais tempo do que existe ChatGPT",
+      "remoto do Brasil, fuso de Nova York",
+      "mestrando em horário extra"
+    ],
+    "en": [
+      "engineer who still writes tests",
+      "human-in-the-loop, the good kind",
+      "talking to LLMs since before ChatGPT existed",
+      "remote from Brazil, on New York time",
+      "doing a master's in his spare time"
+    ]
+  },
+  "location": {
+    "pt": "Belo Horizonte, Brasil · remoto para EUA",
+    "en": "Belo Horizonte, Brazil · remote for the US"
+  },
+  "email": "plagesribeiro@gmail.com",
+  "links": {
+    "github": "https://github.com/plagesribeiro",
+    "linkedin": "https://www.linkedin.com/in/plagesribeiro/",
+    "lattes": "http://lattes.cnpq.br/2018474359242894",
+    "instagram": "https://instagram.com/pedro_lagesr",
+    "whatsapp": "+5531984717567",
+    "kofi": "https://ko-fi.com/plagesribeiro",
+    "twitter": ""
+  },
+  "careerStart": "2019-07",
+  "aiStart": "2020-01",
+  "bio": {
+    "pt": [
+      "Sou desenvolvedor de software desde 2019. Comecei resolvendo problemas em hospitais, virei a chave pra IA quando os modelos da OpenAI ainda chamavam GPT-2 e eu tinha que explicar pra todo mundo o que era um \"transformer\".",
+      "Já fundei, vendi, vi falir e segui em frente. Hoje co-fundo a GoodStream — plataforma de document intelligence pra portfolio management — do Brasil, no fuso de Nova York, no terceiro café.",
+      "Em paralelo, sigo lutando com o mestrado em Ciência da Computação na PUC Minas. Sim, dá pra fazer as duas coisas. Não, não dá pra dormir bem."
+    ],
+    "en": [
+      "I've been a software engineer since 2019. Started shipping software for hospitals, then jumped on the AI train back when OpenAI models were called GPT-2 and I had to explain to everyone what a \"transformer\" was.",
+      "I've founded, sold, watched things go under, and kept going. Today I'm a co-founder at GoodStream — a document intelligence platform for portfolio management — building from Brazil on New York time, on my third coffee.",
+      "On the side, I'm wrestling a master's degree in Computer Science at PUC Minas. Yes, you can do both. No, you can't sleep well."
+    ]
+  },
+  "education": [
+    {
+      "degree": {
+        "pt": "Bacharelado em Ciência da Computação",
+        "en": "BSc, Computer Science"
+      },
+      "institution": "PUC Minas",
+      "start": "2018",
+      "end": "2022",
+      "status": "completed"
+    },
+    {
+      "degree": {
+        "pt": "Mestrado em Ciência da Computação",
+        "en": "MSc, Computer Science"
+      },
+      "institution": "PUC Minas",
+      "start": "2023",
+      "status": "in-progress",
+      "note": {
+        "pt": "em andamento, no horário extra",
+        "en": "in progress, on my own time"
+      }
+    }
+  ],
+  "experience": [
+    {
+      "company": "GoodStream",
+      "role": {
+        "pt": "Co-fundador · Engenheiro de software",
+        "en": "Co-founder · Software Engineer"
+      },
+      "start": "2023-01",
+      "current": true,
+      "founded": true,
+      "remote": true,
+      "summary": {
+        "pt": "Co-fundei a GoodStream, plataforma de document intelligence para portfolio management. Toco engenharia, IA multimodal e LLMs em produção — remoto do Brasil.",
+        "en": "Co-founded GoodStream, a document intelligence platform for portfolio management. I run engineering, multimodal AI and LLMs in production — remote from Brazil."
+      },
+      "tags": ["ai", "multimodal", "llm", "document-intelligence", "founder", "remote-us"]
+    },
+    {
+      "company": "White label próprio",
+      "role": {
+        "pt": "Fundador · Desenvolvedor",
+        "en": "Founder · Engineer"
+      },
+      "start": "2022",
+      "end": "2023",
+      "founded": true,
+      "summary": {
+        "pt": "Construí um produto white label do zero — do código ao primeiro cliente pagante.",
+        "en": "Built a white-label product from scratch — from the code to the first paying customer."
+      },
+      "tags": ["founder", "product", "saas"]
+    },
+    {
+      "company": "Fábrica de software",
+      "role": {
+        "pt": "Fundador",
+        "en": "Founder"
+      },
+      "start": "2022",
+      "end": "2023",
+      "founded": true,
+      "summary": {
+        "pt": "Pequena fábrica de software entregando projetos sob demanda para clientes selecionados.",
+        "en": "Small software studio shipping custom projects for selected clients."
+      },
+      "tags": ["consulting", "founder"]
+    },
+    {
+      "company": "Limpos",
+      "role": {
+        "pt": "Engenheiro de software",
+        "en": "Software Engineer"
+      },
+      "start": "2021",
+      "end": "2022",
+      "endedWith": "shutdown",
+      "summary": {
+        "pt": "Continuei o trabalho da Scripe depois da aquisição. A empresa veio a fechar — startups são assim.",
+        "en": "Continued the Scripe work after the acquisition. The company eventually shut down — startups gonna startup."
+      },
+      "tags": ["startup", "acquisition", "shutdown"]
+    },
+    {
+      "company": "Scripe",
+      "role": {
+        "pt": "Engenheiro de software · IA",
+        "en": "Software Engineer · AI"
+      },
+      "start": "2020",
+      "end": "2021",
+      "endedWith": "acquired",
+      "summary": {
+        "pt": "Marketing com IA nos primeiros modelos da OpenAI — sim, eu prompt-engineerava o GPT-2 antes do ChatGPT existir.",
+        "en": "AI-powered marketing on the earliest OpenAI models — yes, I was prompt-engineering GPT-2 before ChatGPT was a thing."
+      },
+      "tags": ["startup", "ai", "marketing", "gpt-2", "gpt-3"]
+    },
+    {
+      "company": "Suporte Tecnologia",
+      "role": {
+        "pt": "Desenvolvedor",
+        "en": "Developer"
+      },
+      "start": "2019-07",
+      "end": "2020",
+      "summary": {
+        "pt": "Primeiro emprego em desenvolvimento: software hospitalar e soluções para a área da saúde.",
+        "en": "First dev job: hospital software and healthcare solutions."
+      },
+      "tags": ["healthcare", "first-job"]
+    }
+  ],
+  "skills": {
+    "ai": [
+      "LLMs (GPT-2 → GPT-5)",
+      "Multimodal models",
+      "RAG & embeddings",
+      "Document intelligence",
+      "Fine-tuning",
+      "Agents & tool use",
+      "Prompt engineering"
+    ],
+    "languages": ["TypeScript", "Python", "Rust", "Dart (Flutter)", "SQL"],
+    "frameworks": ["SvelteKit", "Next.js", "React", "Flutter", "FastAPI", "Node.js"],
+    "infra": ["Cloudflare Workers", "Cloudflare Pages", "PostgreSQL", "Docker", "Vercel"]
+  },
+  "highlights": {
+    "pt": [
+      "Trabalhou com GPT-2 antes do ChatGPT existir",
+      "Fundou, vendeu, viu falir — e seguiu construindo",
+      "Remoto do Brasil para uma startup nos EUA"
+    ],
+    "en": [
+      "Worked with GPT-2 before ChatGPT existed",
+      "Founded, sold, watched it shut down — and kept building",
+      "Remote from Brazil to a US startup"
+    ]
+  }
+}

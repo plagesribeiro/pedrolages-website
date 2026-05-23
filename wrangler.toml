@@ -1,0 +1,24 @@
+# Cloudflare Pages configuration
+# https://developers.cloudflare.com/pages/functions/wrangler-configuration/
+#
+# Create the KV namespaces (one-time) with the Wrangler CLI:
+#   npx wrangler kv:namespace create SCORES
+#   npx wrangler kv:namespace create CONTENT_CACHE
+# Then paste each printed `id` below. For local dev with wrangler pages dev,
+# add a `preview_id` to each.
+
+name = "plagesribeiro-site"
+compatibility_date = "2025-05-01"
+pages_build_output_dir = ".svelte-kit/cloudflare"
+
+# Leaderboard scores (existing).
+[[kv_namespaces]]
+binding = "SCORES"
+id = "REPLACE_WITH_YOUR_KV_NAMESPACE_ID"
+# preview_id = "REPLACE_WITH_YOUR_PREVIEW_KV_NAMESPACE_ID"
+
+# Cache for Drive manifest + file contents. 5min TTL.
+[[kv_namespaces]]
+binding = "CONTENT_CACHE"
+id = "REPLACE_WITH_YOUR_CONTENT_CACHE_KV_NAMESPACE_ID"
+# preview_id = "REPLACE_WITH_YOUR_PREVIEW_KV_NAMESPACE_ID"

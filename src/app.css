@@ -1,0 +1,129 @@
+@import 'tailwindcss';
+@plugin '@tailwindcss/typography';
+
+@theme {
+  --font-sans: 'Geist', ui-sans-serif, system-ui, sans-serif;
+  --font-mono: 'Geist Mono', ui-monospace, 'SFMono-Regular', monospace;
+  --font-pixel: 'Press Start 2P', monospace;
+  --font-terminal: 'VT323', monospace;
+
+  --color-gb-green: #9bbc0f;
+  --color-gb-dark: #0f380f;
+  --color-gb-mid: #306230;
+  --color-gb-light: #8bac0f;
+  --color-neon-yellow: #facc15;
+
+  --animate-blink: blink 1.2s steps(2) infinite;
+  --animate-float: float 3s ease-in-out infinite;
+  --animate-flicker: flicker 6s linear infinite;
+  --animate-scanline: scanline 8s linear infinite;
+}
+
+@keyframes blink {
+  50% {
+    opacity: 0;
+  }
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
+}
+
+@keyframes flicker {
+  0%,
+  19%,
+  21%,
+  23%,
+  25%,
+  54%,
+  56%,
+  100% {
+    opacity: 1;
+  }
+  20%,
+  22%,
+  24%,
+  55% {
+    opacity: 0.85;
+  }
+}
+
+@keyframes scanline {
+  0% {
+    transform: translateY(-100%);
+  }
+  100% {
+    transform: translateY(100%);
+  }
+}
+
+@layer base {
+  html {
+    color-scheme: dark;
+  }
+  body {
+    background:
+      radial-gradient(ellipse at top, rgba(155, 188, 15, 0.04), transparent 60%),
+      radial-gradient(ellipse at bottom, rgba(250, 204, 21, 0.03), transparent 60%),
+      #09090b;
+  }
+  ::selection {
+    background: var(--color-gb-green);
+    color: #000;
+  }
+  /* Pixel-perfect rendering for tiny icons */
+  .pixelated {
+    image-rendering: pixelated;
+    image-rendering: -moz-crisp-edges;
+    image-rendering: crisp-edges;
+  }
+}
+
+@layer components {
+  .font-pixel {
+    font-family: var(--font-pixel);
+    letter-spacing: 0.02em;
+  }
+  .font-terminal {
+    font-family: var(--font-terminal);
+  }
+
+  .glow-green {
+    text-shadow:
+      0 0 4px rgba(155, 188, 15, 0.6),
+      0 0 12px rgba(155, 188, 15, 0.35);
+  }
+
+  .glow-yellow {
+    text-shadow:
+      0 0 4px rgba(250, 204, 21, 0.55),
+      0 0 12px rgba(250, 204, 21, 0.3);
+  }
+
+  /* CRT overlay */
+  .crt::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    background:
+      repeating-linear-gradient(0deg, rgba(0, 0, 0, 0.18) 0px, rgba(0, 0, 0, 0.18) 1px, transparent 1px, transparent 3px);
+    z-index: 50;
+    mix-blend-mode: multiply;
+    opacity: 0.4;
+  }
+
+  .chip {
+    @apply inline-flex items-center gap-1.5 rounded-full border border-zinc-700/70 bg-zinc-900/60 px-3 py-1 text-xs font-medium text-zinc-300 backdrop-blur;
+  }
+
+  .chip-accent {
+    @apply border-[color:var(--color-gb-green)]/30 bg-[color:var(--color-gb-green)]/10 text-[color:var(--color-gb-light)];
+  }
+}
