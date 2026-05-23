@@ -228,7 +228,8 @@ src/
     +page.svelte         landing
     api/scores/[game]/   leaderboard KV
     api/drive-file/      proxy de arquivo do Drive (com cache)
-    md|html|pdf/[slug]   conteúdo dropado no Drive vira rota
+    api/manifest-version manifest revision tag pro polling do /docs
+    docs/[...path]       biblioteca unificada (md/html/pdf) vinda do Drive
     games/               Snake, Pong, WhackBug, TokenCatcher
     hack|coffee|admin/   easter eggs (404 customizadas etc.)
   lib/
@@ -251,11 +252,36 @@ static/              assets servidos como estão
 remark-parse → remark-math → remark-gfm → remark-rehype → rehype-katex → @shikijs/rehype → rehype-stringify
 ```
 
-Saída é HTML simples cacheado no KV por `fileId + revision`. Quando mudar o pipeline, invalide o cache (ou aceite janela de 5min de TTL).
+Saída é HTML simples cacheado no KV por `driveId + modifiedTime`. Qualquer edição no Drive muda a chave automaticamente — não precisa invalidar nada à mão.
 
-### 7.2. Conteúdo via Drive
+### 7.2. Conteúdo via Drive (`/docs`)
 
-Coloque `slug.md` (ou `.html`, `.pdf`) na pasta do Drive mapeada para `/md/public/` e ele aparece em `/md/<slug>`. Manifest é buscado uma vez por 5min, corpo do arquivo é cacheado no primeiro hit. Nenhuma alteração de código é necessária para adicionar conteúdo.
+Estrutura no Drive:
+
+```
+ROOT/                          (GOOGLE_DRIVE_ROOT_FOLDER_ID)
+  public/                      qualquer estrutura de pastas/arquivos
+    notas/dia-1.md
+    relatorios/q4.pdf
+    sobre.md
+  private/                     idem, mas escondido da listagem raiz
+    diario/2026-05.md
+```
+
+- Kind decidido pela extensão (`.md`, `.html`, `.pdf`); outras extensões são ignoradas.
+- Slug inclui a extensão pra evitar colisão entre kinds (`/docs/notas/dia-1.md`).
+- Pasta `public/` aparece no índice raiz (`/docs`); `private/` só aparece quando você navega pra dentro de uma pasta.
+- Quando público e privado têm o mesmo slug, **público ganha**.
+
+**Real-time (TTL curto sem cron):**
+
+- Manifest cacheado por **15s** no KV (`drive:manifest:v2`).
+- Conteúdo de cada arquivo cacheado por **60s** no KV, com chave `drive:file:<id>:<modifiedTime>` — edição invalida automaticamente.
+- PDF proxy responde com `Cache-Control: public, max-age=60, must-revalidate`.
+- `/api/manifest-version` retorna `{ builtAt, revisionTag }`; o layout de `/docs` polla a cada 5s e dispara `invalidateAll()` quando o tag muda.
+- Latência ponta-a-ponta esperada: ~10s no comum, ~20s no pior caso.
+
+Nenhuma alteração de código é necessária pra adicionar/editar conteúdo — só arrastar arquivo no Drive.
 
 ### 7.3. Leaderboard
 

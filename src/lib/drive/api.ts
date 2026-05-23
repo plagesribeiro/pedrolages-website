@@ -10,6 +10,7 @@ export interface DriveFile {
   id: string;
   name: string;
   mimeType: string;
+  modifiedTime: string;
 }
 
 async function authHeaders(): Promise<HeadersInit> {
@@ -25,7 +26,7 @@ export async function listChildren(folderId: string): Promise<DriveFile[]> {
 
   do {
     const q = encodeURIComponent(`'${folderId}' in parents and trashed=false`);
-    const fields = encodeURIComponent('nextPageToken,files(id,name,mimeType)');
+    const fields = encodeURIComponent('nextPageToken,files(id,name,mimeType,modifiedTime)');
     let url = `https://www.googleapis.com/drive/v3/files?q=${q}&fields=${fields}&pageSize=1000`;
     if (pageToken) url += `&pageToken=${encodeURIComponent(pageToken)}`;
 

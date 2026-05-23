@@ -6,7 +6,7 @@
   import { yearsSince } from '$lib/utils/dates';
   import * as M from '$lib/content/manifest';
   import { manifestStore } from '$lib/content/store';
-  import type { Folder as ContentFolder } from '$lib/content/types';
+  import type { Kind } from '$lib/content/types';
   import {
     terminalLines,
     terminalHistory,
@@ -42,8 +42,8 @@
 
   // ---------------------------------------------------------------------------
   // "filesystem": only real, existing routes — never something that 404s.
-  // Dynamic content folders (/md, /html, /pdf) get their children from the
-  // build-time content manifest so `ls /md` shows actual public files.
+  // The /docs subtree pulls children from the Drive manifest so `ls /docs`
+  // shows actual public files mirroring the cloud.
   // ---------------------------------------------------------------------------
   const STATIC_ROUTES: Record<string, { label: BiStr }> = {
     '/': { label: { pt: 'menu inicial', en: 'home menu' } },
@@ -55,41 +55,41 @@
     '/games/pong': { label: { pt: 'pong vs ia', en: 'pong vs ai' } },
     '/games/bugs': { label: { pt: 'mata-bugs', en: 'whack-a-bug' } },
     '/resume': { label: { pt: 'cv para imprimir', en: 'printable cv' } },
-    '/md': { label: { pt: 'posts em markdown', en: 'markdown shares' } },
-    '/html': { label: { pt: 'compartilhamentos html', en: 'html shares' } },
-    '/pdf': { label: { pt: 'pdfs', en: 'pdf shares' } },
+    '/docs': { label: { pt: 'biblioteca do drive', en: 'drive library' } },
     '/coffee': { label: { pt: '418 bule de chá', en: '418 teapot' } },
     '/admin': { label: { pt: 'acesso negado :p', en: 'access denied :p' } },
     '/banner': { label: { pt: 'banners pra LinkedIn/kofi', en: 'banners for LinkedIn/kofi' } }
   };
 
-  /** Identify if a path lives inside one of the content trees, e.g. /md/notas. */
-  function contentSplit(p: string): { folder: ContentFolder; sub: string } | null {
-    const m = p.match(/^\/(md|html|pdf)(?:\/(.+))?$/);
+  /** Identify if a path lives inside the /docs tree, e.g. /docs/notas. */
+  function docsSplit(p: string): { sub: string } | null {
+    const m = p.match(/^\/docs(?:\/(.+))?$/);
     if (!m) return null;
-    return { folder: m[1] as ContentFolder, sub: (m[2] ?? '').replace(/\/$/, '') };
+    return { sub: (m[1] ?? '').replace(/\/$/, '') };
   }
 
-  function labelFor(folder: ContentFolder): string {
+  function kindLabel(kind: Kind): string {
     if (currentLocale === 'pt') {
-      return folder === 'md'
-        ? 'post markdown'
-        : folder === 'html'
-          ? 'compartilhamento html'
-          : 'pdf';
+      return kind === 'md' ? 'post markdown' : kind === 'html' ? 'compartilhamento html' : 'pdf';
     }
-    return folder === 'md' ? 'markdown post' : folder === 'html' ? 'html share' : 'pdf';
+    return kind === 'md' ? 'markdown post' : kind === 'html' ? 'html share' : 'pdf';
   }
 
   /** Shorthand to read the current manifest synchronously. */
   const m = () => get(manifestStore);
 
   function dynamicChildren(parent: string): { path: string; label: string; isDir: boolean }[] {
-    const split = contentSplit(parent);
+    const split = docsSplit(parent);
     if (!split) return [];
-    return M.listFolderChildren(m(), split.folder, split.sub).map((c) => ({
-      path: `/${split.folder}/${split.sub ? split.sub + '/' : ''}${c.name}`,
-      label: c.isDir ? (currentLocale === 'pt' ? 'pasta' : 'folder') : labelFor(split.folder),
+    return M.listFolderChildren(m(), split.sub).map((c) => ({
+      path: `/docs/${split.sub ? split.sub + '/' : ''}${c.name}`,
+      label: c.isDir
+        ? currentLocale === 'pt'
+          ? 'pasta'
+          : 'folder'
+        : c.kind
+          ? kindLabel(c.kind)
+          : '',
       isDir: c.isDir
     }));
   }
@@ -115,7 +115,7 @@
       const rest = p.slice(prefix.length);
       if (!rest || rest.includes('/')) continue;
       const hasStaticChildren = Object.keys(STATIC_ROUTES).some((q) => q.startsWith(p + '/'));
-      const hasDynamicChildren = p === '/md' || p === '/html' || p === '/pdf';
+      const hasDynamicChildren = p === '/docs';
       out.push({ path: p, label: loc(meta.label), isDir: hasStaticChildren || hasDynamicChildren });
     }
     for (const dyn of dynamicChildren(norm)) out.push(dyn);
@@ -124,11 +124,11 @@
 
   function pathLooksValid(p: string): boolean {
     if (Object.prototype.hasOwnProperty.call(STATIC_ROUTES, p)) return true;
-    // dynamic content paths: /md/<...>, /html/<...>, /pdf/<...> — public OR private
-    const split = contentSplit(p);
+    // dynamic /docs/<...> — public OR private
+    const split = docsSplit(p);
     if (split && split.sub) {
-      if (M.findItem(m(), split.folder, split.sub)) return true;
-      if (M.folderExists(m(), split.folder, split.sub)) return true;
+      if (M.findItem(m(), split.sub)) return true;
+      if (M.folderExists(m(), split.sub)) return true;
     }
     return false;
   }
@@ -286,11 +286,8 @@
           if (!grouped[top]) grouped[top] = [];
           if (path !== top) grouped[top].push(path);
         }
-        for (const f of ['md', 'html', 'pdf'] as const) {
-          const top = '/' + f;
-          for (const slug of M.publicSlugs(m(), f)) {
-            (grouped[top] ??= []).push(`${top}/${slug}`);
-          }
+        for (const slug of M.publicSlugs(m())) {
+          (grouped['/docs'] ??= []).push(`/docs/${slug}`);
         }
         const out: string[] = ['/'];
         const tops = Object.keys(grouped).sort();

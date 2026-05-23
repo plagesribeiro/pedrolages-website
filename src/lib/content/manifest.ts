@@ -4,12 +4,13 @@
  *   - client-side, with a Manifest provided via Svelte store (populated by
  *     the layout server load)
  *
- * No I/O, no globs, no env reads. Just data filtering.
+ * The manifest is a single flat list of items (md/html/pdf, public+private)
+ * — kind is decided by file extension, not by parent folder.
  */
 
-import type { ContentItem, Folder, Manifest, Visibility } from './types';
+import type { ContentItem, Kind, Manifest, Visibility } from './types';
 
-export type { ContentItem, Folder, Manifest, Visibility } from './types';
+export type { ContentItem, Kind, Manifest, Visibility } from './types';
 
 function dedupe(items: ContentItem[]): ContentItem[] {
   // public wins over private when slug collides
@@ -26,25 +27,25 @@ function dedupe(items: ContentItem[]): ContentItem[] {
   return out.sort((a, b) => a.slug.localeCompare(b.slug));
 }
 
-export function allItems(manifest: Manifest, folder: Folder): ContentItem[] {
-  return dedupe(manifest[folder]);
+export function allItems(manifest: Manifest): ContentItem[] {
+  return dedupe(manifest.items);
 }
 
-export function publicItems(manifest: Manifest, folder: Folder): ContentItem[] {
-  return allItems(manifest, folder).filter((i) => i.visibility === 'public');
+export function publicItems(manifest: Manifest): ContentItem[] {
+  return allItems(manifest).filter((i) => i.visibility === 'public');
 }
 
-export function publicSlugs(manifest: Manifest, folder: Folder): string[] {
-  return publicItems(manifest, folder).map((i) => i.slug);
+export function publicSlugs(manifest: Manifest): string[] {
+  return publicItems(manifest).map((i) => i.slug);
 }
 
-export function findItem(manifest: Manifest, folder: Folder, slug: string): ContentItem | null {
-  return allItems(manifest, folder).find((i) => i.slug === slug) ?? null;
+export function findItem(manifest: Manifest, slug: string): ContentItem | null {
+  return allItems(manifest).find((i) => i.slug === slug) ?? null;
 }
 
-export function folderExists(manifest: Manifest, folder: Folder, folderPath: string): boolean {
+export function folderExists(manifest: Manifest, folderPath: string): boolean {
   if (folderPath === '') return true;
-  return allItems(manifest, folder).some(
+  return allItems(manifest).some(
     (i) => i.folder === folderPath || i.folder.startsWith(folderPath + '/')
   );
 }
@@ -57,17 +58,16 @@ export function folderExists(manifest: Manifest, folder: Folder, folderPath: str
  */
 export function listFolderChildren(
   manifest: Manifest,
-  folder: Folder,
   folderPath: string
-): { name: string; isDir: boolean; slug: string }[] {
-  const items = folderPath === '' ? publicItems(manifest, folder) : allItems(manifest, folder);
+): { name: string; isDir: boolean; slug: string; kind?: Kind }[] {
+  const items = folderPath === '' ? publicItems(manifest) : allItems(manifest);
   const prefix = folderPath ? folderPath + '/' : '';
   const seenDirs = new Set<string>();
-  const out: { name: string; isDir: boolean; slug: string }[] = [];
+  const out: { name: string; isDir: boolean; slug: string; kind?: Kind }[] = [];
   for (const item of items) {
     if (item.folder !== folderPath && !item.folder.startsWith(prefix)) continue;
     if (item.folder === folderPath) {
-      out.push({ name: item.name, isDir: false, slug: item.slug });
+      out.push({ name: item.name, isDir: false, slug: item.slug, kind: item.kind });
     } else {
       const rest = item.folder.slice(prefix.length);
       const firstSeg = rest.split('/')[0];
@@ -85,12 +85,8 @@ export function listFolderChildren(
 }
 
 /** Items in a specific folder (recursive). Used by folder routes. */
-export function itemsInFolder(
-  manifest: Manifest,
-  folder: Folder,
-  folderPath: string
-): ContentItem[] {
-  return allItems(manifest, folder).filter(
+export function itemsInFolder(manifest: Manifest, folderPath: string): ContentItem[] {
+  return allItems(manifest).filter(
     (i) => i.folder === folderPath || i.folder.startsWith(folderPath + '/')
   );
 }
