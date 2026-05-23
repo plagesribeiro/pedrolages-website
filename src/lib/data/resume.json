@@ -90,8 +90,8 @@
       "founded": true,
       "remote": true,
       "summary": {
-        "pt": "Co-fundei a GoodStream pra resolver um problema chato e específico: portfolio managers gastam horas processando documentos que ninguém devia mais ler manualmente em 2026. A gente automatiza isso com IA multimodal e LLMs em produção. Lidero o time de engenharia desde a primeira linha de código — defino padrões, monto CI/CD, faço code review, alinho com produto, marketing, CEO e suporte. Remoto do Brasil pro fuso de Nova York, com três cafés de manhã.",
-        "en": "Co-founded GoodStream to solve a specific, annoying problem: portfolio managers spend hours processing documents nobody should be reading by hand in 2026. We automate that with multimodal AI and LLMs in production. I've been leading engineering since the first line of code — setting standards, building CI/CD, reviewing PRs, aligning with product, marketing, the CEO and support. Remote from Brazil on New York time, three morning coffees deep."
+        "pt": "Co-fundei a GoodStream pra resolver um problema chato e específico: portfolio managers gastam horas processando documentos que ninguém devia mais ler manualmente em 2026. A gente automatiza isso com IA multimodal e LLMs em produção. Lidero o time de engenharia desde a primeira linha de código — defino padrões, monto CI/CD, faço code review, alinho com produto, marketing, CEO e suporte. Remoto do Brasil pro fuso de Nova York.",
+        "en": "Co-founded GoodStream to solve a specific, annoying problem: portfolio managers spend hours processing documents nobody should be reading by hand in 2026. We automate that with multimodal AI and LLMs in production. I've been leading engineering since the first line of code — setting standards, building CI/CD, reviewing PRs, aligning with product, marketing, the CEO and support. Remote from Brazil on New York time."
       },
       "bullets": {
         "pt": [
