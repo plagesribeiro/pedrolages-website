@@ -4,6 +4,14 @@
   import Tree from '$lib/components/Tree.svelte';
   import type { ContentItem } from '$lib/content/manifest';
 
+  let htmlFrame: HTMLIFrameElement | undefined;
+  function resizeHtmlFrame() {
+    const doc = htmlFrame?.contentDocument;
+    if (!doc) return;
+    const h = Math.max(doc.documentElement.scrollHeight, doc.body?.scrollHeight ?? 0);
+    if (h) htmlFrame!.style.height = `${h + 32}px`;
+  }
+
   export let data:
     | {
         mode: 'file';
@@ -108,6 +116,35 @@
         </a>
       </p>
     </object>
+  </article>
+{:else if data.mode === 'file' && data.kind === 'html'}
+  <article class="mx-auto max-w-5xl px-6 py-12">
+    {#if data.hasParentListing}
+      <a
+        href={data.parentUrl}
+        class="mb-6 inline-flex items-center gap-1.5 text-xs text-zinc-400 hover:text-zinc-100"
+      >
+        <ArrowLeft class="h-3.5 w-3.5" />
+        {$tt({ pt: 'voltar pra listagem', en: 'back to listing' })}
+      </a>
+    {/if}
+
+    <header class="mb-6 border-b border-zinc-800 pb-4">
+      <p class="font-mono text-xs text-zinc-500">/docs/{data.slug}</p>
+      <h1 class="mt-1 font-pixel text-xl text-[color:var(--color-gb-light)] glow-green sm:text-2xl">
+        {data.title}
+      </h1>
+    </header>
+
+    <iframe
+      bind:this={htmlFrame}
+      srcdoc={data.html}
+      sandbox="allow-same-origin allow-scripts allow-popups"
+      title={data.title}
+      on:load={resizeHtmlFrame}
+      class="w-full rounded-xl border border-zinc-800 bg-white"
+      style="height: 60vh"
+    ></iframe>
   </article>
 {:else if data.mode === 'file'}
   <article class="mx-auto max-w-4xl px-6 py-12">
