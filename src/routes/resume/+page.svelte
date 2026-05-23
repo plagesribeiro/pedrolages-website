@@ -64,13 +64,6 @@
             >
           </div>
           <p class="text-sm text-zinc-400 print:text-zinc-700">{pick(exp.summary, $locale)}</p>
-          {#if exp.bullets}
-            <ul class="mt-2 list-disc space-y-1 pl-5 text-sm text-zinc-400 print:text-zinc-700">
-              {#each pick(exp.bullets, $locale) as bullet}
-                <li>{bullet}</li>
-              {/each}
-            </ul>
-          {/if}
         </div>
       {/each}
     </div>
@@ -90,6 +83,15 @@
             </span>
           </div>
           <p class="text-sm text-zinc-400 print:text-zinc-700">{pick(edu.degree, $locale)}</p>
+          {#if edu.note}
+            <p class="mt-1 text-sm text-zinc-500 print:text-zinc-700">{pick(edu.note, $locale)}</p>
+          {/if}
+          {#if edu.skills}
+            <p class="mt-1 text-xs text-zinc-500 print:text-zinc-700">
+              <span class="font-semibold">Skills:</span>
+              {pick(edu.skills, $locale).join(' · ')}
+            </p>
+          {/if}
         </div>
       {/each}
     </div>
@@ -100,18 +102,21 @@
       {$t('section.skills').toUpperCase()}
     </h2>
     <div class="mt-3 grid gap-1 text-sm">
-      <p><span class="font-semibold">{$t('skills.ai')}:</span> {resume.skills.ai.join(' · ')}</p>
+      <p>
+        <span class="font-semibold">{$t('skills.ai')}:</span>
+        {pick(resume.skills.ai, $locale).join(' · ')}
+      </p>
       <p>
         <span class="font-semibold">{$t('skills.leadership')}:</span>
-        {resume.skills.leadership.join(' · ')}
+        {pick(resume.skills.leadership, $locale).join(' · ')}
       </p>
       <p>
         <span class="font-semibold">{$t('skills.stack')}:</span>
-        {resume.skills.stack.join(' · ')}
+        {pick(resume.skills.stack, $locale).join(' · ')}
       </p>
       <p>
         <span class="font-semibold">{$t('skills.infra')}:</span>
-        {resume.skills.infra.join(' · ')}
+        {pick(resume.skills.infra, $locale).join(' · ')}
       </p>
     </div>
   </section>
