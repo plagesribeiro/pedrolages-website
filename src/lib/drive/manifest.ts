@@ -161,3 +161,27 @@ export async function getFileText(
   await cacheSet(platform, key, text, FILE_TTL);
   return text;
 }
+
+/**
+ * Cache of rendered HTML, keyed by driveId+modifiedTime. Same lifetime as
+ * the raw source. Lets the unified pipeline run at most once per edit.
+ */
+const RENDERED_TTL = 60;
+function renderedKey(driveId: string, modifiedTime: string): string {
+  return `drive:rendered:${driveId}:${modifiedTime}`;
+}
+
+export async function getRenderedHtml(
+  platform: App.Platform | undefined,
+  driveId: string,
+  modifiedTime: string,
+  render: (source: string) => Promise<string>
+): Promise<string> {
+  const key = renderedKey(driveId, modifiedTime);
+  const cached = await cacheGet<string>(platform, key);
+  if (cached !== null) return cached;
+  const source = await getFileText(platform, driveId, modifiedTime);
+  const html = await render(source);
+  await cacheSet(platform, key, html, RENDERED_TTL);
+  return html;
+}

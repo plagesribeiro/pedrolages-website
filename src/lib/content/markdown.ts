@@ -4,13 +4,12 @@ import remarkGfm from 'remark-gfm';
 import remarkMath from 'remark-math';
 import remarkRehype from 'remark-rehype';
 import rehypeKatex from 'rehype-katex';
-import rehypeShiki from '@shikijs/rehype';
 import rehypeStringify from 'rehype-stringify';
 
-// Use a loose type for the cached chain — the configured pipeline isn't
-// assignable to `ReturnType<typeof unified>` because each `.use()` narrows
-// the generic parameters. We only ever call `.process()`, which is on every
-// processor regardless.
+// Shiki was dropped from the Cloudflare-Workers build because its singleton
+// highlighter dynamically loads grammars/themes and pushes the request past
+// the CPU budget on the Bundled usage model (which is what Pages Functions
+// default to). Code blocks render as plain <pre><code>; styling lives in CSS.
 let cachedProcessor: Processor | null = null;
 
 function getProcessor(): Processor {
@@ -21,10 +20,6 @@ function getProcessor(): Processor {
     .use(remarkMath)
     .use(remarkRehype, { allowDangerousHtml: true })
     .use(rehypeKatex)
-    .use(rehypeShiki, {
-      themes: { light: 'github-light', dark: 'github-dark' },
-      defaultColor: 'dark'
-    })
     .use(rehypeStringify, { allowDangerousHtml: true }) as unknown as Processor;
   return cachedProcessor;
 }
