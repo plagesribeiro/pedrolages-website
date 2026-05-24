@@ -1,5 +1,5 @@
 import { error } from '@sveltejs/kit';
-import { getManifest, getFileText } from '$lib/drive/manifest';
+import { getManifest, getFileText, getRenderedHtml } from '$lib/drive/manifest';
 import { findItem, folderExists, itemsInFolder, type ContentItem } from '$lib/content/manifest';
 import { renderMarkdown } from '$lib/content/markdown';
 
@@ -17,7 +17,12 @@ export async function load({ params, platform }) {
 
     if (item.kind === 'md') {
       const source = await getFileText(platform, item.driveId, item.modifiedTime);
-      const html = await renderMarkdown(source);
+      const html = await getRenderedHtml(
+        platform,
+        item.driveId,
+        item.modifiedTime,
+        renderMarkdown
+      );
       const title = extractMarkdownTitle(source, path);
       return {
         mode: 'file' as const,
